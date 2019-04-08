@@ -49,7 +49,7 @@ JSlide.editor.prototype.insertChar = function(c) {
 /** Something as changed
  */
 JSlide.editor.prototype.onchange = function(panel) {
-  this.jSlide.slide[this.jSlide.current] = this.getText().replace(/^====/,'');
+  this.jSlide.slide[this.jSlide.current] = this.getText().replace(/^\[====/,'');
   this.jSlide.show();
   if (panel) this.jSlide.showPanel(this.jSlide.current);
 };

@@ -30,7 +30,7 @@ JSlide.prototype.read = function (file) {
 JSlide.prototype.open = function (slide) {
   this.slide = slide;
   this.slide = this.slide.replace(/(\r\n)/g, '\n');
-  this.slide = this.slide.split(/====/g);
+  this.slide = this.slide.split(/\[====/g);
   // Header
   var head = this.slide.shift().split('\n');
   var properties = {};
@@ -53,7 +53,7 @@ JSlide.prototype.save = function () {
   for (var i in this.getProperties()) {
     slide += i + ': ' + this.get(i) + '\n';
   }
-  slide +=  '==== ' + this.slide.join('==== ');
+  slide +=  '==== ' + this.slide.join('[==== ');
   var blob = new Blob([slide], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, this.filename || 'slide.md');
 };

@@ -198,3 +198,16 @@ img.bgImage {
 .footer div.right {
   right: 0;
 }
+
+.md .step {
+  display: inline-block;
+}
+.slideshow .md .step {
+  visibility: hidden;
+  opacity: 0;
+  transition: .1s;
+}
+.slideshow .md .step.visible {
+  visibility: visible;
+  opacity: 1;
+}

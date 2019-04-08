@@ -71,10 +71,10 @@ JSlide.prototype.setDefault = function() {
 /**
  * 
  */
-JSlide.prototype.drawSlide = function (element, page) {
+JSlide.prototype.drawSlide = function (element, page, slideshow) {
   var slide = this.slide[page];
-  var pos = slide.search('\n');
-  var head = slide.substr(0,pos).trim().split(',');
+  var pos = slide.search(']');
+  var head = slide.substr(0,pos).trim().split('\n');
   var md = slide.substr(pos+1);
   var data = {
     TITLE: this.title,
@@ -92,24 +92,31 @@ JSlide.prototype.drawSlide = function (element, page) {
 
   // Add Slide
   var div = document.createElement('DIV');
-  div.className = 'slide '+param.className;
+  div.className = ('slide '+param.className+(slideshow?' slideshow':'')).trim();
   div.innerHTML = '<div class="md">'+md2html(md, data)+'</div>';
   element.innerHTML = '';
   element.appendChild(div);
   this.updateSize();
   if (param.bgImage) {
-    var img = document.createElement('IMG');
-    img.className = 'bgImage';
-    img.src = param.bgImage;
+    element.style.backgroundImage = 'none';
+    div.style.backgroundImage = 'none';
     var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
-    var setSize = function() {
-      var r = d.getBoundingClientRect();
-      if (r.width/img.width > r.height/img.height) img.style.width = '100%';
-      else img.style.height = '100%';
-    }.bind(this);
-    if (img.width) setSize();
-    else img.onload = setSize;
-    d.insertBefore(img, d.firstChild);
+    if (/^linear-gradient|^radial-gradient/.test(param.bgImage)) {
+      d.style.backgroundImage = param.bgImage;
+      console.log(param.bgImage)
+    } else {
+      var img = document.createElement('IMG');
+      img.className = 'bgImage';
+      img.src = param.bgImage;
+      var setSize = function() {
+        var r = d.getBoundingClientRect();
+        if (r.width/img.width > r.height/img.height) img.style.width = '100%';
+        else img.style.height = '100%';
+      }.bind(this);
+      if (img.width) setSize();
+      else img.onload = setSize;
+      d.insertBefore(img, d.firstChild);
+    }
   }
   if (param.color) {
     div.className += ' resetColor';
@@ -199,7 +206,7 @@ JSlide.prototype.show = function (n) {
 
   // Draw slide
   element.innerHTML = '';
-  this.drawSlide(element, this.current);
+  this.drawSlide(element, this.current, this.slideshow);
   var li = document.querySelectorAll('#panel > li');
   li.forEach(function (l, i) {
     if (i===this.current) {
@@ -213,19 +220,40 @@ JSlide.prototype.show = function (n) {
   }.bind(this));
 
   // Editor
-  this.editor.setText('===='+this.slide[this.current]);
+  this.editor.setText('[===='+this.slide[this.current]);
   // Set progress bar
   this.progressBar.style.width = (100 * (this.current+1) / this.slide.length)+'%';
 
   if (this.presentation) {
     this.presentation.innerHTML = '';
-    this.drawSlide(this.presentation, this.current);
+    this.drawSlide(this.presentation, this.current, this.slideshow);
   }
 };
 
 /** Show next slide
  */
 JSlide.prototype.next = function () {
+  // Get next step
+  var nextStep = function(elt) {
+    var step = [];
+    elt.querySelectorAll('.step').forEach(function(e){
+      if (!/visible/.test(e.className)) step.push(e);
+    });
+    if (step.length) {
+      step = step.sort(function(a,b) {
+        return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
+      })
+      step[0].className = step[0].className+' visible';
+      return true;
+    }
+    return false;
+  }
+  if (this.slideshow) {
+    if (nextStep(document.getElementById('slide'))) {
+      if (this.presentation) nextStep(this.presentation);
+      return;
+    }
+  }
   if (this.current < this.slide.length-1) this.show(++this.current);
 };
 
@@ -331,6 +359,13 @@ JSlide.prototype.addBar = function() {
   addButton('open');
   addButton('save', this.save.bind(this));
   addButton('present', this.openPresentation.bind(this));
+  addButton('slideshow', this.showPresentation.bind(this));
+};
+
+JSlide.prototype.showPresentation = function() {
+  this.slideshow = !this.slideshow;
+  this.step = 0;
+  this.show();
 };
 
 /** Open in a new window */
@@ -338,20 +373,36 @@ JSlide.prototype.openPresentation = function() {
   var w = window.open ('./presentation.html'+(this.presentation?'#':''), 'jSlidePresentation', 'channelmode=0, directories=0, location=0, menubar=0, status=0, titlebar=0, toolbar=0, copyhistory=no');
   w.document.title = window.document.title;
   var pres = w.document.querySelector('div');
-  if (!this.presentation && pres) {
-    setTimeout(function() {
-      this.presentation = w.document.querySelector('div');
-      w.addEventListener('resize', this.updateSize.bind(this));
-      w.document.addEventListener('keydown', this.onkeydown.bind(this), false);
-      this.show();
-    }.bind(this),500)
-  }
-  w.onload = function() {
+  // Create presentation page
+  var create = function(){
     this.presentation = w.document.querySelector('div');
     w.addEventListener('resize', this.updateSize.bind(this));
     w.document.addEventListener('keydown', this.onkeydown.bind(this), false);
+    w.document.addEventListener('click', function() {
+      this.next();
+    }.bind(this));
+    w.document.addEventListener('keydown', function(e) {
+      if (e.keyCode===116 && w.document.documentElement.requestFullscreen) {
+        if (w.fullScreen) {
+          w.document.exitFullscreen();
+          w.fullScreen = false;
+          this.updateSize();
+        }
+        else {
+          w.document.documentElement.requestFullscreen();
+          w.fullScreen = true;
+          this.updateSize();
+        }
+        e.preventDefault();
+      }
+    }.bind(this));
     this.show();
   }.bind(this);
+  if (!this.presentation && pres) {
+    setTimeout (create, 500);
+  }
+  w.onload = create;
+  // Remove preentation on unload
   w.onunload = function() {
     this.presentation = null;
   }.bind(this);
@@ -407,7 +458,7 @@ JSlide.editor.prototype.insertChar = function(c) {
 /** Something as changed
  */
 JSlide.editor.prototype.onchange = function(panel) {
-  this.jSlide.slide[this.jSlide.current] = this.getText().replace(/^====/,'');
+  this.jSlide.slide[this.jSlide.current] = this.getText().replace(/^\[====/,'');
   this.jSlide.show();
   if (panel) this.jSlide.showPanel(this.jSlide.current);
 };
@@ -473,7 +524,7 @@ JSlide.prototype.read = function (file) {
 JSlide.prototype.open = function (slide) {
   this.slide = slide;
   this.slide = this.slide.replace(/(\r\n)/g, '\n');
-  this.slide = this.slide.split(/====/g);
+  this.slide = this.slide.split(/\[====/g);
   // Header
   var head = this.slide.shift().split('\n');
   var properties = {};
@@ -496,7 +547,7 @@ JSlide.prototype.save = function () {
   for (var i in this.getProperties()) {
     slide += i + ': ' + this.get(i) + '\n';
   }
-  slide +=  '==== ' + this.slide.join('==== ');
+  slide +=  '==== ' + this.slide.join('[==== ');
   var blob = new Blob([slide], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, this.filename || 'slide.md');
 };
@@ -566,9 +617,6 @@ var md2html = function (md, data) {
   // Handle icons
   md = md2html.doIcons(md);
 
-  // Handle blocks
-  md = md2html.doBlocks(md);
-
   // Table management
   md = md2html.doTable(md);
   // Data management
@@ -577,6 +625,8 @@ var md2html = function (md, data) {
   for (i=0; i<md2html.rules.length; i++) {
     md = md.replace(md2html.rules[i][0], md2html.rules[i][1]);
   }
+  // Handle blocks
+  md = md2html.doBlocks(md);
   // Clean up
   md = md2html.cleanUp(md);
 //	console.log(md)
@@ -609,40 +659,8 @@ md2html.floatingImages = function (md) {
  * Create collapsible blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\n\[----\]/g, '\n</div></div>');
-  var nb = 0;
-  var md2;
-  var rex = /\n\[--(.*)--\]/;
-  while (true) {
-    md2 = md.replace(rex, 
-      '\n</div></div>'
-      +'<input class="mdBlock" id="_mdBlock_'+nb+'" type="checkbox"/>'
-      +'<div class="mdBlock">'
-      +'<label for="_mdBlock_'+nb+'" class="mdBlockTitle">\n'
-      +'$1'
-      +'\n</label>'
-      +'<div class="mdBlockContent">'
-    );
-    if (md2===md) break;
-    else md = md2;
-    nb++;
-  }
-  rex = /\n\[\+\+(.*)\+\+\]/;
-  while (true) {
-    md2 = md.replace(rex, 
-      '\n</div></div>'
-      +'<input class="mdBlock" id="_mdBlock_'+nb+'" checked="checked" type="checkbox"/>'
-      +'<div class="mdBlock">'
-      +'<label for="_mdBlock_'+nb+'" class="mdBlockTitle">\n'
-      +'$1'
-      +'\n</label>'
-      +'<div class="mdBlockContent">'
-    );
-    if (md2===md) break;
-    else md = md2;
-    nb++;
-  }
-
+  md = md.replace(/\[--(\d+)?(\n)?/g, '<div class="step" data-step="$1">');
+  md = md.replace(/\--\]/g, '</div>');
   return md;
 };
 
@@ -754,6 +772,7 @@ md2html.cleanUp = function(md) {
 
   md = md.replace(/(\<\/h[0-9]>)\n/g, '$1');
   md = md.replace(/(\<hr \/>)\n/g, '$1');
+  md = md.replace(/^\n/, '');
   md = md.replace(/^\n/, '');
   md = md.replace(/\n$/, '');
   md = md.replace(/\n/g, '<br />');

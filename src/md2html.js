@@ -27,9 +27,6 @@ var md2html = function (md, data) {
   // Handle icons
   md = md2html.doIcons(md);
 
-  // Handle blocks
-  md = md2html.doBlocks(md);
-
   // Table management
   md = md2html.doTable(md);
   // Data management
@@ -38,6 +35,8 @@ var md2html = function (md, data) {
   for (i=0; i<md2html.rules.length; i++) {
     md = md.replace(md2html.rules[i][0], md2html.rules[i][1]);
   }
+  // Handle blocks
+  md = md2html.doBlocks(md);
   // Clean up
   md = md2html.cleanUp(md);
 //	console.log(md)
@@ -70,40 +69,8 @@ md2html.floatingImages = function (md) {
  * Create collapsible blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\n\[----\]/g, '\n</div></div>');
-  var nb = 0;
-  var md2;
-  var rex = /\n\[--(.*)--\]/;
-  while (true) {
-    md2 = md.replace(rex, 
-      '\n</div></div>'
-      +'<input class="mdBlock" id="_mdBlock_'+nb+'" type="checkbox"/>'
-      +'<div class="mdBlock">'
-      +'<label for="_mdBlock_'+nb+'" class="mdBlockTitle">\n'
-      +'$1'
-      +'\n</label>'
-      +'<div class="mdBlockContent">'
-    );
-    if (md2===md) break;
-    else md = md2;
-    nb++;
-  }
-  rex = /\n\[\+\+(.*)\+\+\]/;
-  while (true) {
-    md2 = md.replace(rex, 
-      '\n</div></div>'
-      +'<input class="mdBlock" id="_mdBlock_'+nb+'" checked="checked" type="checkbox"/>'
-      +'<div class="mdBlock">'
-      +'<label for="_mdBlock_'+nb+'" class="mdBlockTitle">\n'
-      +'$1'
-      +'\n</label>'
-      +'<div class="mdBlockContent">'
-    );
-    if (md2===md) break;
-    else md = md2;
-    nb++;
-  }
-
+  md = md.replace(/\[--(\d+)?(\n)?/g, '<div class="step" data-step="$1">');
+  md = md.replace(/\--\]/g, '</div>');
   return md;
 };
 
@@ -215,6 +182,7 @@ md2html.cleanUp = function(md) {
 
   md = md.replace(/(\<\/h[0-9]>)\n/g, '$1');
   md = md.replace(/(\<hr \/>)\n/g, '$1');
+  md = md.replace(/^\n/, '');
   md = md.replace(/^\n/, '');
   md = md.replace(/\n$/, '');
   md = md.replace(/\n/g, '<br />');
