@@ -1,0 +1,45 @@
+.md ul {
+  list-style: none;
+  padding: 0;
+}
+.md li {
+  padding-left: 1.3em;
+  position: relative;
+  display: table;
+}
+
+.md li:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: .45em;
+  height: .45em;
+  background-color: currentColor;
+  margin-left: -1em;
+  top: .4em;
+  transform: rotate(45deg);
+}
+
+.li-squares .md li:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: .2em;
+  height: .2em;
+  background-color: currentColor;
+  margin-left: -1.1em;
+  top: .5em;
+  transform: rotate(45deg);
+  box-shadow: 0.3em 0, 0.3em -0.3em, 0 -0.3em;
+}
+
+.li-arrow .md li:before {
+  content: "\f0a9";
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-left: -1.3em;
+  width: 1.3em;
+  top: .1em;
+  transform: none;
+  background: transparent;
+}

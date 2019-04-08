@@ -1,0 +1,15 @@
+/** Chapter layout
+ */
+.slide.chapter h1 {
+  margin-left: -5.5em;
+}
+.slide.chapter h2 {
+  position: absolute;
+  left: 0;
+  width: 6.5em;
+  margin: -.3em 0 0;
+  text-align: left;
+}
+.slide.chapter .md {
+  padding: 0 0 0 10em;
+}
