@@ -87,20 +87,44 @@ body {
 }
 
 #header button {
+  position: relative;
   width: 2em;
   height: 2em;
   font-size: 1em;
   color: #7c6c50;
   font-family: FontAwesome;
+  vertical-align: top;
 }
 #header button.addSlide:before {
-  content: '\f196';
+  content: "\f196";
 }
 #header button.open:before {
-  content: '\f115';
+  content: "\f115";
 }
 #header button.save:before {
-  content: '\f019';
+  content: "\f019";
+}
+#header button.present:before {
+  content: "";
+  width: .9em;
+  height: .55em;
+  border: .1em solid currentColor;
+  box-shadow: 0 -.15em;
+  position: absolute;
+  top: .45em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#header button.present:after {
+  content: "";
+  width: .4em;
+  height: .4em;
+  border: .1em solid currentColor;
+  border-color: currentColor currentColor transparent transparent;
+  position: absolute;
+  top: 1.2em;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
 }
 
 .slide {

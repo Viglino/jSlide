@@ -101,13 +101,14 @@ JSlide.prototype.drawSlide = function (element, page) {
     var img = document.createElement('IMG');
     img.className = 'bgImage';
     img.src = param.bgImage;
+    var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
     var setSize = function() {
-      if (this.get('width')/img.width>this.get('height')/img.height) img.style.width = '100%';
+      var r = d.getBoundingClientRect();
+      if (r.width/img.width > r.height/img.height) img.style.width = '100%';
       else img.style.height = '100%';
     }.bind(this);
     if (img.width) setSize();
     else img.onload = setSize;
-    var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
     d.insertBefore(img, d.firstChild);
   }
   if (param.color) {
@@ -137,7 +138,7 @@ JSlide.prototype.drawSlide = function (element, page) {
 JSlide.prototype.setSlideFont = function (div, font) {
   if (font) {
     div.style.fontFamily = font;
-    if (!this.fonts[font]) {
+    if (!this.fonts[font] && typeof WebFont !== undefined) {
       WebFont.load({
         google: { families: [font] } 
       });
@@ -147,7 +148,8 @@ JSlide.prototype.setSlideFont = function (div, font) {
   if (this.presentation) {
     try {
       if (!this.presentationFonts) this.presentationFonts = {};
-      if (this.presentation.ownerDocument.defaultView.WebFont && !this.presentationFonts[font]) {
+      if (this.presentation.ownerDocument.defaultView.WebFont 
+        && !this.presentationFonts[font]) {
         this.presentation.ownerDocument.defaultView.WebFont.load({
           google: { families: [font] } 
         });
