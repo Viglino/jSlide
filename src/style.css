@@ -31,6 +31,14 @@ body {
   margin: 1em;
   overflow: hidden;
 }
+.presentation #slide {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
 #editor {
   position: fixed;
   left: 10em;
@@ -56,6 +64,11 @@ body {
   right: 0;
   bottom: 12em;
   z-index: 1;
+}
+.presentation #progress {
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 #progress > div {
   background-color: #af9f83;
@@ -199,15 +212,47 @@ img.bgImage {
   right: 0;
 }
 
+/* Presentation steps */
 .md .step {
-  display: inline-block;
+  display: inline;
 }
+.slideshow .md .step > *,
+.slideshow .md .visible .step,
 .slideshow .md .step {
   visibility: hidden;
   opacity: 0;
-  transition: .1s;
+  transition: opacity .5s;
 }
+.slideshow .md .step {
+  position: relative;
+  transition-property: opacity, left, top;
+}
+.slideshow .md .step.slide-left {
+  left: -100%;
+  opacity: 1;
+}
+.slideshow .md .step.slide-right {
+  left: 100%;
+  opacity: 1;
+}
+.slideshow .md .step.slide-down {
+  top: -800px;
+  opacity: 1;
+}
+.slideshow .md .step.slide-up {
+  top: 800px;
+  opacity: 1;
+}
+.slideshow .md .step.visible > *,
+.slideshow .md .visible .step.visible,
 .slideshow .md .step.visible {
   visibility: visible;
   opacity: 1;
+  left: 0;
+  top: 0;
+}
+.slideshow .md .visible .step {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .5s;
 }

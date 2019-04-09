@@ -19,7 +19,7 @@ JSlide.prototype.addBar = function() {
     return b;  
   }
   addButton('addSlide', function() {
-    this.slide.splice(this.current+1,0,'');
+    this.slide.splice(this.current+1,0,']');
     this.showPanel();
     this.show(this.current+1);
   }.bind(this));
@@ -49,6 +49,7 @@ JSlide.prototype.openPresentation = function() {
       this.next();
     }.bind(this));
     w.document.addEventListener('keydown', function(e) {
+      // F5 = fullscreen
       if (e.keyCode===116 && w.document.documentElement.requestFullscreen) {
         if (w.fullScreen) {
           w.document.exitFullscreen();

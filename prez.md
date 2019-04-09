@@ -119,5 +119,24 @@ Add a twitter button:
 Display your twitter time line in your slides.
 
 [====]
-test
-[-- test --]
+
+# Animation 
+[--
+## Appear
+--]
+[--slide-up
+## slide-up
+test 
+--]
+[--slide-down
+## slide-down
+test 
+--]
+[--slide-left
+## slide-left
+test 
+--]
+[--slide-right
+## slide-right
+test 
+--]

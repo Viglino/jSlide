@@ -69,7 +69,7 @@ md2html.floatingImages = function (md) {
  * Create collapsible blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\[--(\d+)?(\n)?/g, '<div class="step" data-step="$1">');
+  md = md.replace(/\[--([\d+])?:?(\b.*\b)?(\n)?/g, '<div class="step $2" data-step="$1">');
   md = md.replace(/\--\]/g, '</div>');
   return md;
 };

@@ -4,7 +4,7 @@
 var JSlide = function() {
   this._param = {};
   this.fonts = {};
-  this.progressBar = document.getElementById('progress').querySelector('div')
+  this.progressBar = document.getElementById('progress').querySelector('div');
   this.setDefault();
   this.addListeners();
   this.setEditor();
@@ -103,7 +103,6 @@ JSlide.prototype.drawSlide = function (element, page, slideshow) {
     var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
     if (/^linear-gradient|^radial-gradient/.test(param.bgImage)) {
       d.style.backgroundImage = param.bgImage;
-      console.log(param.bgImage)
     } else {
       var img = document.createElement('IMG');
       img.className = 'bgImage';
@@ -145,26 +144,7 @@ JSlide.prototype.drawSlide = function (element, page, slideshow) {
 JSlide.prototype.setSlideFont = function (div, font) {
   if (font) {
     div.style.fontFamily = font;
-    if (!this.fonts[font] && typeof WebFont !== undefined) {
-      WebFont.load({
-        google: { families: [font] } 
-      });
-      this.fonts[font] = true;
-    }
-  }
-  if (this.presentation) {
-    try {
-      if (!this.presentationFonts) this.presentationFonts = {};
-      if (this.presentation.ownerDocument.defaultView.WebFont 
-        && !this.presentationFonts[font]) {
-        this.presentation.ownerDocument.defaultView.WebFont.load({
-          google: { families: [font] } 
-        });
-        this.presentationFonts[font] = true
-      }
-    } catch(e) {}
-  } else {
-    this.presentationFonts = {};
+    this.loadFont(font);
   }
 };
 
@@ -222,35 +202,53 @@ JSlide.prototype.show = function (n) {
   // Editor
   this.editor.setText('[===='+this.slide[this.current]);
   // Set progress bar
-  this.progressBar.style.width = (100 * (this.current+1) / this.slide.length)+'%';
+  this.progressBar.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
 
   if (this.presentation) {
     this.presentation.innerHTML = '';
     this.drawSlide(this.presentation, this.current, this.slideshow);
+    var p = this.presentation.ownerDocument.getElementById('progress').querySelector('div');
+    p.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
   }
 };
+
+JSlide.prototype.nextStep = function (elt) {
+  var step = [];
+  elt.querySelectorAll('.step').forEach(function(e){
+    if (!/visible/.test(e.className)) step.push(e);
+  });
+  if (step.length) {
+    step = step.sort(function(a,b) {
+      return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
+    });
+    step[0].className = step[0].className+' visible';
+    return true;
+  }
+  return false;
+}
+
+JSlide.prototype.prevStep = function (elt) {
+  var step = [];
+  elt.querySelectorAll('.step').forEach(function(e){
+    if (/visible/.test(e.className)) step.push(e);
+  });
+  if (step.length) {
+    step = step.sort(function(a,b) {
+      return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
+    });
+    step[step.length-1].className = step[step.length-1].className.replace('visible','').trim();
+    return true;
+  }
+  return false;
+}
 
 /** Show next slide
  */
 JSlide.prototype.next = function () {
   // Get next step
-  var nextStep = function(elt) {
-    var step = [];
-    elt.querySelectorAll('.step').forEach(function(e){
-      if (!/visible/.test(e.className)) step.push(e);
-    });
-    if (step.length) {
-      step = step.sort(function(a,b) {
-        return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
-      })
-      step[0].className = step[0].className+' visible';
-      return true;
-    }
-    return false;
-  }
   if (this.slideshow) {
-    if (nextStep(document.getElementById('slide'))) {
-      if (this.presentation) nextStep(this.presentation);
+    if (this.nextStep(document.getElementById('slide'))) {
+      if (this.presentation) this.nextStep(this.presentation);
       return;
     }
   }
@@ -260,6 +258,12 @@ JSlide.prototype.next = function () {
 /** Show previous slide
  */
 JSlide.prototype.prev = function () {
+  if (this.slideshow) {
+    if (this.prevStep(document.getElementById('slide'))) {
+      if (this.presentation) this.prevStep(this.presentation);
+      return;
+    }
+  }
   if (this.current) this.show(--this.current);
 };
 
@@ -331,6 +335,23 @@ JSlide.prototype.addListeners = function() {
   window.addEventListener('load', this.onload.bind(this));
 };
 
+JSlide.prototype.loadFont = function(font, doc) {
+  if (!doc) {
+    this.loadFont(font, document);
+    if (this.presentation) this.loadFont(font, this.presentation.ownerDocument);
+    return;
+  } else {
+    var elt = doc.getElementById('font-'+font);
+    if (!elt) {
+      var fileref = doc.createElement("link");
+      fileref.setAttribute('id', 'font-'+font);
+      fileref.setAttribute('rel', 'stylesheet');
+      fileref.setAttribute('type', 'text/css');
+      fileref.setAttribute('href', 'http://fonts.googleapis.com/css?family='+font);
+      doc.getElementsByTagName('head')[0].appendChild(fileref)
+    }
+  }
+};
 /**
 *	Copyright (c) 2016 Jean-Marc VIGLINO (https://github.com/Viglino),
 *	released under the MIT license (French BSD license)
@@ -352,7 +373,7 @@ JSlide.prototype.addBar = function() {
     return b;  
   }
   addButton('addSlide', function() {
-    this.slide.splice(this.current+1,0,'');
+    this.slide.splice(this.current+1,0,']');
     this.showPanel();
     this.show(this.current+1);
   }.bind(this));
@@ -382,6 +403,7 @@ JSlide.prototype.openPresentation = function() {
       this.next();
     }.bind(this));
     w.document.addEventListener('keydown', function(e) {
+      // F5 = fullscreen
       if (e.keyCode===116 && w.document.documentElement.requestFullscreen) {
         if (w.fullScreen) {
           w.document.exitFullscreen();
@@ -659,7 +681,7 @@ md2html.floatingImages = function (md) {
  * Create collapsible blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\[--(\d+)?(\n)?/g, '<div class="step" data-step="$1">');
+  md = md.replace(/\[--([\d+])?:?(\b.*\b)?(\n)?/g, '<div class="step $2" data-step="$1">');
   md = md.replace(/\--\]/g, '</div>');
   return md;
 };
