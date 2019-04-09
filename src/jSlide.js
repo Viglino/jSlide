@@ -347,7 +347,7 @@ JSlide.prototype.loadFont = function(font, doc) {
       fileref.setAttribute('id', 'font-'+font);
       fileref.setAttribute('rel', 'stylesheet');
       fileref.setAttribute('type', 'text/css');
-      fileref.setAttribute('href', 'http://fonts.googleapis.com/css?family='+font);
+      fileref.setAttribute('href', 'https://fonts.googleapis.com/css?family='+font);
       doc.getElementsByTagName('head')[0].appendChild(fileref)
     }
   }
