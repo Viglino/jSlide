@@ -181,7 +181,7 @@ JSlide.prototype.show = function (n) {
   this.current = Math.max(0, Math.min(this.current, this.slide.length-1));
 
   // Set location
-  if (history.pushState) history.pushState(null, null, '#'+(this.current+1));
+  if (history.replaceState) history.replaceState(null, null, '#'+(this.current+1));
   else location.hash = '#'+(this.current+1);
 
   // Draw slide
