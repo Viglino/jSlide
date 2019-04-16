@@ -9,11 +9,6 @@ var JSlide = function() {
   this.addListeners();
   this.setEditor();
   this.addBar();
-  // Add new slide
-  this.slide = [' title ]\n# New presentation\n## Subtitle'];
-  this.current = 0;
-  this.showPanel();
-  this.show(this.current+1);
 };
 
 /** Default title  */

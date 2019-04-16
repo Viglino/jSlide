@@ -71,8 +71,9 @@ JSlide.prototype.ondrop = function (ev) {
 /* Load file using lcation hash info
  */
 JSlide.prototype.onload = function (ev) {
+  // Look for a file to load
   var doc = document.location.search.replace(/^\?/,'');
-  
+  // Load file
   if (doc) {
     doc += '.md';
     var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
@@ -95,5 +96,11 @@ JSlide.prototype.onload = function (ev) {
       // GO!
       ajax.send();
     }
+  } else {
+    // Create new one
+    this.slide = [' title ]\n# New presentation\n## Subtitle'];
+    this.current = 0;
+    this.showPanel();
+    this.show(this.current+1);
   }
 };
