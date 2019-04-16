@@ -2,12 +2,12 @@
   list-style: none;
   padding: 0 0 0 1.3em;
 }
-.md li {
+.md ul li {
   position: relative;
   display: table;
 }
 
-.md li:before {
+.md ul li:before {
   content: "";
   position: absolute;
   display: block;
@@ -19,7 +19,7 @@
   transform: rotate(45deg);
 }
 
-.li-squares .md li:before {
+.li-squares .md ul li:before {
   content: "";
   position: absolute;
   display: block;
@@ -32,7 +32,7 @@
   box-shadow: 0.3em 0, 0.3em -0.3em, 0 -0.3em;
 }
 
-.li-arrow .md li:before {
+.li-arrow .md ul li:before {
   content: "\f0a9";
   font-family: FontAwesome;
   display: inline-block;

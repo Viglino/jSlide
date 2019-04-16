@@ -9,6 +9,11 @@ var JSlide = function() {
   this.addListeners();
   this.setEditor();
   this.addBar();
+  // Add new slide
+  this.slide = [' title ]\n# New presentation\n## Subtitle'];
+  this.current = 0;
+  this.showPanel();
+  this.show(this.current+1);
 };
 
 /** Default title  */
@@ -71,7 +76,7 @@ JSlide.prototype.setDefault = function() {
 /**
  * 
  */
-JSlide.prototype.drawSlide = function (element, page, slideshow) {
+JSlide.prototype.drawSlide = function (content, page, slideshow) {
   var slide = this.slide[page];
   var pos = slide.search(']');
   var head = slide.substr(0,pos).trim().split('\n');
@@ -90,21 +95,44 @@ JSlide.prototype.drawSlide = function (element, page, slideshow) {
     param[p.shift().trim()] = p.join(':').trim();
   });
 
+  var element = content;
+  content.className = (slideshow ? 'slideshow ' + (param.transition||'') : '').trim();
+
+  var element = document.createElement('DIV');
+  element.className = 'content';
+
   // Add Slide
   var div = document.createElement('DIV');
-  div.className = ('slide '+param.className+(slideshow?' slideshow':'')).trim();
+  div.className = ('slide '+param.className).trim();
   div.innerHTML = '<div class="md">'+md2html(md, data)+'</div>';
-  element.innerHTML = '';
+
+  // element.innerHTML = '';
+  // Switch slides
+  var old = content.querySelectorAll('.content');
+  old.forEach(function(node) {
+    node.className = node.className+' hidden';
+  });
+  setTimeout(function() {
+    old.forEach(function(node) {
+      node.remove();
+    });
+  }, 500);
+  setTimeout(function() {
+    element.className = element.className + ' visible';
+  },100);
+
+  content.appendChild(element);
   element.appendChild(div);
+
   this.updateSize();
   if (param.bgImage) {
-    element.style.backgroundImage = 'none';
-    div.style.backgroundImage = 'none';
-    var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
+    var img, d = (/\bfullscreen\b/.test(div.className)) ? element : div;
     if (/^linear-gradient|^radial-gradient/.test(param.bgImage)) {
-      d.style.backgroundImage = param.bgImage;
+      img = document.createElement('DIV');
+      img.className = 'bgImage';
+      img.style.backgroundImage = param.bgImage;
     } else {
-      var img = document.createElement('IMG');
+      img = document.createElement('IMG');
       img.className = 'bgImage';
       img.src = param.bgImage;
       var setSize = function() {
@@ -114,8 +142,8 @@ JSlide.prototype.drawSlide = function (element, page, slideshow) {
       }.bind(this);
       if (img.width) setSize();
       else img.onload = setSize;
-      d.insertBefore(img, d.firstChild);
     }
+    d.insertBefore(img, d.lastChild);
   }
   if (param.color) {
     div.className += ' resetColor';
@@ -135,7 +163,7 @@ JSlide.prototype.drawSlide = function (element, page, slideshow) {
   footer.innerHTML = '<div class="left">'+md2html(c[0]||'', data)+'</div>'
   +'<div class="middle">'+md2html(c[1]||'', data)+'</div>'
   +'<div class="right">'+md2html(c[2]||'', data)+'</div>';
-  element.querySelector('div').appendChild(footer);
+  div.appendChild(footer);
 };
 
 /**
@@ -185,8 +213,9 @@ JSlide.prototype.show = function (n) {
   else location.hash = '#'+(this.current+1);
 
   // Draw slide
-  element.innerHTML = '';
   this.drawSlide(element, this.current, this.slideshow);
+
+  // Select current slide in the panel
   var li = document.querySelectorAll('#panel > li');
   li.forEach(function (l, i) {
     if (i===this.current) {
@@ -199,13 +228,13 @@ JSlide.prototype.show = function (n) {
     }
   }.bind(this));
 
-  // Editor
+  // Insert edition
   this.editor.setText('[===='+this.slide[this.current]);
+
   // Set progress bar
   this.progressBar.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
 
   if (this.presentation) {
-    this.presentation.innerHTML = '';
     this.drawSlide(this.presentation, this.current, this.slideshow);
     var p = this.presentation.ownerDocument.getElementById('progress').querySelector('div');
     p.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
@@ -294,12 +323,14 @@ JSlide.prototype.onkeydown = function(e) {
     case 40:
     case 34: {
       this.next();
+      e.preventDefault();
       break;
     }
     case 37:
     case 38:
     case 33: {
       this.prev();
+      e.preventDefault();
       break;
     }
     // Ctrl + O
@@ -307,6 +338,11 @@ JSlide.prototype.onkeydown = function(e) {
       if (e.ctrlKey) {
         e.preventDefault();
       }
+      break;
+    }
+    // Fullscreen
+    case 116: {
+      this.openPresentation();
       break;
     }
     // Ctrl + S
@@ -489,6 +525,7 @@ JSlide.editor.prototype.onchange = function(panel) {
  * @param {Event} e
  */
 JSlide.editor.prototype.onkeydown = function(e) {
+  if (e.keyCode === 116) return;
   if (!e.ctrlKey || e.keyCode < 60) {
     e.stopPropagation();
     switch (e.keyCode) {
@@ -501,7 +538,7 @@ JSlide.editor.prototype.onkeydown = function(e) {
         this.insertChar('\n');
       case 27: {
         this.onchange(false);
-        e.preventDefault()
+        e.preventDefault();
         break;
       }
       default: break;
@@ -587,26 +624,30 @@ JSlide.prototype.ondrop = function (ev) {
 /* Load file using lcation hash info
  */
 JSlide.prototype.onload = function (ev) {
-  var doc = document.location.search.replace(/^\?/,'')+'.md';
-  var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
+  var doc = document.location.search.replace(/^\?/,'');
+  
   if (doc) {
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET', doc, true);
-    this.filename = doc.split('/').pop();
+    doc += '.md';
+    var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
+    if (doc) {
+      var ajax = new XMLHttpRequest();
+      ajax.open('GET', doc, true);
+      this.filename = doc.split('/').pop();
 
-    // Load complete
-    var self = this;
-    ajax.onload = function(e) {
-      self.open(this.response)
-      self.show(c-1);
-    };
+      // Load complete
+      var self = this;
+      ajax.onload = function(e) {
+        self.open(this.response)
+        self.show(c-1);
+      };
 
-    // Oops
-    ajax.onerror = function() {
-    };
+      // Oops
+      ajax.onerror = function() {
+      };
 
-    // GO!
-    ajax.send();
+      // GO!
+      ajax.send();
+    }
   }
 };
 
@@ -799,6 +840,8 @@ md2html.cleanUp = function(md) {
   md = md.replace(/\n$/, '');
   md = md.replace(/\n/g, '<br />');
   md = md.replace(/\t/g, ' ');
+  md = md.replace(/\<\/ol><br \/>/g, '</ol>');
+  md = md.replace(/\<\/ul><br \/>/g, '</ul>');
 
   return md;
 };

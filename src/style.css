@@ -28,7 +28,6 @@ body {
   left: 10em;
   right: 0;
   bottom: 12em;
-  margin: 1em;
   overflow: hidden;
 }
 .presentation #slide {
@@ -39,6 +38,20 @@ body {
   margin: 0;
   padding: 0;
 }
+.content {
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#slide .content {
+  margin: 1em;
+}
+.presentation #slide .content {
+  margin: 0;
+}
+
 #editor {
   position: fixed;
   left: 10em;
@@ -75,7 +88,7 @@ body {
   height: 5px;
 }
 
-#panel li {
+#panel > li {
   position: relative;
   list-style: none;
   border: .5em solid transparent;
@@ -86,7 +99,7 @@ body {
   opacity: .7;
   cursor: pointer;
 }
-#panel li > div {
+#panel > li > div {
   position: relative;
   height: 8em;
   width: 100%;
@@ -152,7 +165,9 @@ body {
   overflow: hidden;
   color: #5d513c;
 }
-
+.hidden .slide {
+  box-shadow: unset;
+}
 .slide.fullscreen {
   box-shadow: unset;
   background: transparent;
@@ -163,6 +178,15 @@ body {
   max-height: 100%;
 }
 
+div.bgImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: calc(100% + 4em);
+  height: calc(100% + 4em);
+  margin: -1em;
+}
 img.bgImage {
   position: absolute;
   left: 50%;
@@ -210,49 +234,4 @@ img.bgImage {
 }
 .footer div.right {
   right: 0;
-}
-
-/* Presentation steps */
-.md .step {
-  display: inline;
-}
-.slideshow .md .step > *,
-.slideshow .md .visible .step,
-.slideshow .md .step {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity .5s;
-}
-.slideshow .md .step {
-  position: relative;
-  transition-property: opacity, left, top;
-}
-.slideshow .md .step.slide-left {
-  left: -100%;
-  opacity: 1;
-}
-.slideshow .md .step.slide-right {
-  left: 100%;
-  opacity: 1;
-}
-.slideshow .md .step.slide-down {
-  top: -800px;
-  opacity: 1;
-}
-.slideshow .md .step.slide-up {
-  top: 800px;
-  opacity: 1;
-}
-.slideshow .md .step.visible > *,
-.slideshow .md .visible .step.visible,
-.slideshow .md .step.visible {
-  visibility: visible;
-  opacity: 1;
-  left: 0;
-  top: 0;
-}
-.slideshow .md .visible .step {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity .5s;
 }

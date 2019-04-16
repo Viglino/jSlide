@@ -58,6 +58,7 @@ JSlide.editor.prototype.onchange = function(panel) {
  * @param {Event} e
  */
 JSlide.editor.prototype.onkeydown = function(e) {
+  if (e.keyCode === 116) return;
   if (!e.ctrlKey || e.keyCode < 60) {
     e.stopPropagation();
     switch (e.keyCode) {
@@ -70,7 +71,7 @@ JSlide.editor.prototype.onkeydown = function(e) {
         this.insertChar('\n');
       case 27: {
         this.onchange(false);
-        e.preventDefault()
+        e.preventDefault();
         break;
       }
       default: break;

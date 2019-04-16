@@ -71,25 +71,29 @@ JSlide.prototype.ondrop = function (ev) {
 /* Load file using lcation hash info
  */
 JSlide.prototype.onload = function (ev) {
-  var doc = document.location.search.replace(/^\?/,'')+'.md';
-  var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
+  var doc = document.location.search.replace(/^\?/,'');
+  
   if (doc) {
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET', doc, true);
-    this.filename = doc.split('/').pop();
+    doc += '.md';
+    var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
+    if (doc) {
+      var ajax = new XMLHttpRequest();
+      ajax.open('GET', doc, true);
+      this.filename = doc.split('/').pop();
 
-    // Load complete
-    var self = this;
-    ajax.onload = function(e) {
-      self.open(this.response)
-      self.show(c-1);
-    };
+      // Load complete
+      var self = this;
+      ajax.onload = function(e) {
+        self.open(this.response)
+        self.show(c-1);
+      };
 
-    // Oops
-    ajax.onerror = function() {
-    };
+      // Oops
+      ajax.onerror = function() {
+      };
 
-    // GO!
-    ajax.send();
+      // GO!
+      ajax.send();
+    }
   }
 };

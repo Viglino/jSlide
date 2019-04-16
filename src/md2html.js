@@ -187,6 +187,8 @@ md2html.cleanUp = function(md) {
   md = md.replace(/\n$/, '');
   md = md.replace(/\n/g, '<br />');
   md = md.replace(/\t/g, ' ');
+  md = md.replace(/\<\/ol><br \/>/g, '</ol>');
+  md = md.replace(/\<\/ul><br \/>/g, '</ul>');
 
   return md;
 };
