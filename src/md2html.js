@@ -21,7 +21,7 @@ var md2html = function (md, data) {
     }
   }
 
-  // Secure md string
+  // md string
   md = "\n" + md +"\n";
 
   // Handle icons
