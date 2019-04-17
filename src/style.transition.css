@@ -1,0 +1,146 @@
+/* Slide transition */
+#slide.slideshow .content {
+  transition: all .5s, opacity .4s;
+}
+#slide .content > * {
+  transition: clip .5s;
+}
+#slide.opacity .content {
+  opacity: 0;
+}
+#slide.zoom .content {
+  opacity: 0;
+  transform: scale(0);
+}
+#slide.zoom-2 .content {
+  opacity: 0;
+  transform: scale(2);
+}
+#slide.zoom-3 .content {
+  opacity: 0;
+  transform: scale(10);
+}
+#slide.shrinkX .content {
+  opacity: 0;
+  transform: scaleX(0);
+}
+#slide.shrinkY .content {
+  opacity: 0;
+  transform: scaleY(0);
+}
+#slide.zoom-rotate .content {
+  opacity: 0;
+  transform: scale(0) rotate(360deg);
+}
+#slide.rotate .content {
+  opacity: 0;
+  transform: scale(1) rotate(360deg);
+}
+#slide.wipe-right .content > .slide {
+  clip: rect(0, 0, 1000px, 0);
+}
+#slide.wipe-left .content > .slide {
+  clip: rect(0, 1600px, 1000px, 1600px);
+}
+#slide.wipe-up .content > .slide {
+  clip: rect(1600px,1000px,1600px,0);
+}
+#slide.wipe-down .content > .slide {
+  clip: rect(0,1600px,0,0)
+}
+#slide.slide-right .content {
+  opacity: 0;
+  transform: translate(-110%,0);
+}
+#slide.slide-left .content {
+  opacity: 0;
+  transform: translate(110%,0);
+}
+#slide.slide-up .content {
+  opacity: 0;
+  transform: translate(0,110%);
+}
+#slide.slide-down .content {
+  opacity: 0;
+  transform: translate(0,-110%);
+}
+#slide .content.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0) translate(0,0);
+}
+#slide .content.visible > .slide {
+  clip: rect(0, 1600px, 1000px, 0);
+}
+
+#slide .content.hidden {
+  opacity: 0;
+  transition-delay: .2s;
+}
+
+
+/* Presentation steps */
+.md .step {
+  display: inline-block;
+  transition: none;
+}
+.slideshow .md .visible .step,
+.slideshow .md .step {
+  visibility: hidden;
+  opacity: 0;
+}
+.slideshow .md .step {
+  position: relative;
+}
+.slideshow .md .step.slide-left {
+  left: -100%;
+  opacity: 1;
+}
+.slideshow .md .step.slide-right {
+  left: 100%;
+  opacity: 1;
+}
+.slideshow .md .step.slide-down {
+  top: -800px;
+  opacity: 1;
+}
+.slideshow .md .step.slide-up {
+  top: 800px;
+  opacity: 1;
+}
+
+.slideshow .md .step.zoom {
+  transform: scale(0);
+}
+.slideshow .md .step.zoom-2 {
+  transform: scale(2);
+}
+.slideshow .md .step.zoom-3 {
+  transform: scale(10);
+}
+.slideshow .md .step.zoom-rotate {
+  transform: scale(0) rotate(360deg);
+}
+.slideshow .md .step.shrinkX {
+  transform: scaleX(0);
+}
+.slideshow .md .step.shrinkY {
+  transform: scaleY(0);
+}
+.slideshow .md .step.stretchX {
+  transform: scaleX(0);
+  transform-origin: 0 0;
+}
+.slideshow .md .step.stretchY {
+  transform: scaleY(0);
+  transform-origin: 0 0;
+}
+
+.slideshow .md .visible .step.visible,
+.slideshow .md .step.visible {
+  visibility: visible;
+  opacity: 1;
+  left: 0;
+  top: 0;
+  transform: scale(1) rotate(0deg);
+  transition: all .5s;
+}
