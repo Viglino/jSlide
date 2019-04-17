@@ -125,21 +125,21 @@ Display your twitter time line in your slides.
 
 # Animation 
 [--
-## Appear
+## Amazing [--(zoom,delay: 5) animations --] [--(delay:10) appears --]
 --]
-[--slide-up
+[--(zoom)
 ## slide-up
 test 
 --]
-[--slide-down
+[--(slide-down,delay:5)
 ## slide-down
 test 
 --]
-[--slide-left
+[--(slide-left,step:1)
 ## slide-left
 test 
 --]
-[--slide-right
+[--(slide-right)
 ## slide-right
 test 
 --]

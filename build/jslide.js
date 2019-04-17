@@ -100,6 +100,27 @@ JSlide.prototype.drawSlide = function (content, page, slideshow) {
   var div = document.createElement('DIV');
   div.className = ('slide '+param.className).trim();
   div.innerHTML = '<div class="md">'+md2html(md, data)+'</div>';
+  // Create steps
+  div.querySelectorAll('.step').forEach(function(e){
+    var prop = e.getAttribute('data-anim');
+    if (prop) {
+      prop = prop.split(',');
+      if (prop[0] && !/:/.test(prop[0])) {
+        e.className = 'step '+prop.shift().trim();
+      }
+      prop.forEach(function(p) {
+        p = p.split(':');
+        p[0] = p[0].trim();
+        switch (p[0]) {
+          case 'step': 
+          case 'delay': {
+            e.setAttribute('data-'+p[0], p[1].trim());
+            break;
+          }
+        }
+      });
+    }
+  });
 
   // element.innerHTML = '';
   // Switch slides
@@ -236,30 +257,52 @@ JSlide.prototype.show = function (n) {
   }
 };
 
+/** Show next step
+ * @param {Element} elt DOM element to searchin
+ */
 JSlide.prototype.nextStep = function (elt) {
   var step = [];
+  // Get all steps (visible)
   elt.querySelectorAll('.step').forEach(function(e){
     if (!/visible/.test(e.className)) step.push(e);
   });
   if (step.length) {
+    // Sort steps by count
     step = step.sort(function(a,b) {
       return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
     });
     step[0].className = step[0].className+' visible';
+    // Show delay steps
+    function delayShow(s) {
+      setTimeout(function(){
+        s.className = s.className+' visible';
+      }, parseInt(100*s.getAttribute('data-delay')));
+    }
+    for (var i=1; i<step.length; i++) {
+      if (step[i].getAttribute('data-delay')) {
+        delayShow(step[i]);
+      } else break;
+    };
     return true;
   }
   return false;
 }
 
+/** Go to previous Step
+ * @param {Element} elt DOM element to searchin
+ */
 JSlide.prototype.prevStep = function (elt) {
+  // Get all steps (visible)
   var step = [];
   elt.querySelectorAll('.step').forEach(function(e){
     if (/visible/.test(e.className)) step.push(e);
   });
   if (step.length) {
+    // Show delay steps
     step = step.sort(function(a,b) {
       return parseInt(a.getAttribute('data-step')||0) - parseInt(b.getAttribute('data-step')||0);
     });
+    // Remove
     step[step.length-1].className = step[step.length-1].className.replace('visible','').trim();
     return true;
   }
@@ -721,10 +764,11 @@ md2html.floatingImages = function (md) {
 };
 
 /**
- * Create collapsible blocks
+ * Create animated blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\[--([\d+])?:?(\b.*\b)?(\n)?/g, '<div class="step $2" data-step="$1">');
+  md = md.replace(/\[--(\(([^\)]*)\))?\n?/g, '<div class="step" data-anim="$2">');
+  md = md.replace(/\--\]\n/g, '</div><br/>');
   md = md.replace(/\--\]/g, '</div>');
   return md;
 };
@@ -753,28 +797,9 @@ md2html.doIcons = function(md) {
 *	@return {string} result md
 */
 md2html.doData = function(md, data) {
-  // Save ends of exp
-  md = md.replace(/\)\)/g,"‡");
-  md = md.replace(/\|\|/g,"‾");
   for (var i in data) if (data[i]) {
-    // Conditional display
-    md = md.replace(new RegExp("\\(\\(\\?\%"+i+"%([^‡]*)‡",'g'), "$1");
-//		md = md.replace(new RegExp("\\(\\(?\%"+i+"%",'g'), "((?%%");
     md = md.replace(new RegExp("%"+i+"%",'g'), data[i]);
   }
-  // Conditional display: ((!%att% exp )) => exp / si att est vide
-  md = md.replace (/\(\(!\%([^\%](.*))\%([^‡]*)(‡)/g, "$3");
-  md = md.replace (/\(\(!([^‡]*)(‡)/g, "");
-  // Conditional display: ((?%att% exp )) => exp / si att est rempli
-//	md = md.replace (/\(\(\?\%\%([^\)\)]*)(\)\))/g, "$1");
-  md = md.replace (/\(\(\?([^‡]*)(‡)/g, "");
-  // Conditional display: (( exp %att% exp )) => exp att exp
-  md = md.replace (/(\(\()([^\%|‡]*)\%([^\%](.*))\%([^‡|‾]*)(‾)?([^‡|‾]*)(‡)/g, "$7");
-  md = md.replace (/\(\(([^‡|‾]*)(‾)?(.*)‡/g, "$1");
-  md = md.replace (/%%/g, "%");
-  // restore
-  md = md.replace(/‡/g,"))");
-  md = md.replace(/‾/g,"||");
   return md;
 };
 

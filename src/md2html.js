@@ -66,10 +66,11 @@ md2html.floatingImages = function (md) {
 };
 
 /**
- * Create collapsible blocks
+ * Create animated blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\[--([\d+])?:?(\b.*\b)?(\n)?/g, '<div class="step $2" data-step="$1">');
+  md = md.replace(/\[--(\(([^\)]*)\))?\n?/g, '<div class="step" data-anim="$2">');
+  md = md.replace(/\--\]\n/g, '</div><br/>');
   md = md.replace(/\--\]/g, '</div>');
   return md;
 };
@@ -98,28 +99,9 @@ md2html.doIcons = function(md) {
 *	@return {string} result md
 */
 md2html.doData = function(md, data) {
-  // Save ends of exp
-  md = md.replace(/\)\)/g,"‡");
-  md = md.replace(/\|\|/g,"‾");
   for (var i in data) if (data[i]) {
-    // Conditional display
-    md = md.replace(new RegExp("\\(\\(\\?\%"+i+"%([^‡]*)‡",'g'), "$1");
-//		md = md.replace(new RegExp("\\(\\(?\%"+i+"%",'g'), "((?%%");
     md = md.replace(new RegExp("%"+i+"%",'g'), data[i]);
   }
-  // Conditional display: ((!%att% exp )) => exp / si att est vide
-  md = md.replace (/\(\(!\%([^\%](.*))\%([^‡]*)(‡)/g, "$3");
-  md = md.replace (/\(\(!([^‡]*)(‡)/g, "");
-  // Conditional display: ((?%att% exp )) => exp / si att est rempli
-//	md = md.replace (/\(\(\?\%\%([^\)\)]*)(\)\))/g, "$1");
-  md = md.replace (/\(\(\?([^‡]*)(‡)/g, "");
-  // Conditional display: (( exp %att% exp )) => exp att exp
-  md = md.replace (/(\(\()([^\%|‡]*)\%([^\%](.*))\%([^‡|‾]*)(‾)?([^‡|‾]*)(‡)/g, "$7");
-  md = md.replace (/\(\(([^‡|‾]*)(‾)?(.*)‡/g, "$1");
-  md = md.replace (/%%/g, "%");
-  // restore
-  md = md.replace(/‡/g,"))");
-  md = md.replace(/‾/g,"||");
   return md;
 };
 
