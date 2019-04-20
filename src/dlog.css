@@ -1,0 +1,56 @@
+.dlog-back {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 150%;
+  height: 100%;
+  background: rgba(0,0,0,.3);
+  opacity: 0;
+  transition: all .3s, top .1s ease-in-out .3s;
+  pointer-events: none;
+}
+.dlog-back.visible {
+  display: block;
+  opacity: 1;
+  top: 0;
+  transition: all .3s, top 0s;
+  pointer-events: unset;
+}
+
+.dlog {
+  position: absolute;
+  left: 33.33%;
+  top: -50%;
+  transform: translate(-50%,-40%) scale(0);
+  min-width: 10em;
+  max-width: 100%;
+  min-height: 2em;
+  max-height: 100%;
+  background: #fff;
+  box-shadow: 2px 2px 4px 1px rgba(0,0,0,.3);
+  padding: 1em;
+  opacity: 0;
+  transition: all .3s, top .1s ease-in-out .3s;
+}
+.visible .dlog {
+  top: 40%;
+  opacity: 1;
+  transform: translate(-50%,-40%) scale(1);
+  transition: all .3s, top 0s;
+}
+.dlog h1 {
+  font-size: 1.4em; 
+  margin: 0;
+}
+.dlog .buttons {
+  text-align: right;
+}
+.dlog button {
+  font-size: 1em;
+  border: 0;
+  background: #7c6c50;
+  color: #fff;
+  padding: .2em .5em;
+  margin: .5em 0 0 .5em;
+}
+

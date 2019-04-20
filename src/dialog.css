@@ -1,0 +1,56 @@
+.dlog .edition, 
+.dlog .inside, 
+.dlog .duplicate {
+  position: relative;
+  display: inline-block;
+  border: .2em solid #7c6c50;
+  width: 10em;
+  height: 10em;
+  text-align: center;
+  padding: 8em 0 0 0;
+  box-sizing: border-box;
+  color: #7c6c50;
+  font-weight: bold;
+  cursor: pointer;
+  margin: .5em;
+}
+.dlog .inside:hover, 
+.dlog .duplicate:hover {
+  box-shadow: 0 0 2px 2px currentColor;
+}
+.dlog .inside:before {
+  content: "";
+  position: absolute;
+  border: .2em solid currentColor;
+  width: 6em;
+  height: 4em;
+  top: 2em;
+  left: 1.5em;
+}
+.dlog .duplicate:before {
+  content: "";
+  position: absolute;
+  border: .2em solid currentColor;
+  width: 5em;
+  height: 3em;
+  top: 4em;
+  left: 1em;
+  background: #fff;
+  box-shadow: inset 1em -1em, 1.8em -2.2em 0 .8em;
+}
+.dlog .inside:after,
+.dlog .duplicate:after {
+  content: "";
+  border: 1em solid transparent;
+  border-left: 1.2em solid currentColor;
+  box-sizing: border-box;
+  position: absolute;
+  left: 4.2em;
+  top: 3.2em;
+}
+.dlog .duplicate:after {
+  border-left-color: #fff;
+  top: 2.5em;
+  left: 5em;
+}
+
