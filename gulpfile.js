@@ -14,7 +14,7 @@ function css() {
 
 /* JS */
 function js() {
-  return src(['src/jSlide.js', 'src/*.js'])
+  return src(['src/jSlide.js', 'src/i19n.js', 'src/*.js'])
     .pipe(concat('jslide.js'))
     .pipe(minify({	ext: { 
         src:".js", 

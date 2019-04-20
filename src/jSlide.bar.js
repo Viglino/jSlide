@@ -29,6 +29,8 @@ JSlide.prototype.addBar = function() {
   addButton('slideshow', this.showPresentation.bind(this));
 };
 
+/** Show presentation
+ */
 JSlide.prototype.showPresentation = function() {
   this.slideshow = !this.slideshow;
   this.step = 0;
@@ -37,6 +39,13 @@ JSlide.prototype.showPresentation = function() {
 
 /** Open in a new window */
 JSlide.prototype.openPresentation = function() {
+  this.dialog.show({
+    content: _T('show_presentation'),
+    buttons: {
+      cancel: 1
+    }
+  });
+  return;
   var w = window.open ('./presentation.html'+(this.presentation?'#':''), 'jSlidePresentation', 'channelmode=0, directories=0, location=0, menubar=0, status=0, titlebar=0, toolbar=0, copyhistory=no');
   w.document.title = window.document.title;
   var pres = w.document.querySelector('div');

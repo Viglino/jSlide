@@ -1,6 +1,6 @@
 ﻿/*
-*	Copyright (c) 2016 Jean-Marc VIGLINO (https://github.com/Viglino),
-*	released under the MIT license (French BSD license)
+*  Copyright (c) 2016 Jean-Marc VIGLINO (https://github.com/Viglino),
+*  released under the MIT license (French BSD license)
 */
 /*eslint no-useless-escape: "off" */
 /*eslint no-constant-condition: ["error", { "checkLoops": false }]*/
@@ -39,7 +39,7 @@ var md2html = function (md, data) {
   md = md2html.doBlocks(md);
   // Clean up
   md = md2html.cleanUp(md);
-//	console.log(md)
+//  console.log(md)
 
   // Floating images
   md = md2html.floatingImages(md);
@@ -77,9 +77,9 @@ md2html.doBlocks = function (md) {
 
 
 /** Add new rule
-*	@param {RegExp} rex RegExp to use in replacement
-*	@param {string} rep replacement string
-*	@return {string} result md
+*  @param {RegExp} rex RegExp to use in replacement
+*  @param {string} rep replacement string
+*  @return {string} result md
 */
 md2html.addRule = function(rex, rep) {
   md2html.rules.push(rex, rep);
@@ -94,9 +94,9 @@ md2html.doIcons = function(md) {
 };
 
 /** A list of key value to replace as %key% > value in md
-*	@param {string} md the markdown
-*	@param {Objevt} data list of key/value
-*	@return {string} result md
+*  @param {string} md the markdown
+*  @param {Objevt} data list of key/value
+*  @return {string} result md
 */
 md2html.doData = function(md, data) {
   for (var i in data) if (data[i]) {
@@ -106,8 +106,8 @@ md2html.doData = function(md, data) {
 };
 
 /** Table handler
-*	@param {string} md the markdown
-*	@return {string} result md
+*  @param {string} md the markdown
+*  @return {string} result md
 */
 md2html.doTable = function(md) {
   // Detect ---- | ----
@@ -133,10 +133,10 @@ md2html.doTable = function(md) {
 };
 
 /** Clean endl
-*	@param {string} md the markdown
-*	@return {string} result md
+*  @param {string} md the markdown
+*  @return {string} result md
 */
-md2html.cleanUp = function(md) {	
+md2html.cleanUp = function(md) {  
   md = md.replace(/(\<\/h[1-5]\>)\n/g, "$1");
   md = md.replace(/^\n/, '');
   if (md==='\n') md = '';
@@ -157,8 +157,8 @@ md2html.cleanUp = function(md) {
   md = md.replace(/\n<\/div><\/div>/g,'</div><\/div>');
   md = md.replace(/<\/div>\n/g,'</div>');
 
-//	md = md.replace(/<\/ul>\n{1,2}/g, '</ul>');
-//	md = md.replace(/\<\/ol\>\n{1,2}/g, '</ol>');
+//  md = md.replace(/<\/ul>\n{1,2}/g, '</ul>');
+//  md = md.replace(/\<\/ol\>\n{1,2}/g, '</ol>');
 
   md = md.replace(/<\/p>\n/g, '</p>');
 
@@ -179,35 +179,35 @@ md2html.cleanUp = function(md) {
 */
 md2html.rules = [
   // Headers
-  [/#?(.*)\n={5}(.*)/g, "<h1>$1</h1>"],				// h1
-// [/#?(.*)\n\-{5}(.*)/g, "<h2>$1</h2>"],				// h2
+  [/#?(.*)\n={5}(.*)/g, "<h1>$1</h1>"],        // h1
+// [/#?(.*)\n\-{5}(.*)/g, "<h2>$1</h2>"],        // h2
 
-  [/\n#{6}(.*)/g, "\<h6>$1</h6>"],					// h5
-  [/\n#{5}(.*)/g, "\n<h5>$1</h5>"],					// h5
-  [/\n#{4}(.*)/g, "\n<h4>$1</h4>"],					// h4
-  [/\n#{3}(.*)/g, "\n<h3>$1</h3>"],					// h3
-  [/\n#{2}(.*)/g, "\n<h2>$1</h2>"],					// h2
-  [/\n#{1}(.*)/g, "\n<h1>$1</h1>"],					// h1
+  [/\n#{6}(.*)/g, "\<h6>$1</h6>"],          // h5
+  [/\n#{5}(.*)/g, "\n<h5>$1</h5>"],          // h5
+  [/\n#{4}(.*)/g, "\n<h4>$1</h4>"],          // h4
+  [/\n#{3}(.*)/g, "\n<h3>$1</h3>"],          // h3
+  [/\n#{2}(.*)/g, "\n<h2>$1</h2>"],          // h2
+  [/\n#{1}(.*)/g, "\n<h1>$1</h1>"],          // h1
 
-  [/<h([1-6])>\t/g, "<h$1 class='center'>"],			// Center header with tab
+  [/<h([1-6])>\t/g, "<h$1 class='center'>"],      // Center header with tab
 
   // Blocks
-  [/\n\&gt\;(.*)/g, '<blockquote>$1</blockquote>'],	// blockquotes
-  [/\<\/blockquote\>\<blockquote\>/g, '\n'],			// fix
-  [/\n-{5,}/g, "\n<hr />"],							// hr
+  [/\n\&gt\;(.*)/g, '<blockquote>$1</blockquote>'],  // blockquotes
+  [/\<\/blockquote\>\<blockquote\>/g, '\n'],      // fix
+  [/\n-{5,}/g, "\n<hr />"],              // hr
 
   // Lists
-  [/\n\* (.*)/g, '\n<ul><li>$1</li></ul>'],			// ul lists
-  [/\n {1,}\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],	// ul ul lists
-  [/\n\t\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],	// ul ul lists
-  [/<\/ul2><ul2>/g, ''],								// concat
+  [/\n\* (.*)/g, '\n<ul><li>$1</li></ul>'],      // ul lists
+  [/\n {1,}\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],  // ul ul lists
+  [/\n\t\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],  // ul ul lists
+  [/<\/ul2><ul2>/g, ''],                // concat
   [/<\/ul><ul2>([^\n]*)<\/ul2>\n/g, '<ul>$1</ul></ul>'],// indent
-  [/\n\<ul\>/g, '<ul>'],								// fix
-  [/<\/ul><ul>/g, ''],								// concat
+  [/\n\<ul\>/g, '<ul>'],                // fix
+  [/<\/ul><ul>/g, ''],                // concat
 
   // Ordered list
-  [/\n[0-9]+\.(.*)/g, '<ol><li>$1</li></ol>'],		// ol lists
-  [/\<\/ol\>\<ol\>/g, ''],							// fix
+  [/\n[0-9]+\.(.*)/g, '<ol><li>$1</li></ol>'],    // ol lists
+  [/\<\/ol\>\<ol\>/g, ''],              // fix
 
   // Automatic links
   [/([^\(])([ |\n]https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))( ?)/g, '$1<a href=\'$2\' target="_blank">$2</a>'],
@@ -270,8 +270,8 @@ md2html.rules = [
     '<video controls style="width:$6px; height:$7px;" title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
   // Internal images
-  [/\!(\[([^\[|\]]+)?\])?\((\.\/)([^\.]*\.(jpe?g|png|gif|svg)) ?(\d+)?x?(\d+)?\)/g,
-    '<img style="width:$6px; height:$7px;" src="$3$4" title="$2" />'],
+  [/\!(\[([^\[|\]]+)?\])?\((.*\.(jpe?g|png|gif|svg)) ?(\d+)?x?(\d+)?\)/g,
+    '<img style="width:$5px; height:$6px;" src="$3" title="$2" />'],
 
   // Images
   [/!(\[([^[|\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
@@ -293,37 +293,37 @@ md2html.rules = [
   [/\(tel:([0-9+-]+)\)/g, '<a href=\'tel:$1\'>$1</a>'],
 
   // Code
-  [/`(.*?)`/g, '<code>$1</code>'],					    // inline code
-  [/\n {4,}(.*)/g, '<pre>$1</pre>'],					  // Code
-  [/\n\t(.*)/g, '<pre>$1</pre>'],						    // Code
-  [/<\/pre><pre>/g, '<br/>'],							      // fix
-  [/<\/pre>\n/g, '</pre>'],							        // fix
+  [/`(.*?)`/g, '<code>$1</code>'],              // inline code
+  [/\n {4,}(.*)/g, '<pre>$1</pre>'],            // Code
+  [/\n\t(.*)/g, '<pre>$1</pre>'],               // Code
+  [/<\/pre><pre>/g, '<br/>'],                   // fix
+  [/<\/pre>\n/g, '</pre>'],                     // fix
 
   // format
-  [/(\\\*)/g, '&#42;'],								          // escape *
+  [/(\\\*)/g, '&#42;'],                         // escape *
   [/(\*\*)([^]*?)\1/g, '<strong>$2</strong>'],  // bold
-  [/(\*)([^]*?)\1/g, '<em>$2</em>'],					  // emphasis
-  [/<strong><\/strong>/g, '****'],				      // fix bold
-  [/<em><\/em>/g, '**'],							          // fix em
-  [/(__)(.*?)\1/g, '<u>$2</u>'],						    // underline
-  [/(~~)(.*?)\1/g, '<del>$2</del>'],				    // del
+  [/(\*)([^]*?)\1/g, '<em>$2</em>'],            // emphasis
+  [/<strong><\/strong>/g, '****'],              // fix bold
+  [/<em><\/em>/g, '**'],                        // fix em
+  [/(__)(.*?)\1/g, '<u>$2</u>'],                // underline
+  [/(~~)(.*?)\1/g, '<del>$2</del>'],            // del
 
   // alignement https://github.com/jgm/pandoc/issues/719
-  [/\n\|<>([^\n]*)/g, "\n<pc>$1</pc>"],			// center |<>
-  [/\n\|\t([^\n]*)/g, "\n<pc>$1</pc>"],				// center |[tab]
-  [/\n\|<([^\n]*)/g, "\n<pl>$1</pl>"],				// left |<
-  [/\n\|>([^\n]*)/g, "\n<pr>$1</pr>"],				// rigth |>
+  [/\n\|<>([^\n]*)/g, "\n<pc>$1</pc>"],       // center |<>
+  [/\n\|\t([^\n]*)/g, "\n<pc>$1</pc>"],       // center |[tab]
+  [/\n\|<([^\n]*)/g, "\n<pl>$1</pl>"],        // left |<
+  [/\n\|>([^\n]*)/g, "\n<pr>$1</pr>"],        // rigth |>
   [/<\/pc>\n<pc>/g, "<br/>"],
   [/<\/pl>\n<pl>/g, "<br/>"],
   [/<\/pr>\n<pr>/g, "<br/>"],
-  [/<pc>/g, "<div class='center'>"],					//	fix
-  [/<pl>/g, "<div class='left'>"],					//	fix
-  [/<pr>/g, "<div class='right'>"],					//	fix
-  [/<\/pc>|<\/pl>|<\/pr>/g, "</div>"],					//	fix
+  [/<pc>/g, "<div class='center'>"],          // fix
+  [/<pl>/g, "<div class='left'>"],            // fix
+  [/<pr>/g, "<div class='right'>"],           // fix
+  [/<\/pc>|<\/pl>|<\/pr>/g, "</div>"],        // fix
 
   //
-  [/\(c\)/g, "&copy;"],									// (c)
-  [/\(r\)/g, "&reg;"],									// (R)
-  [/\(TM\)/g, "&trade;"]									// (TM)
+  [/\(c\)/g, "&copy;"],                 // (c)
+  [/\(r\)/g, "&reg;"],                  // (R)
+  [/\(TM\)/g, "&trade;"]                // (TM)
 
 ];

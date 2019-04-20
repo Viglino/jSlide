@@ -9,6 +9,7 @@ var JSlide = function() {
   this.addListeners();
   this.setEditor();
   this.addBar();
+  this.dialog = new Dlog();
 };
 
 /** Default title  */
@@ -381,6 +382,7 @@ JSlide.prototype.onkeydown = function(e) {
     // Fullscreen
     case 116: {
       this.openPresentation();
+      e.preventDefault();
       break;
     }
     // Ctrl + S
