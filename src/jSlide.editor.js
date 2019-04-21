@@ -1,5 +1,5 @@
 /**
-*	Copyright (c) 2016 Jean-Marc VIGLINO (https://github.com/Viglino),
+*	Copyright (c) 2019 Jean-Marc VIGLINO (https://github.com/Viglino),
 *	released under the MIT license (French BSD license)
 * 
 * @file jSlide editor

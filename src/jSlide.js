@@ -1,5 +1,9 @@
 /**
- * jSlide object
+ * Copyright (c) 2019 Jean-Marc VIGLINO (https://github.com/Viglino),
+ * released under the MIT license (French BSD license)
+ * 
+ * @class
+ * @author Jean-Marc VIGLINO (https://github.com/Viglino)
  */
 var JSlide = function() {
   this._param = {};
@@ -409,7 +413,58 @@ JSlide.prototype.addListeners = function() {
   });
   // Load file onload
   window.addEventListener('load', this.onload.bind(this));
+  // Longtouch / slide
+  document.getElementById('slide').addEventListener("touchstart", this.ontouchstart.bind(this), false);
+  document.getElementById('slide').addEventListener("touchmove", this.ontouchmove.bind(this), false);
+  document.getElementById('slide').addEventListener("touchend", this.ontouchend.bind(this), false);
 };
+
+(function() {
+
+// internal var
+var touchstart = [0,0];
+var touchend = [0,0];
+var timer;
+
+/** Longtouch on the slide > openpresentation
+ */
+JSlide.prototype.ontouchstart = function(e) {
+  touchstart  = touchend = [e.touches[0].clientX, e.touches[0].clientY, new Date()];
+  if (timer) clearTimeout(timer); 
+  timer = setTimeout(function() {
+    if (Math.abs(touchstart[0] - touchend[0]) < 5 && Math.abs(touchstart[1] - touchend[1]) < 5) {
+      e.preventDefault();
+      this.openPresentation();
+    }
+  }.bind(this), 800); 
+}
+
+/** Swipe left/ritgh
+ */
+JSlide.prototype.ontouchmove = function(e) {
+  touchend = [e.touches[0].clientX, e.touches[0].clientY, new Date()];
+  if (touchend[2] - touchstart[2] < 100) {
+    if (touchstart[0] - touchend[0] > 100) {
+      touchstart[2] = 0;
+      if (timer) clearTimeout(timer); 
+      this.prev()
+    }
+    if (touchstart[0] - touchend[0] < -100) {
+      touchstart[2] = 0;
+      if (timer) clearTimeout(timer); 
+      this.next()
+    }
+  }
+}
+
+/** Prevent longtouch
+ */
+JSlide.prototype.ontouchend = function(e) {
+  if (timer) clearTimeout(timer); 
+  e.preventDefault();
+}
+
+})();
 
 JSlide.prototype.loadFont = function(font, doc) {
   if (!doc) {
