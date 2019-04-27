@@ -1,5 +1,6 @@
 // Default style
 import './style.css'
+import './githubcorner.css'
 
 import './style.title.css'
 import './style.chapter.css'

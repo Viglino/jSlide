@@ -227,6 +227,9 @@ img.bgImage {
   z-index: -1;
   height: 3em;
 }
+.slide .footer .icss-github-corner {
+  font-size: 2em;
+}
 .footer > div {
   position: absolute;
   padding: 1em;

@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/Viglino/jslide#,",
   "dependencies": {
-    "file-saver": "^2.0.1"
+    "file-saver": "^2.0.1",
+    "highlight.js": "^9.15.6"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.3",

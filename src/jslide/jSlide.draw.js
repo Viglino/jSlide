@@ -1,5 +1,7 @@
 import jSlide from './jSlide'
 import md2html from '../md/md2html'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 
 /**
  * 
@@ -33,6 +35,10 @@ jSlide.drawSlide = function (content, page, slideshow) {
   var div = document.createElement('DIV');
   div.className = ('slide '+param.className).trim();
   div.innerHTML = '<div class="md">'+md2html(md, data)+'</div>';
+  // Hightlight code blocks
+  div.querySelectorAll('pre.code code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
   // Create steps
   div.querySelectorAll('.step').forEach(function(e){
     var prop = e.getAttribute('data-anim');
@@ -108,7 +114,7 @@ jSlide.drawSlide = function (content, page, slideshow) {
   // Set Footer
   var footer = document.createElement('DIV');
   footer.className = 'footer';
-  var c = this.get('footer').split('|');
+  var c = (param.footer || this.get('footer')).split('|');
   footer.innerHTML = '<div class="left">'+md2html(c[0]||'', data)+'</div>'
   +'<div class="middle">'+md2html(c[1]||'', data)+'</div>'
   +'<div class="right">'+md2html(c[2]||'', data)+'</div>';

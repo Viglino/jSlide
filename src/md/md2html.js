@@ -7,13 +7,33 @@
 
 import './md.css'
 
-
 /** Simple markdown to html convertor
  * @param {String} md the markdown text
  * @param {} data a list of key value to replace in the markdown %key%
  * @return {HTMl} HTML code
  */
 const md2html = function (md, data) {
+  let result = '';
+  // Extract code ```
+  md.split(/`{3,}/).forEach((m,i) => {
+    if (i%2) {
+      const c = m.indexOf('\n');
+      const type = m.substr(0,c);
+      m = m.substr(c+1);
+      result += '<pre class="code"><code class="'+type+'">' + m.replace(/</g,'&lt;') + '</code></pre>';
+    } else {
+      result += md2html.mdPart(m, data);
+    }
+  });
+  return result;
+};
+
+/** Handle md part
+ * @param {String} md the markdown text
+ * @param {} data a list of key value to replace in the markdown %key%
+ * @return {HTMl} HTML code
+ */
+md2html.mdPart = function (md, data) {
   var i;
   data = data || {};
   // Encoder les URI
@@ -46,6 +66,7 @@ const md2html = function (md, data) {
 
   // Floating images
   md = md2html.floatingImages(md);
+
   return md;
 };
 
@@ -151,7 +172,7 @@ md2html.cleanUp = function(md) {
   md = md.replace (/<div class='right'><blockquote /g,"<div class='floatRight' style=\"min-width:200px\"><blockquote ")
   md = md.replace (/<div class='left'><blockquote /g,"<div class='floatLeft' style=\"min-width:200px\"><blockquote ")
   // Facebook
-  md = md.replace (/URL_PAGE_CARTE/g, encodeURIComponent(window.location.href));
+  md = md.replace (/_URL_PAGE_/g, encodeURIComponent(window.location.href));
   
   // Collapsible blocks
   md = md.replace(/mdBlockTitle\">\n/g,'mdBlockTitle">');
@@ -217,6 +238,18 @@ md2html.rules = [
   // Mailto
   [/([^\(])\bmailto\b\:(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/gi, '$1<a href=\'mailto:$2\'>$2</a>'],
 
+  /* Github */
+    // Github corner
+    [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&//=]*)\)\n/, 
+    '<a href="https://github.com/$1" class="icss-github-corner"><i></i></a>'],
+
+  // Github
+  [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/watch ?(\d+)?x?(\d+)?\)/g, 
+    '<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=$1&repo=$2&type=watch&count=true&size=large&v=2" allowtransparency="true" frameborder="0" scrolling="0" style="width:$3px"></iframe>'],
+  [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/fork ?(\d+)?x?(\d+)?\)/g, 
+    '<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=$1&repo=$2&type=fork&count=true&size=large&v=2" allowtransparency="true" frameborder="0" scrolling="0" style="width:$3px"></iframe>'],
+  [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/follow ?(\d+)?x?(\d+)?\)/g, 
+    '<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=$1&type=follow&count=true&size=large&v=2" allowtransparency="true" frameborder="0" scrolling="0" style="width:$2px"></iframe>'],
 
   /* Twitter */
 
@@ -239,7 +272,7 @@ md2html.rules = [
 
   // FaceBook like
   [ /\!(\[([^\[|\]]+)?\])?\(https:\/\/www.facebook.com\/like ?(\d+)?x?(\d+)?\)/g,
-    '<iframe src="https://www.facebook.com/plugins/like.php?href=URL_PAGE_CARTE&width=136&layout=button_count&action=like&size=small&show_faces=false&share=true&height=20&appId" width="136" height="20" class="facebook-share-button" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>'],
+    '<iframe src="https://www.facebook.com/plugins/like.php?href=_URL_PAGE_&width=136&layout=button_count&action=like&size=small&show_faces=false&share=true&height=20&appId" width="136" height="20" class="facebook-share-button" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>'],
 
   // Page FaceBook
   [ /\!(\[([^\[|\]]+)?\])?\(https:\/\/www.facebook.com\/([^\/)]*)\/posts\/([^ |\)]*) ?(\d+)?x?(\d+)?\)/g,

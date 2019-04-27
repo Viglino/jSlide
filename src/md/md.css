@@ -40,14 +40,15 @@
   margin: 0 0.5em;
   padding: 0 1em;
 }
-.md code { color: #800; }
+.md code { 
+  color: #800;
+}
 .md pre { 
-  background-color: #eee; 
-  color:#800; 
-  padding: 0.5em 1em; 
   margin:0; 
   display: grid;
   overflow: auto;
+  font-size: .8em;
+  tab-size: 2;
 }
 
 .md .fa.left,
@@ -298,4 +299,11 @@ textarea.mdEditor {
   z-index: 1;
   cursor: pointer;
   transform: scale(1.2);
+}
+
+iframe.github-btn {
+  width: 160px;
+  height: 30px;
+  vertical-align: middle;
+  display: inline;
 }
