@@ -14,8 +14,8 @@ import './md.css'
  */
 const md2html = function (md, data) {
   let result = '';
-  // Extract code ```
-  md.split(/`{3,}/).forEach((m,i) => {
+  // Extract code using ```
+  md.split(/\n`{3,}/).forEach((m,i) => {
     if (i%2) {
       const c = m.indexOf('\n');
       const type = m.substr(0,c);

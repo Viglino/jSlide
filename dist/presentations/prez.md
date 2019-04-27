@@ -3,7 +3,9 @@ format: 4:3
 fontSize: 35
 footer:  | **%TITLE%** | %PAGE%/%LENGTH%
 
-[==== title no-footer ]
+[==== title 
+  footer: !(https://github.com/Viglino/jSlide)
+]
 
 # jSlide
 ## Simple, in-browser, markdown slideshow.
@@ -19,6 +21,38 @@ Display images in your slides
 
 =====
 test
+
+[====
+  fontSize: 32
+]
+# Github buttons
+
+Use a media syntax to insert Github buttons:
+````
+!(https://github.com/{user}/{repo}/{button})
+````
+
+* Watch: !(https://github.com/Viglino/jSlide/watch) 
+````markdown
+!(https://github.com/Viglino/jSlide/watch) 
+````
+
+* Fork: !(https://github.com/Viglino/jSlide/fork) 
+````markdown
+!(https://github.com/Viglino/jSlide/fork) 
+````
+
+* Follow: !(https://github.com/Viglino/follow 240x)
+````markdown
+!(https://github.com/Viglino/follow 240x)
+````
+
+* Github corner
+!(https://github.com/Viglino/jSlide)
+Just link to your repo to add a gihub link to the top right corner:
+````markdown
+!(https://github.com/Viglino/jSlide)
+````
 
 [====]
 # Symbol icons

@@ -7,6 +7,7 @@ body {
 tt, code, kbd, samp {
   font-family: HackRegular, monospace;
   font-size: .95em;
+  text-align: left;
 }
 
 #header {
