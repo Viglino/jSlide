@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'HackRegular';
+  src: url('HackRegular.eot');
+  src: url('HackRegular.eot?#iefix') format('embedded-opentype'),
+      /*url('HackRegular.woff2') format('woff2'),*/
+      url('HackRegular.woff') format('woff'),
+      url('HackRegular.ttf') format('truetype'),
+      url('HackRegular.svg#hackregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}

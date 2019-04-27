@@ -7,7 +7,9 @@
     "example": "examples"
   },
   "scripts": {
-    "start": "node ./node_modules/gulp/bin/gulp.js serve"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html --out-dir ./.dist",
+    "build": "parcel build index.js --no-content-hash --public-url . --out-dir ./dist index.html"
   },
   "repository": {
     "type": "git",
@@ -22,13 +24,17 @@
     "url": "https://github.com/Viglino/jslide/issues"
   },
   "homepage": "https://github.com/Viglino/jslide#,",
-  "dependencies": {},
+  "dependencies": {
+    "file-saver": "^2.0.1"
+  },
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-csso": "^3.0.1",
-    "gulp-minify": "^3.1.0",
-    "gulp-watch": "^5.0.1",
-    "live-server": "^1.2.1"
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-static-files-copy": "^2.0.0"
+  },
+  "staticFiles": {
+    "staticPath": [
+      "assets"
+    ],
+    "watcherGlob": "**"
   }
 }
