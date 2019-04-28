@@ -1,6 +1,9 @@
 # jSlide
+# <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/320px-Markdown-mark.svg.png" height="40" valign="middle"/>+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/240px-Unofficial_JavaScript_logo_2.svg.png" height="50" valign="middle"/>+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/240px-HTML5_logo_and_wordmark.svg.png" height="50" valign="middle"/>+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/170px-CSS3_logo_and_wordmark.svg.png" height="50" valign="middle"/> = <img src="https://raw.githubusercontent.com/Viglino/jSlide/master/img/logo.png" height="50" valign="middle"/>
 
-jSlide is a markdown-driven [web-based slideshow](https://en.m.wikipedia.org/wiki/Web-based_slideshow) to create presentations which can be played (created, viewed) using a web browser. 
+
+
+jSlide is a [markdown-driven](https://en.wikipedia.org/wiki/Markdown) [web-based slideshow tool](https://en.m.wikipedia.org/wiki/Web-based_slideshow) to create presentations which can be played (created, viewed) using a web browser. 
 
 It includes an authoring mode to let you easily edit and change your slides.
 
@@ -22,7 +25,7 @@ It includes an authoring mode to let you easily edit and change your slides.
 - [x] Ability to work offline (partial)
 
 ### Editing
-- {x] Markdown support
+- [x] Markdown support
 - [x] HTML support
 - [x] Embedding web pages
 - [x] Embeded images
@@ -40,8 +43,8 @@ It includes an authoring mode to let you easily edit and change your slides.
 - [ ] Random auto-play
 
 ### Animation
-- [x] Slide transitions and animations.
-- [x] in slide blocks animation
+- [x] Slide transitions and animations (using CSS3).
+- [x] in slide blocks animation (Using JS+CSS3)
 - [x] Timed transitions.
 
 ### Theming
