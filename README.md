@@ -41,7 +41,7 @@ It includes an authoring mode to let you easily edit and change your slides.
 
 ### Animation
 - [x] Slide transitions and animations.
-- {x] in slide blocks animation
+- [x] in slide blocks animation
 - [x] Timed transitions.
 
 ### Theming
