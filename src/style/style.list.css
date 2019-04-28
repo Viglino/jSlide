@@ -1,44 +1,150 @@
 .md ul {
   list-style: none;
-  padding: 0 0 0 1.3em;
+  padding: 0 0 0 1.5em;
 }
 .md ul li {
   position: relative;
   display: table;
 }
 
+.md ul li.sub-- {
+  margin-left: 1em;
+}
+.md ul li.sub--- {
+  margin-left: 2em;
+}
+.md ul li.sub---- {
+  margin-left: 3em;
+}
+.md ul li.sub----- {
+  margin-left: 4em;
+}
+
 .md ul li:before {
   content: "";
   position: absolute;
-  display: block;
-  width: .45em;
-  height: .45em;
   background-color: currentColor;
-  margin-left: -1em;
-  top: .4em;
-  transform: rotate(45deg);
+  width: .5em;
+  height: .5em;
+  left: -1em;
+  top: .5em;
+  box-sizing: border-box;
 }
 
-.li-squares .md ul li:before {
+.md ul li.radio-:before,
+.md ul li.radio-x:before,
+.md ul li.check-:before,
+.md ul li.check-x:before {
+  background-color: transparent;
+  border: .1em solid currentColor;
+  border-radius: .1em;
+  width: .9em;
+  height: .9em;
+  top: 0.3em;
+  left: -1.23em;
+  opacity: .5;
+}
+.md ul li.radio-:before,
+.md ul li.radio-x:before {
+  opacity: 1;
+  border-radius: 50%;
+}
+.md ul li.radio-x:before {
+  border: .15em solid transparent;
+  box-shadow: inset 1em 0, 0 0 0 0.1em;
+  width: .7em;
+  height: .7em;
+  left: -1.13em;
+  top: .35em;
+}
+
+.md ul li.check-x:after {
   content: "";
   position: absolute;
-  display: block;
-  width: .2em;
-  height: .2em;
-  background-color: currentColor;
-  margin-left: -1.1em;
-  top: .5em;
+  width: .25em;
+  height: .7em;
+  border: .1em solid currentColor;
+  border-width: 0 .2em .2em 0;
   transform: rotate(45deg);
-  box-shadow: 0.3em 0, 0.3em -0.3em, 0 -0.3em;
+  top: .13em;
+  left: -.85em;
 }
 
-.li-arrow .md ul li:before {
-  content: "\f0a9";
-  font-family: FontAwesome;
-  display: inline-block;
-  margin-left: -1.3em;
-  width: 1.3em;
-  top: .1em;
-  transform: none;
-  background: transparent;
+.md ul li.dot:before {
+  border-radius: 50%;
+}
+
+.md ul li.arrow,
+.md ul li.arrow-o {
+  padding-left: .3em; 
+}
+.md ul li.arrow-o:before,
+.md ul li.arrow:before {
+  width: .6em;
+  left: -1.1em;
+}
+.md ul li.arrow-o:before {
+  background-color: transparent;
+  border: .15em solid currentColor;
+  border-right-width: 0;
+  height: .65em;
+  top: .4em;
+  width: .7em;
+  left: -1.1em;
+}
+.md ul li.arrow-o:after {
+  content: "";
+  position: absolute;
+  width: .5em;
+  height: .5em;
+  border: .15em solid transparent;
+  border-color: currentColor currentColor transparent transparent;
+  background-color: transparent;
+  top: .35em;
+  left: -.9em;
+  transform: rotate(45deg);
+}
+.md ul li.arrow:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: .5em solid transparent;
+  border-left-color: currentColor;
+  top: .25em;
+  left: -.5em;
+}
+
+.md ul li.diamond:before {
+  transform: rotate(45deg);
+}
+
+.md ul li.minus:before,
+.md ul li.plus:before {
+  height: .15em;
+  width: .7em;
+  left: -1.1em;
+  top: .7em;
+}
+.md ul li.plus:after {
+  content: "";
+  position: absolute;
+  width: .15em;
+  height: .7em;
+  left: -.825em;
+  top: .425em;
+  background-color: currentColor;
+}
+
+.md ul li.equal:before {
+  content: '=';
+}
+
+.md ul li.squares:before {
+  width: .2em;
+  height: .2em;
+  top: .6em;
+  left: -1.1em;
+  transform: rotate(45deg);
+  box-shadow: 0.3em 0, 0.3em -0.3em, 0 -0.3em;
 }

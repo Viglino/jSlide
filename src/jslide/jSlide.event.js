@@ -23,18 +23,34 @@ jSlide.updateSize = function() {
 /** Handle keydown avent
  */
 jSlide.onkeydown = function(e) {
+  // console.log(e.keyCode)
   switch (e.keyCode) {
+    // Space arrow left/down
+    case 32:
     case 39:
     case 40:
     case 34: {
-      jSlide.next();
+        jSlide.next();
       e.preventDefault();
       break;
     }
+    // End
+    case 35: {
+      jSlide.show(jSlide.slide.length);
+      e.preventDefault();
+      break;
+    }
+    // Arrow right/up
     case 37:
-    case 38:
+    case 38: 
     case 33: {
       jSlide.prev();
+      e.preventDefault();
+      break;
+    }
+    // Start
+    case 36: {
+      jSlide.show(0);
       e.preventDefault();
       break;
     }

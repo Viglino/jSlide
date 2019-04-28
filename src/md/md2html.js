@@ -218,16 +218,29 @@ md2html.rules = [
   // Blocks
   [/\n\&gt\;(.*)/g, '<blockquote>$1</blockquote>'],  // blockquotes
   [/\<\/blockquote\>\<blockquote\>/g, '\n'],      // fix
-  [/\n-{5,}/g, "\n<hr />"],              // hr
 
   // Lists
-  [/\n\* (.*)/g, '\n<ul><li>$1</li></ul>'],      // ul lists
-  [/\n {1,}\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],  // ul ul lists
-  [/\n\t\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],  // ul ul lists
-  [/<\/ul2><ul2>/g, ''],                // concat
+  [/\n\* (.*)/g, '\n<ul><li>$1</li></ul>'],                 // default list
+  [/\n(-+) (.*)/g, '\n<ul><li class="sub$1 minus">$2</li></ul>'],   // 
+  [/\n(-*)\+ (.*)/g, '\n<ul><li class="sub-$1 plus">$2</li></ul>'],    // 
+  [/\n(-+)o (.*)/g, '\n<ul><li class="sub$1 dot">$2</li></ul>'],    // 
+  [/\n(-+)> (.*)/g, '\n<ul><li class="sub$1 arrow">$2</li></ul>'],  // 
+  [/\n(-+)x (.*)/g, '\n<ul><li class="sub$1 squares">$2</li></ul>'],  // 
+  [/\n(-*)=> (.*)/g, '\n<ul><li class="sub-$1 arrow-o">$2</li></ul>'],    // 
+  [/\n(-*)<> (.*)/g, '\n<ul><li class="sub-$1 diamond">$2</li></ul>'],  // 
+  [/\n(-*)\[([ |x])\] (.*)/g, '\n<ul><li class="sub-$1 check-$2">$3</li></ul>'],   // check lists
+  [/\n(-*)\(([ |x])\) (.*)/g, '\n<ul><li class="sub-$1 radio-$2">$3</li></ul>'],   // check lists
+/*
+  [/\n {1,}\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],   // ul ul lists
+  [/\n\t\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],      // ul ul lists
+  [/<\/ul2><ul2>/g, ''],                                // concat
   [/<\/ul><ul2>([^\n]*)<\/ul2>\n/g, '<ul>$1</ul></ul>'],// indent
-  [/\n\<ul\>/g, '<ul>'],                // fix
-  [/<\/ul><ul>/g, ''],                // concat
+  [/<ul2>([^\n]*)<\/ul2>\n/g, '<ul>$1</ul>'],           // clear
+*/
+  [/\n\<ul\>/g, '<ul>'],                                // fix
+  [/<\/ul><ul>/g, ''],                                  // concat
+
+  [/\n-{5,}/g, "\n<hr />"],              // hr
 
   // Ordered list
   [/\n[0-9]+\.(.*)/g, '<ol><li>$1</li></ol>'],    // ol lists

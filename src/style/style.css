@@ -94,6 +94,7 @@ tt, code, kbd, samp {
 #progress > div {
   background-color: #af9f83;
   height: 5px;
+  transition: .3s;
 }
 
 #panel > li {

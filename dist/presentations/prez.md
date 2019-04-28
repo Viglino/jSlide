@@ -22,6 +22,22 @@ Display images in your slides
 =====
 test
 
+[====]
+# List
+
+* default
+- minus
++ plus
+-o dot
+-x squares
+<> diamond
+-> arrow
+=> arrow-o
+[ ] check box
+[x] checked
+( ) radio off
+(x) radio on
+
 [====
   fontSize: 32
 ]
