@@ -33,6 +33,7 @@ It includes an authoring mode to let you easily edit and change your slides.
 - [ ] Separate slide notes for the speaker
 - [x] Code syntax hilighting using [highlight.js](https://highlightjs.org/)
 - [ ] MathML support using [Mathjax](https://www.mathjax.org/)
+- [ ] Chart upport using [chartist-js](https://github.com/gionkunz/chartist-js)
 - [ ] Layout grid
 
 ### Misc
