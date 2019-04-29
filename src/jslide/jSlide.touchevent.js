@@ -32,6 +32,7 @@ jSlide.ontouchstart = function(e) {
  */
 jSlide.ontouchmove = function(e) {
   e.preventDefault();
+  touchend = [e.changedTouches[0].pageX, e.changedTouches[0].pageY, new Date()];
 };
 
 /** Swipe left/right
@@ -59,7 +60,7 @@ jSlide.ontouchend = function(e) {
         console.log('prev')
         e.preventDefault();
       }
-  }
+  } else e.preventDefault();
 };
 
 document.getElementById('slide').addEventListener("touchstart", jSlide.ontouchstart, false);

@@ -2,8 +2,13 @@ body {
   font-size: 20px;
   background-color: #ebe7e0;
   font-family: OpenSans, sans-serif;
+  -webkit-touch-callout: none!important;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-
+textarea, input {
+  user-select: unset;
+}
 tt, code, kbd, samp {
   font-family: HackRegular, monospace;
   font-size: .95em;
