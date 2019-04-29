@@ -61,7 +61,7 @@ md2html.mdPart = function (md, data) {
   // Handle blocks
   md = md2html.doBlocks(md);
   // Clean up
-  md = md2html.cleanUp(md);
+  md = md2html.cleanUp(md, data.PATH);
 //  console.log(md)
 
   // Floating images
@@ -160,7 +160,7 @@ md2html.doTable = function(md) {
 *  @param {string} md the markdown
 *  @return {string} result md
 */
-md2html.cleanUp = function(md) {  
+md2html.cleanUp = function(md, localpath) {  
   md = md.replace(/(\<\/h[1-5]\>)\n/g, "$1");
   md = md.replace(/^\n/, '');
   if (md==='\n') md = '';
@@ -173,7 +173,13 @@ md2html.cleanUp = function(md) {
   md = md.replace (/<div class='left'><blockquote /g,"<div class='floatLeft' style=\"min-width:200px\"><blockquote ")
   // Facebook
   md = md.replace (/_URL_PAGE_/g, encodeURIComponent(window.location.href));
-  
+
+  // Local images
+  let path = window.location.href.split(/[?|#]/).shift();
+  path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(localpath||'');
+  console.log(path)
+  md = md.replace (/_LOCAL_IMG_/g, path);
+
   // Collapsible blocks
   md = md.replace(/mdBlockTitle\">\n/g,'mdBlockTitle">');
   md = md.replace(/mdBlockContent\">\n/g,'mdBlockContent">');
@@ -314,15 +320,11 @@ md2html.rules = [
     '<video controls style="width:$6px; height:$7px;" title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
   // Internal images
-  [/\!(\[([^\[|\]]+)?\])?\((.*\.(jpe?g|png|gif|svg)) ?(\d+)?x?(\d+)?\)/g,
-    '<img style="width:$5px; height:$6px;" src="$3" title="$2" />'],
-
+  [/!(\[([^[|\]]+)?\])?\((\.\.?\/([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
+    '<img style="width:$5px; height:$6px;" src="_LOCAL_IMG_$3" title="$2" />'],
   // Images
   [/!(\[([^[|\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
     '<img style="width:$6px; height:$7px;" src="$3" title="$2" />'],
-  // Local images
-  [/!(\[([^[|\]]+)?\])?\((file:\/\/\/([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
-    '<img style="width:$5px; height:$6px;" src="$3" title="$2" />'],
 
   // links
   [/\[([^[]+)?\]\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))( ?)([^)]*)\)/g,

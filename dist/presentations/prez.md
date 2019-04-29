@@ -9,7 +9,7 @@ footer:  | **%TITLE%** | %PAGE%/%LENGTH%
 
 # jSlide
 ## Simple, in-browser, markdown slideshow.
-|	!(./img/logo.png 100x)
+|	!(./prez/logo.png 100x)
 
 [====]
 # Image

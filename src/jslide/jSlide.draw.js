@@ -14,7 +14,8 @@ jSlide.drawSlide = function (content, page, slideshow) {
   var data = {
     TITLE: this.get('title'),
     PAGE: page+1,
-    LENGTH: this.slide.length
+    LENGTH: this.slide.length,
+    PATH: this.pathName
   };
 
   // Get slide parameters

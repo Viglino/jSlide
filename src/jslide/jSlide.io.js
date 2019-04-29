@@ -23,6 +23,7 @@ jSlide.read = function (file) {
  * @param {string} slide md string
  */
 jSlide.open = function (slide) {
+  this.pathName = '';
   this.slide = slide;
   this.slide = this.slide.replace(/(\r\n)/g, '\n');
   this.slide = this.slide.split(/\[====/g);
@@ -56,7 +57,6 @@ jSlide.save = function () {
 /* Drag n drop a new md
  */
 jSlide.ondrop = function (ev) {
-  console.log('drop')
   // Prevent default behavior (Prevent file from being opened)
   ev.preventDefault();
 
@@ -71,6 +71,7 @@ jSlide.onload = function (ev) {
   var doc = document.location.search.replace(/^\?/,'');
   // Load file
   if (doc) {
+    const pathName = doc.substr(0,doc.lastIndexOf('/')+1);
     doc = './presentations/'+doc+'.md';
     var c = parseInt(document.location.hash.replace(/^#/,'')) || 1;
     if (doc) {
@@ -82,6 +83,7 @@ jSlide.onload = function (ev) {
       var self = this;
       ajax.onload = function(e) {
         self.open(this.response)
+        jSlide.pathName = pathName;
         self.show(c-1);
       };
 
