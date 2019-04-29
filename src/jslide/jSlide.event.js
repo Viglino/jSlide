@@ -1,4 +1,5 @@
 import jSlide from  './jSlide'
+import './jSlide.touchevent'
 
 /** Update slides size
  */
@@ -101,47 +102,3 @@ document.body.addEventListener('dragover', (e) => {
 window.addEventListener('load', (e) => {
   jSlide.onload(e);
 });
-
-// Longtouch / slide on the slides
-var touchstart = [0,0];
-var touchend = [0,0];
-var timer;
-
-/** Longtouch on the slide > openPresentationDlog
- */
-document.getElementById('slide').addEventListener("touchstart", (e) => {
-  touchstart = touchend = [e.touches[0].clientX, e.touches[0].clientY, new Date()];
-  if (timer) clearTimeout(timer); 
-  timer = setTimeout(function() {
-    if (Math.abs(touchstart[0] - touchend[0]) < 5 && Math.abs(touchstart[1] - touchend[1]) < 5) {
-      e.preventDefault();
-      jSlide.openPresentationDlog();
-    }
-  }, 800); 
-}, false);
-
-/** Swipe left/ritgh
- */
-document.getElementById('slide').addEventListener("touchmove", (e) => {
-  touchend = [e.touches[0].clientX, e.touches[0].clientY, new Date()];
-  if (touchend[2] - touchstart[2] < 100) {
-    if (touchstart[0] - touchend[0] > 100) {
-      touchstart[2] = 0;
-      if (timer) clearTimeout(timer); 
-      jSlide.next()
-      console.log('next')
-    }
-    if (touchstart[0] - touchend[0] < -100) {
-      touchstart[2] = 0;
-      if (timer) clearTimeout(timer); 
-      jSlide.prev();
-      console.log('prev')
-    }
-  }
-}, false);
-
-/** Prevent longtouch */
-document.getElementById('slide').addEventListener("touchend", (e) => {
-  if (timer) clearTimeout(timer); 
-  e.preventDefault();
-}, false);

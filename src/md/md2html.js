@@ -230,13 +230,7 @@ md2html.rules = [
   [/\n(-*)<> (.*)/g, '\n<ul><li class="sub-$1 diamond">$2</li></ul>'],  // 
   [/\n(-*)\[([ |x])\] (.*)/g, '\n<ul><li class="sub-$1 check-$2">$3</li></ul>'],   // check lists
   [/\n(-*)\(([ |x])\) (.*)/g, '\n<ul><li class="sub-$1 radio-$2">$3</li></ul>'],   // check lists
-/*
-  [/\n {1,}\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],   // ul ul lists
-  [/\n\t\*\ ([^\n]*)/g, '<ul2><li>$1</li></ul2>'],      // ul ul lists
-  [/<\/ul2><ul2>/g, ''],                                // concat
-  [/<\/ul><ul2>([^\n]*)<\/ul2>\n/g, '<ul>$1</ul></ul>'],// indent
-  [/<ul2>([^\n]*)<\/ul2>\n/g, '<ul>$1</ul>'],           // clear
-*/
+
   [/\n\<ul\>/g, '<ul>'],                                // fix
   [/<\/ul><ul>/g, ''],                                  // concat
 
@@ -247,14 +241,15 @@ md2html.rules = [
   [/\<\/ol\>\<ol\>/g, ''],              // fix
 
   // Automatic links
-  [/([^\(])([ |\n]https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))( ?)/g, '$1<a href=\'$2\' target="_blank">$2</a>'],
+  [/([^\(])[ |\n](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))( ?)/g, 
+    '$1<a href=\'$2\' target="_blank">$2</a>'],
   // Mailto
   [/([^\(])\bmailto\b\:(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/gi, '$1<a href=\'mailto:$2\'>$2</a>'],
 
   /* Github */
     // Github corner
     [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&//=]*)\)\n/, 
-    '<a href="https://github.com/$1" class="icss-github-corner"><i></i></a>'],
+    '<a href="https://github.com/$1" class="icss-github-corner" target="_blanck"><i></i></a>'],
 
   // Github
   [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/([-a-zA-Z0-9@:%_+.~#?&=]*)\/watch ?(\d+)?x?(\d+)?\)/g, 
