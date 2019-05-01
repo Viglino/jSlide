@@ -177,8 +177,9 @@ md2html.cleanUp = function(md, localpath) {
   // Local images
   let path = window.location.href.split(/[?|#]/).shift();
   path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(localpath||'');
-  console.log(path)
-  md = md.replace (/_LOCAL_IMG_/g, path);
+  md = md.replace (/(<img src=")/g, '$1'+path);
+  md = md.replace (/(<source src=")/g, '$1'+path);
+  //md = md.replace (/_LOCAL_IMG_/g, path);
 
   // Collapsible blocks
   md = md.replace(/mdBlockTitle\">\n/g,'mdBlockTitle">');
@@ -319,12 +320,19 @@ md2html.rules = [
   [/\!(\[([^\[|\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=\(\)]*)\.mp4) ?(\d+)?x?(\d+)?\)/g,
     '<video controls style="width:$6px; height:$7px;" title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
-  // Internal images
-  [/!(\[([^[|\]]+)?\])?\((\.\.?\/([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
-    '<img style="width:$5px; height:$6px;" src="_LOCAL_IMG_$3" title="$2" />'],
   // Images
   [/!(\[([^[|\]]+)?\])?\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=()]*)) ?(\d+)?x?(\d+)?\)/g,
     '<img style="width:$6px; height:$7px;" src="$3" title="$2" />'],
+
+  // Internal images
+  [/\!(\[([^\[|\]]+)?\])?\((\.\.?\/.*\.(jpe?g|png|gif|svg)) ?(\d+)?x?(\d+)?\)/g,
+    '<img src="$3" style="width:$5px; height:$6px;" title="$2" />'],
+  // Internal audio
+  [/\!(\[([^\[|\]]+)?\])?\((\.\.?\/.*\.(mp3)) ?(\d+)?x?(\d+)?\)/g,
+    '<audio controls style="width:$5px; height:$6px;" title="$2"><source src="$3" type="audio/mpeg">Your browser does not support the audio element.</audio>'],
+  // Internal video
+  [/\!(\[([^\[|\]]+)?\])?\((\.\.?\/.*\.(mp4)) ?(\d+)?x?(\d+)?\)/g,
+    '<video controls style="width:$5px; height:$6px;" title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
 
   // links
   [/\[([^[]+)?\]\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))( ?)([^)]*)\)/g,
