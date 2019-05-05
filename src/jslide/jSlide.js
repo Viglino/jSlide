@@ -68,14 +68,7 @@ jSlide.dialog = new Dlog();
 const slide = document.createElement('DIV');
 slide.id = 'slide';
 document.body.appendChild(slide);
-
-// Add progress bar
-const progress = document.createElement('DIV');
-progress.id = 'progress';
-document.body.appendChild(progress);
-
-jSlide.progressBar = document.createElement('DIV');
-progress.appendChild(jSlide.progressBar);
+jSlide.slideDiv = slide;
 
 // Export slide
 export default jSlide

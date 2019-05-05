@@ -9,6 +9,7 @@ jSlide.openPresentation = function() {
   
   // Copy head section
   w.document.head.innerHTML = document.head.innerHTML;
+  w.jSlide = jSlide;
   // Restore link path
   var links = w.document.querySelectorAll('link');
   document.querySelectorAll('link').forEach((l, i) => {
@@ -73,13 +74,20 @@ jSlide.openPresentation = function() {
   setTimeout(() => { jSlide.updateSize(); });
 };
 
-/** Show presentation
+/** Start presentation mode
+ * @param {boolean} b
  */
-jSlide.showPresentation = function() {
-  jSlide.slideshow = !jSlide.slideshow;
+jSlide.startPresentation = function(b) {
+  jSlide.slideshow = (b!==false);
   jSlide.step = 0;
   jSlide.show();
 };
+
+/** Stop presentation mode
+ */
+jSlide.stopPresentation = function() {
+  jSlide.startPresentation(false);
+}
 
 /** Open in a new window */
 jSlide.openPresentationDlog = function() {

@@ -3,73 +3,89 @@
   transition: all .5s, opacity .4s;
 }
 #slide .content > * {
-  transition: clip .5s;
+  transition: clip .5s, clip-path .5s;
 }
 #slide.opacity .content {
   opacity: 0;
 }
-#slide.zoom .content {
+#slide.tr-zoom .content {
   opacity: 0;
   transform: scale(0);
 }
-#slide.zoom-2 .content {
+#slide.tr-zoom-2 .content {
   opacity: 0;
   transform: scale(2);
 }
-#slide.zoom-3 .content {
+#slide.tr-zoom-3 .content {
   opacity: 0;
   transform: scale(10);
 }
-#slide.shrinkX .content {
+#slide.tr-shrinkX .content {
   opacity: 0;
   transform: scaleX(0);
 }
-#slide.shrinkY .content {
+#slide.tr-shrinkY .content {
   opacity: 0;
   transform: scaleY(0);
 }
-#slide.zoom-rotate .content {
+#slide.tr-zoom-rotate .content {
   opacity: 0;
   transform: scale(0) rotate(360deg);
 }
-#slide.rotate .content {
+#slide.tr-rotate .content {
   opacity: 0;
   transform: scale(1) rotate(360deg);
 }
-#slide.wipe-right .content > .slide {
+
+#slide.tr-circle .content > .slide {
+  clip-path: circle(0);
+}
+#slide.tr-circle .content.visible > .slide {
+  clip-path: circle(100%);
+}
+#slide.tr-square .content > .slide {
+  clip-path: inset(100%);
+}
+#slide.tr-square .content.visible > .slide {
+  clip-path: inset(0);
+}
+
+#slide.tr-wipe-right .content > .slide {
   clip: rect(0, 0, 1000px, 0);
 }
-#slide.wipe-left .content > .slide {
+#slide.tr-wipe-left .content > .slide {
   clip: rect(0, 1600px, 1000px, 1600px);
 }
-#slide.wipe-up .content > .slide {
+#slide.tr-wipe-up .content > .slide {
   clip: rect(1600px,1000px,1600px,0);
 }
-#slide.wipe-down .content > .slide {
+#slide.tr-wipe-down .content > .slide {
   clip: rect(0,1600px,0,0)
 }
-#slide.slide-right .content {
+#slide.tr-slide-right .content {
   opacity: 0;
   transform: translate(-110%,0);
 }
-#slide.slide-left .content {
+#slide.tr-slide-left .content {
   opacity: 0;
   transform: translate(110%,0);
 }
-#slide.slide-up .content {
+#slide.tr-slide-up .content {
   opacity: 0;
   transform: translate(0,110%);
 }
-#slide.slide-down .content {
+#slide.tr-slide-down .content {
   opacity: 0;
   transform: translate(0,-110%);
 }
 #slide .content.visible {
   opacity: 1;
   transform: scale(1) rotate(0) translate(0,0);
+  border-radius: 0;
 }
 #slide .content.visible > .slide {
   clip: rect(0, 1600px, 1000px, 0);
+  border-radius: 0;
 }
 
 #slide .content.hidden {
@@ -83,6 +99,15 @@
   display: inline-block;
   transition: none;
 }
+.md .step.block {
+  width: 100%;
+}
+.md .step.full {
+  position: fixed!important;
+  width: 100%;
+  height: 100%;
+}
+
 .slideshow .md .visible .step,
 .slideshow .md .step {
   visibility: hidden;

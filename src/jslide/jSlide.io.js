@@ -26,7 +26,7 @@ jSlide.open = function (slide) {
   this.pathName = '';
   this.slide = slide;
   this.slide = this.slide.replace(/(\r\n)/g, '\n');
-  this.slide = this.slide.split(/\[====/g);
+  this.slide = this.slide.split(/\n\[====/g);
   // Header
   var head = this.slide.shift().split('\n');
   var properties = {};
@@ -49,7 +49,7 @@ jSlide.save = function () {
   for (var i in this.getProperties()) {
     slide += i + ': ' + this.get(i) + '\n';
   }
-  slide +=  '==== ' + this.slide.join('[==== ');
+  slide +=  '[==== ' + this.slide.join('[==== ');
   var blob = new Blob([slide], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, this.filename || 'slide.md');
 };
@@ -96,7 +96,7 @@ jSlide.onload = function (ev) {
     }
   } else {
     // Create new one
-    this.slide = [' title ]\n# New presentation\n## Subtitle'];
+    this.slide = [' title ]\n\n'+_T('new_presentation')];
     this.current = 0;
     this.showPanel();
     this.show(this.current+1);

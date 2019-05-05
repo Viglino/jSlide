@@ -4,11 +4,12 @@ import '../i19n/i19n'
 /** Application dialog
  * @class
  */
-const Dlog = function() {
+const Dlog = function(options) {
+  options = options || {};
   this.element = this.createElement('DIV', document.body);
   this.element.className = 'dlog-back';
   this.dlog = this.createElement('DIV', this.element);
-  this.dlog.className = 'dlog';
+  this.dlog.className = ('dlog '+(options.className||'')).trim();
 };
 
 /** Create an element

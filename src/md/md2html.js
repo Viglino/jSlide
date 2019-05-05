@@ -47,11 +47,12 @@ md2html.mdPart = function (md, data) {
   // md string
   md = "\n" + md +"\n";
 
+  // Table management
+  md = md2html.doTable(md);
+
   // Handle icons
   md = md2html.doIcons(md);
 
-  // Table management
-  md = md2html.doTable(md);
   // Data management
   md = md2html.doData(md, data);
   // RegEpx rules
@@ -90,12 +91,18 @@ md2html.floatingImages = function (md) {
 };
 
 /**
- * Create animated blocks
+ * Create blocks
  */
 md2html.doBlocks = function (md) {
-  md = md.replace(/\[--(\(([^\)]*)\))?\n?/g, '<div class="step" data-anim="$2">');
+  // Animated blocks
+  md = md.replace(/\[--(\[([^\]]*)\])?\n?/g, '<div class="step" data-anim="$2">');
   md = md.replace(/\--\]\n/g, '</div><br/>');
   md = md.replace(/\--\]/g, '</div>');
+
+  // Styled blocs
+  md = md.replace(/\n\[-(\[([^\]]*)\])?( *)?\n?/g, '<div class="mdblock" style="$2">');
+  md = md.replace(/\-\]\n?/g, '</div>');
+
   return md;
 };
 
@@ -135,24 +142,31 @@ md2html.doData = function(md, data) {
 */
 md2html.doTable = function(md) {
   // Detect ---- | ----
-  md = md.replace(/\n\ ?-{3,}\ ?\|/g, '<table></table>|');
-  while (/<\/table>\|\ ?-{3,}/.test(md)) {
-    md = md.replace(/<\/table>\|\ ?-{3,}\ ?/g, '</table>');
+  md = md.replace(/\n\|>(-*)([ :]?)\|/g, '<table class="fullpage"></table>|');
+  md = md.replace(/\n\|<(-*)([ :]?)\|/g, '<table class="left"></table>|');
+  md = md.replace(/\n\|([ :]?)(-*)([ :]?)\|/g, '<table></table>|');
+  while (/<\/table>\|[ :]?(-*)[ :]?/.test(md)) {
+    md = md.replace(/<\/table>\|[ :]?(-*)[ :]?/g, '</table>');
   }
+  md = md.replace(/<\/colgroup><colgroup>/g, '');
+  md = md.replace(/<\/table>\|/g, '</table>');
   // Header
-  md = md.replace(/(.*)<table>/g, '<table><tr><td>$1</td></tr>');
+  md = md.replace(/\|(.*)<table>/g, '<table><thead><tr><td>$1</td></tr></thead>');
+  md = md.replace(/\|(.*)<table class="(.*)">/g, '<table class="$2"><thead><tr><td>$1</td></tr></thead>');
   while (/<td>(.*)\|/.test(md)) {
     md = md.replace(/<td>(.*)\|/g, '<td>$1</td><td>');
   }
   // Lines
-  while (/<\/table>\n([^\n]*)\|/.test(md)) {
-    md = md.replace(/<\/table>\n(.*)/g, '<tr><td>$1</td></tr></table>');
+  while (/<\/table>\n\|([^\n]*)\|/.test(md)) {
+    md = md.replace(/<\/table>\n\|(.*)/g, '<tr><td>$1</td></tr></table>');
     while (/<td>(.*)\|/.test(md)) {
       md = md.replace(/<td>(.*)\|/g, '<td>$1</td><td>');
     }
   }
-  md = md.replace(/<\/table>\n/g,"</table>");
+  md = md.replace(/<td><\/td><\/tr>/g,"</tr>");
+  md = md.replace(/<\/table>/g,"</table>");
   md = md.replace(/<td>\t/g,"<td class='center'>");
+  md = md.replace(/<td>>/g,"<td class='right'>");
   return md;
 };
 
@@ -177,8 +191,8 @@ md2html.cleanUp = function(md, localpath) {
   // Local images
   let path = window.location.href.split(/[?|#]/).shift();
   path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(localpath||'');
-  md = md.replace (/(<img src=")/g, '$1'+path);
-  md = md.replace (/(<source src=")/g, '$1'+path);
+  md = md.replace (/(<img src="(\.\.?\/))/g, '$1'+path+'$2');
+  md = md.replace (/(<source src="(\.\.?\/))/g, '$1'+path+'$2');
   //md = md.replace (/_LOCAL_IMG_/g, path);
 
   // Collapsible blocks
@@ -202,6 +216,8 @@ md2html.cleanUp = function(md, localpath) {
   md = md.replace(/\t/g, ' ');
   md = md.replace(/\<\/ol><br \/>/g, '</ol>');
   md = md.replace(/\<\/ul><br \/>/g, '</ul>');
+
+  md = md.replace(/\<\/table><br \/>/g, '</table>');
 
   return md;
 };
@@ -333,6 +349,10 @@ md2html.rules = [
   // Internal video
   [/\!(\[([^\[|\]]+)?\])?\((\.\.?\/.*\.(mp4)) ?(\d+)?x?(\d+)?\)/g,
     '<video controls style="width:$5px; height:$6px;" title="$2"><source src="$3" type="video/mp4">Your browser does not support the video tag.</video>'],
+
+  // Internal links
+  [/\[([^[]+)?\]\(#([0-9]*)\)/g,
+    '<a href="javascript:jSlide.show($2-1)" title="$1" target="_blank">$1</a>'],
 
   // links
   [/\[([^[]+)?\]\((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))( ?)([^)]*)\)/g,

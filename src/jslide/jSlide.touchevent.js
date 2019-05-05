@@ -14,16 +14,23 @@ let timer;
 /** Longtouch on the slide > openPresentationDlog
  */
 jSlide.ontouchstart = function(e) {
-//  e.preventDefault();
-  touchstart = touchend = [e.changedTouches[0].pageX, e.changedTouches[0].pageY, new Date()];
+  //  e.preventDefault();
+  if (e.changedTouches) {
+    touchstart = touchend = [e.changedTouches[0].pageX, e.changedTouches[0].pageY, new Date()];
+  } else {
+    touchstart = touchend = [e.pageX, e.pageY, new Date()];
+  }
   if (timer) clearTimeout(timer);
   // Longtouch
   timer = setTimeout(function() {
+    if (!e.changedTouches) {
+      touchend = [e.pageX, e.pageY, new Date()];
+    }
     if (Math.abs(touchstart[0] - touchend[0]) < minDist 
      && Math.abs(touchstart[1] - touchend[1]) < minDist) {
       e.preventDefault();
       jSlide.closePresentation();
-      jSlide.openPresentationDlog();
+      jSlide.rcontrol.show(touchend);
     }
   }, longtouchDelay);
 };
@@ -32,7 +39,9 @@ jSlide.ontouchstart = function(e) {
  */
 jSlide.ontouchmove = function(e) {
   e.preventDefault();
-  touchend = [e.changedTouches[0].pageX, e.changedTouches[0].pageY, new Date()];
+  if (e.changedTouches) {
+    touchend = [e.changedTouches[0].pageX, e.changedTouches[0].pageY, new Date()];
+  }
 };
 
 /** Swipe left/right
@@ -66,3 +75,6 @@ jSlide.ontouchend = function(e) {
 document.getElementById('slide').addEventListener("touchstart", jSlide.ontouchstart, false);
 document.getElementById('slide').addEventListener("touchmove", jSlide.ontouchmove, false);
 document.getElementById('slide').addEventListener("touchend", jSlide.ontouchend, false);
+
+document.getElementById('slide').addEventListener("mousedown", jSlide.ontouchstart, false);
+document.getElementById('slide').addEventListener("mouseup", () => { clearTimeout(timer); }, false);

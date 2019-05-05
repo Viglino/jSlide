@@ -90,6 +90,13 @@ tt, code, kbd, samp {
   right: 0;
   bottom: 12em;
   z-index: 1;
+  cursor: row-resize;
+}
+#progress:hover {
+  box-shadow: 0 2px 5px #af9f83;
+}
+.presentation #progress {
+  cursor: default;
 }
 .presentation #progress {
   left: 0;
@@ -145,26 +152,7 @@ tt, code, kbd, samp {
   content: "\f019";
 }
 #header button.present:before {
-  content: "";
-  width: .9em;
-  height: .55em;
-  border: .1em solid currentColor;
-  box-shadow: 0 -.15em;
-  position: absolute;
-  top: .45em;
-  left: 50%;
-  transform: translateX(-50%);
-}
-#header button.present:after {
-  content: "";
-  width: .4em;
-  height: .4em;
-  border: .1em solid currentColor;
-  border-color: currentColor currentColor transparent transparent;
-  position: absolute;
-  top: 1.2em;
-  left: 50%;
-  transform: translateX(-50%) rotate(-45deg);
+  content: "\f01d";
 }
 
 .slide {

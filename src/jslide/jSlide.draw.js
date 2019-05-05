@@ -3,7 +3,7 @@ import md2html from '../md/md2html'
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 
-/**
+/** draw a slide in a
  * 
  */
 jSlide.drawSlide = function (content, page, slideshow) {
@@ -26,10 +26,8 @@ jSlide.drawSlide = function (content, page, slideshow) {
     param[p.shift().trim()] = p.join(':').trim();
   });
 
-  var element = content;
-  content.className = (slideshow ? 'slideshow ' + (param.transition||'') : '').trim();
-
-  var element = document.createElement('DIV');
+  content.className = (slideshow ? 'slideshow tr-' + (param.transition||'') : '').trim();
+  const element = document.createElement('DIV');
   element.className = 'content';
 
   // Add Slide

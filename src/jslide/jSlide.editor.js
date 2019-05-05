@@ -46,7 +46,10 @@ editor.insertChar = function(c) {
 /** Something as changed
  */
 function onchange(panel) {
-  jSlide.slide[jSlide.current] = editor.getText().replace(/^\[====/,'');
+  let t = editor.getText().replace(/^\[====/, '');
+  t = t.replace(/\n\[====/g,'\n&#91;====');
+  if (t.slice(-1) !== '\n') t += '\n';
+  jSlide.slide[jSlide.current] = t;
   jSlide.show();
   if (panel) jSlide.showPanel(jSlide.current);
 };

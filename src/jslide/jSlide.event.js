@@ -15,9 +15,15 @@ function resize(s){
 };
 
 jSlide.updateSize = function() {
-  document.body.querySelectorAll('.slide').forEach(resize);
+  document.body.querySelectorAll('div .slide').forEach(resize);
+  // Prevent zero height slides
+  if (jSlide.slideDiv.clientHeight < 100) {
+    jSlide.editor.element.parentNode.style.height = 
+    jSlide.slideDiv.style.bottom = 
+    jSlide.progressBar.parentNode.style.bottom = Math.round(window.innerHeight/2)+'px';
+  }
   if (jSlide.presentation) {
-    jSlide.presentation.querySelectorAll('.slide').forEach(resize);
+    jSlide.presentation.querySelectorAll('div .slide').forEach(resize);
   }
 };
 

@@ -25,7 +25,7 @@ addButton('addSlide', () => {
 });
 addButton('open');
 addButton('save', () => { jSlide.save(); });
-addButton('present', () => { jSlide.openPresentation(); });
-addButton('slideshow', () => { jSlide.showPresentation(); });
+addButton('present', () => { jSlide.rcontrol.show([200,150]); });
+//addButton('slideshow', () => { jSlide.startPresentation(); });
 
 export default bar
