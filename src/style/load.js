@@ -1,6 +1,6 @@
 // Default style
 import './style.css'
-//import './githubcorner.css'
+import './githubcorner.css'
 
 import './style.title.css'
 import './style.chapter.css'
@@ -19,3 +19,4 @@ function addCSS(filename){
 addCSS('fonts/font-awesome.css');
 addCSS('fonts/HackRegular.css');
 addCSS('fonts/OpenSans.css');
+addCSS('fonts/jslide.css');

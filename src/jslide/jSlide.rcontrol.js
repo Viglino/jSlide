@@ -10,25 +10,25 @@ document.body.appendChild(panel);
 
 const buttons = [{
     title: _T('edit'),
-    icon: 'fa-pencil',
+    icon: 'jslide-edit',
     click: function() {
       jSlide.stopPresentation();
     }
   },{
     title: _T('play'),
-    icon: 'fa-play-circle-o',
+    icon: 'jslide-play',
     click: function() {
       jSlide.startPresentation();
     }
   },{
     title: _T('duplicate'),
-    icon: 'fa-window-restore',
+    icon: 'jslide-duplicate',
     click: function() {
       jSlide.openPresentation();
     }
   },{
     title: _T('slideshow'),
-    icon: 'fa-clock-o',
+    icon: 'jslide-play-time',
     click: function() {
       jSlide.startPresentation();
     }
