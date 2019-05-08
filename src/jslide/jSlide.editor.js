@@ -50,7 +50,7 @@ function onchange(panel) {
   t = t.replace(/\n\[====/g,'\n&#91;====');
   if (t.slice(-1) !== '\n') t += '\n';
   jSlide.slide[jSlide.current] = t;
-  jSlide.show();
+  jSlide.show(false);
   if (panel) jSlide.showPanel(jSlide.current);
 };
 

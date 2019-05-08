@@ -106,6 +106,10 @@ test
 :fa-pencil: pencil
 :fa-desktop: desktop
 
+## Color
+
+Display _[color:red] information_ with _[color:blue] color_
+
 [==== fontFamily: Dokdo
 ]
 

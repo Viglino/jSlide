@@ -33,11 +33,7 @@ jSlide.openPresentation = function() {
     w.document.body.className = 'presentation';
     
     w.addEventListener('resize', (e) => { jSlide.updateSize(e); });
-    /* Next slide
-    w.document.addEventListener('click', function() {
-      jSlide.next();
-    });
-    */
+
     // Longtouch / slide
     w.document.getElementById('slide').addEventListener("touchstart", jSlide.ontouchstart, false);
     w.document.getElementById('slide').addEventListener("touchmove", jSlide.ontouchmove, false);
@@ -67,27 +63,14 @@ jSlide.openPresentation = function() {
     // Remove presentation on unload
     w.onunload = function() {
       jSlide.presentation = null;
+      jSlide.setMode('edit');
     };
   }
 
   jSlide.show();
   setTimeout(() => { jSlide.updateSize(); });
+  setTimeout(() => { jSlide.updateSize(); }, 200);
 };
-
-/** Start presentation mode
- * @param {boolean} b
- */
-jSlide.startPresentation = function(b) {
-  jSlide.slideshow = (b!==false);
-  jSlide.step = 0;
-  jSlide.show();
-};
-
-/** Stop presentation mode
- */
-jSlide.stopPresentation = function() {
-  jSlide.startPresentation(false);
-}
 
 /** Open in a new window */
 jSlide.openPresentationDlog = function() {

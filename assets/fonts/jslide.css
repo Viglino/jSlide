@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'jslide';
-  src: url('jslide.eot?88877374');
-  src: url('jslide.eot?88877374#iefix') format('embedded-opentype'),
-       url('jslide.woff2?88877374') format('woff2'),
-       url('jslide.woff?88877374') format('woff'),
-       url('jslide.ttf?88877374') format('truetype'),
-       url('jslide.svg?88877374#jslide') format('svg');
+  src: url('jslide.eot');
+  src: url('jslide.eot#iefix') format('embedded-opentype'),
+       url('jslide.woff2') format('woff2'),
+       url('jslide.woff') format('woff'),
+       url('jslide.ttf') format('truetype'),
+       url('jslide.svg#jslide') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'jslide';
-    src: url('../font/jslide.svg?88877374#jslide') format('svg');
+    src: url('../font/jslide.svg?85258381#jslide') format('svg');
   }
 }
 */
@@ -29,7 +29,6 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
   text-align: center;
   /* opacity: .8; */
  
@@ -40,19 +39,9 @@
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
  
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
- 
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
- 
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
 .jslide-jslide:before { content: '\e800'; } /* '' */
@@ -62,3 +51,4 @@
 .jslide-pause:before { content: '\e804'; } /* '' */
 .jslide-edit:before { content: '\e805'; } /* '' */
 .jslide-duplicate:before { content: '\e806'; } /* '' */
+.jslide-logo:before { content: '\e807'; } /* '' */

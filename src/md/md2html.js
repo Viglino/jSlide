@@ -103,6 +103,9 @@ md2html.doBlocks = function (md) {
   md = md.replace(/\n\[-(\[([^\]]*)\])?( *)?\n?/g, '<div class="mdblock" style="$2">');
   md = md.replace(/\-\]\n?/g, '</div>');
 
+  // Styled span
+  md = md.replace(/(_)\[([^_]*)\](.*?)\1/g, '<span style="$2">$3</span>');
+
   return md;
 };
 
@@ -174,7 +177,7 @@ md2html.doTable = function(md) {
 *  @param {string} md the markdown
 *  @return {string} result md
 */
-md2html.cleanUp = function(md, localpath) {  
+md2html.cleanUp = function(md, path) {  
   md = md.replace(/(\<\/h[1-5]\>)\n/g, "$1");
   md = md.replace(/^\n/, '');
   if (md==='\n') md = '';
@@ -189,10 +192,8 @@ md2html.cleanUp = function(md, localpath) {
   md = md.replace (/_URL_PAGE_/g, encodeURIComponent(window.location.href));
 
   // Local images
-  let path = window.location.href.split(/[?|#]/).shift();
-  path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(localpath||'');
-  md = md.replace (/(<img src="(\.\.?\/))/g, '$1'+path+'$2');
-  md = md.replace (/(<source src="(\.\.?\/))/g, '$1'+path+'$2');
+  md = md.replace (/(<img src=")(\.\.?\/)/g, '$1'+path+'$2');
+  md = md.replace (/(<source src=")(\.\.?\/)/g, '$1'+path+'$2');
   //md = md.replace (/_LOCAL_IMG_/g, path);
 
   // Collapsible blocks

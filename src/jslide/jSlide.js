@@ -11,8 +11,10 @@ jSlide._default = {
   title: 'jSlide',
   size: [1200,900],
   fontSize: 35,
-  footer: '| %TITLE% | %PAGE%/%LENGTH%'
-}
+  footer: '| %TITLE% | %PAGE%/%LENGTH%',
+  delay: 3000,
+  loop: false
+};
 
 /** Set property
  * @param {string|Object} k key value or a key value object
@@ -55,10 +57,31 @@ jSlide.getProperties = function() {
 };
 
 /** Set default properties */
-['title', 'size', 'fontSize', 'footer'].forEach((p) => {
+Object.keys(jSlide._default).forEach((p) => {
   jSlide.set(p);  
 });
 
+/** Set presentation mode
+ * @param {string} mode play | edit
+ * @param {bolean} timer
+ */
+jSlide.setMode = function (mode, timer) {
+  if (jSlide.timer) {
+    clearTimeout(jSlide.timer);
+  }
+  jSlide.timer = timer;
+  document.body.setAttribute('data-mode', mode);
+  jSlide.slideshow = /play/.test(mode);
+  jSlide.step = 0;
+  jSlide.show();
+};
+
+/** Get presentation mode
+ * @return {string} current mode: play | edit
+ */
+jSlide.getMode = function () {
+  return document.body.getAttribute('data-mode');
+};
 
 // Create dialog
 import Dlog from '../dialog/dlog'

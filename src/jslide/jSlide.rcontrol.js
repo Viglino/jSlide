@@ -1,9 +1,10 @@
+/** jSlide remote control
+ */
 import '../style/rcontrol.css'
 import jSlide from './jSlide'
 
-/** jSlide remote control
- */
-// Create panel
+
+// Create control panel
 const panel = document.createElement('DIV');
 panel.id = 'rcontrol';
 document.body.appendChild(panel);
@@ -12,13 +13,13 @@ const buttons = [{
     title: _T('edit'),
     icon: 'jslide-edit',
     click: function() {
-      jSlide.stopPresentation();
+      jSlide.setMode('edit');
     }
   },{
     title: _T('play'),
     icon: 'jslide-play',
     click: function() {
-      jSlide.startPresentation();
+      jSlide.setMode('play', false);
     }
   },{
     title: _T('duplicate'),
@@ -30,7 +31,7 @@ const buttons = [{
     title: _T('slideshow'),
     icon: 'jslide-play-time',
     click: function() {
-      jSlide.startPresentation();
+      jSlide.setMode('play', true);
     }
   },{
     title: ''
@@ -38,6 +39,7 @@ const buttons = [{
     title: ''
   }
 ];
+
 buttons.forEach((c,i) => {
   const button = document.createElement('DIV');
   button.className = 'button button-'+i;
@@ -48,7 +50,7 @@ buttons.forEach((c,i) => {
     if (c.click) c.click();
   });
   const icon = document.createElement('I');
-  icon.className = 'fa icon-'+i+' '+c.icon;
+  icon.className = 'icon-'+i+' '+c.icon;
   panel.appendChild(icon);
 })
 

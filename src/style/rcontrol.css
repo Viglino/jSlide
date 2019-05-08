@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   z-index: 1000;
   color: #7c6c50;
   background-color: #fafafa;
@@ -35,8 +35,8 @@
 }
 
 #rcontrol .center {
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   box-shadow: 1px 1px 4px 1px rgba(0,0,0,.3), inset 0 0 5px 0 rgba(0,0,0,.3);
   background-color: #fafafa;
@@ -45,7 +45,7 @@
   content:'';
 }
 
-#rcontrol .fa {
+#rcontrol i {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -58,17 +58,24 @@
   text-shadow: 2px 2px 1px #fff;
   font-weight: bold;
 }
-#rcontrol .icon-0 {
-  top: 13%;
+#rcontrol i:before {
+  margin: 0;
+  position: absolute;
   left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+#rcontrol .icon-0 {
+  top: 15%;
+  left: 52%;
 }
 #rcontrol .icon-1 {
   top: 32%;
-  left: 78%;
+  left: 81%;
 }
 #rcontrol .icon-2 {
   top: 67%;
-  left: 78%;
+  left: 82%;
 }
 #rcontrol .icon-3 {
   top: 85%;
@@ -78,20 +85,19 @@
 #rcontrol .button {
   transform: translate(0, -100%) rotate(-60deg) skew(-30deg);
   transform-origin: 0 100%;
-  transition: all .5s, background-color 0;
 }
-#rcontrol.visible .button-1 {
+#rcontrol .button-1 {
   transform: translate(0, -100%) rotate(0deg) skew(-30deg);
 }
-#rcontrol.visible .button-2 {
+#rcontrol .button-2 {
   transform: translate(0, -100%) rotate(60deg) skew(-30deg);
 }
-#rcontrol.visible .button-3 {
+#rcontrol .button-3 {
   transform: translate(0, -100%) rotate(120deg) skew(-30deg);
 }
-#rcontrol.visible .button-4 {
+#rcontrol .button-4 {
   transform: translate(0, -100%) rotate(180deg) skew(-30deg);
 }
-#rcontrol.visible .button-5 {
+#rcontrol .button-5 {
   transform: translate(0, -100%) rotate(240deg) skew(-30deg);
 }

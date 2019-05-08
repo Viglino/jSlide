@@ -11,11 +11,16 @@ jSlide.drawSlide = function (content, page, slideshow) {
   var pos = slide.search(']');
   var head = slide.substr(0,pos).trim().split('\n');
   var md = slide.substr(pos+1);
+
+  // Current path for local media
+  let path = window.location.href.split(/[?|#]/).shift();
+  path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(jSlide.pathName||'');
+
   var data = {
     TITLE: this.get('title'),
     PAGE: page+1,
     LENGTH: this.slide.length,
-    PATH: this.pathName
+    PATH: path
   };
 
   // Get slide parameters
@@ -122,10 +127,15 @@ jSlide.drawSlide = function (content, page, slideshow) {
 
 /** Show a slide
  * @param {number} n position, default current slide
+ * @param {boolean} showpanel, default true
  */
-jSlide.show = function (n) {
+jSlide.show = function (n, showpanel) {
   if (!this.slide || !this.slide.length) return;
-  var element = document.getElementById('slide');
+  var element = jSlide.slideDiv;
+  if (n===false) {
+    n = undefined;
+    showpanel = false;
+  }
   // current slide
   if (n!==undefined) this.current = n;
   this.current = Math.max(0, Math.min(this.current, this.slide.length-1));
@@ -134,21 +144,25 @@ jSlide.show = function (n) {
   if (history.replaceState) history.replaceState(null, null, '#'+(this.current+1));
   else location.hash = '#'+(this.current+1);
 
+  // Duplicate mode
+  document.body.className = jSlide.presentation ? 'duplicate' : 'single';
   // Draw slide
   this.drawSlide(element, this.current, this.slideshow);
 
   // Select current slide in the panel
-  var li = document.querySelectorAll('#panel > li');
-  li.forEach(function (l, i) {
-    if (i===jSlide.current) {
-      l.className='selected';
-      var r = l.getBoundingClientRect();
-      var ul = document.getElementById('panel');
-      ul.scrollTop = l.offsetTop + r.height/2 - ul.getBoundingClientRect().height/2;
-    } else {
-      l.className = '';
-    }
-  });
+  if (showpanel!==false) {
+    var li = document.querySelectorAll('#panel > li');
+    li.forEach(function (l, i) {
+      if (i===jSlide.current) {
+        l.className='selected';
+        var r = l.getBoundingClientRect();
+        var ul = document.getElementById('panel');
+        ul.scrollTop = l.offsetTop + r.height/2 - ul.getBoundingClientRect().height/2;
+      } else {
+        l.className = '';
+      }
+    });
+  }
 
   // Insert edition
   this.editor.setText('[===='+this.slide[this.current]);
@@ -161,10 +175,17 @@ jSlide.show = function (n) {
     var p = this.presentation.ownerDocument.getElementById('progress').querySelector('div');
     p.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
   }
+
+  // Delay next slide
+  if (jSlide.timer) {
+    jSlide.timer = setTimeout(() => {
+      jSlide.next();
+    }, jSlide.get('delay'));
+  }
 };
 
 /** Show next step
- * @param {Element} elt DOM element to searchin
+ * @param {Element} elt DOM element
  */
 jSlide.nextStep = function (elt) {
   var step = [];
@@ -195,7 +216,7 @@ jSlide.nextStep = function (elt) {
 }
 
 /** Go to previous Step
- * @param {Element} elt DOM element to searchin
+ * @param {Element} elt DOM element
  */
 jSlide.prevStep = function (elt) {
   // Get all steps (visible)
@@ -222,10 +243,23 @@ jSlide.next = function () {
   if (this.slideshow) {
     if (this.nextStep(document.getElementById('slide'))) {
       if (this.presentation) this.nextStep(this.presentation);
+      if (jSlide.timer) {
+        jSlide.timer = setTimeout(() => {
+          jSlide.next();
+        }, jSlide.get('delay'));
+      }
       return;
     }
   }
-  if (this.current < this.slide.length-1) this.show(++this.current);
+  if (this.current < this.slide.length-1) {
+    this.show(++this.current);
+  } else {
+    if (jSlide.timer && jSlide.get('loop')) {
+      jSlide.timer = setTimeout(() => {
+        jSlide.show(0);
+      }, jSlide.get('delay'));
+    }
+  }
 };
 
 /** Show previous slide

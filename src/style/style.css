@@ -43,6 +43,7 @@ tt, code, kbd, samp {
   bottom: 12em;
   overflow: hidden;
 }
+
 .presentation #slide {
   top: 0;
   left: 0;
@@ -239,4 +240,20 @@ img.bgImage {
 }
 .footer div.right {
   right: 0;
+}
+
+
+[data-mode="play"].single #header, 
+[data-mode="play"].single #panel, 
+[data-mode="play"].single #header, 
+[data-mode="play"].single #editor {
+  display: none;
+}
+[data-mode="play"].single #slide {
+  left: 0!important;
+  bottom: 0!important;
+}
+[data-mode="play"].single #progress {
+  left: 0!important;
+  bottom: 0!important;
 }

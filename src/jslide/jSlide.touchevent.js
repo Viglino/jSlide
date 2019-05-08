@@ -29,7 +29,7 @@ jSlide.ontouchstart = function(e) {
     if (Math.abs(touchstart[0] - touchend[0]) < minDist 
      && Math.abs(touchstart[1] - touchend[1]) < minDist) {
       e.preventDefault();
-      jSlide.closePresentation();
+      // jSlide.closePresentation();
       jSlide.rcontrol.show(touchend);
     }
   }, longtouchDelay);
