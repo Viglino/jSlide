@@ -53,14 +53,15 @@ md2html.mdPart = function (md, data) {
   // Handle icons
   md = md2html.doIcons(md);
 
+  // Handle blocks
+  md = md2html.doBlocks(md);
+
   // Data management
   md = md2html.doData(md, data);
   // RegEpx rules
   for (i=0; i<md2html.rules.length; i++) {
     md = md.replace(md2html.rules[i][0], md2html.rules[i][1]);
   }
-  // Handle blocks
-  md = md2html.doBlocks(md);
   // Clean up
   md = md2html.cleanUp(md, data.PATH);
 //  console.log(md)
@@ -104,7 +105,7 @@ md2html.doBlocks = function (md) {
   md = md.replace(/\-\]\n?/g, '</div>');
 
   // Styled span
-  md = md.replace(/(_)\[([^_]*)\](.*?)\1/g, '<span style="$2">$3</span>');
+  md = md.replace(/(_)\[([^_]*)\](.*?)\1/g, '<div class="styled" style="$2">$3</div>');
 
   return md;
 };
@@ -213,6 +214,7 @@ md2html.cleanUp = function(md, path) {
   md = md.replace(/^\n/, '');
   md = md.replace(/^\n/, '');
   md = md.replace(/\n$/, '');
+  md = md.replace(/\n<li/g, '<li');
   md = md.replace(/\n/g, '<br />');
   md = md.replace(/\t/g, ' ');
   md = md.replace(/\<\/ol><br \/>/g, '</ol>');
@@ -244,8 +246,8 @@ md2html.rules = [
   [/\<\/blockquote\>\<blockquote\>/g, '\n'],      // fix
 
   // Lists
-  [/\n\* (.*)/g, '\n<ul><li>$1</li></ul>'],                 // default list
   [/\n(-+) (.*)/g, '\n<ul><li class="sub$1 minus">$2</li></ul>'],   // 
+  [/\n(-*)\* (.*)/g, '\n<ul><li class="sub-$1 ">$2</li></ul>'],    // 
   [/\n(-*)\+ (.*)/g, '\n<ul><li class="sub-$1 plus">$2</li></ul>'],    // 
   [/\n(-+)o (.*)/g, '\n<ul><li class="sub$1 dot">$2</li></ul>'],    // 
   [/\n(-+)> (.*)/g, '\n<ul><li class="sub$1 arrow">$2</li></ul>'],  // 
@@ -257,6 +259,7 @@ md2html.rules = [
 
   [/\n\<ul\>/g, '<ul>'],                                // fix
   [/<\/ul><ul>/g, ''],                                  // concat
+  [/<\/li><li/g, '<\/li>\n<li'],                        // fix
 
   [/\n-{5,}/g, "\n<hr />"],              // hr
 
@@ -265,7 +268,7 @@ md2html.rules = [
   [/\<\/ol\>\<ol\>/g, ''],              // fix
 
   // Automatic links
-  [/([^\(])[ |\n](https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))( ?)/g, 
+  [/([^\(])\b(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\b/g, 
     '$1<a href=\'$2\' target="_blank">$2</a>'],
   // Mailto
   [/([^\(])\bmailto\b\:(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/gi, '$1<a href=\'mailto:$2\'>$2</a>'],
@@ -376,8 +379,8 @@ md2html.rules = [
 
   // format
   [/(\\\*)/g, '&#42;'],                         // escape *
-  [/(\*\*)([^]*?)\1/g, '<strong>$2</strong>'],  // bold
-  [/(\*)([^]*?)\1/g, '<em>$2</em>'],            // emphasis
+  [/(\*\*)([^\n]*?)\1/g, '<strong>$2</strong>'],  // bold
+  [/(\*)([^\n]*?)\1/g, '<em>$2</em>'],            // emphasis
   [/<strong><\/strong>/g, '****'],              // fix bold
   [/<em><\/em>/g, '**'],                        // fix em
   [/(__)(.*?)\1/g, '<u>$2</u>'],                // underline

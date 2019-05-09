@@ -283,3 +283,7 @@ iframe.github-btn {
   min-width: 1.3em;
   text-align: center;
 }
+
+.md div.styled {
+  display: inline-block;
+}
