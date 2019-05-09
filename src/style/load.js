@@ -2,6 +2,8 @@
 import './style.css'
 import './githubcorner.css'
 
+import './dialog.css'
+
 import './style.title.css'
 import './style.chapter.css'
 import './style.list.css'

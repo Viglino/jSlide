@@ -106,6 +106,9 @@ test
 :fa-pencil: pencil
 :fa-desktop: desktop
 
+## Keyboard
+Use `&lt;kbd>&lt;/kbd>` to display keyboard: <kbd>Ctrl</kbd>+<kbd>F5</kbd>
+
 ## Color
 
 Display _[color:red] information_ with _[color:blue] color_

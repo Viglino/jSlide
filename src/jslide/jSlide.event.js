@@ -1,4 +1,5 @@
 import jSlide from  './jSlide'
+import md2html from  '../md/md2html'
 import './jSlide.touchevent'
 
 /** Update slides size
@@ -66,6 +67,24 @@ jSlide.onkeydown = function(e) {
       if (e.ctrlKey) {
         e.preventDefault();
       }
+      break;
+    }
+    // ESC: close dialog
+    case 27: {
+      if (jSlide.dialog.isOpen()) {
+        jSlide.dialog.close();
+        e.preventDefault();
+      }
+      break;
+    }
+    // Help
+    case 112: {
+      jSlide.dialog.show({
+        content: md2html(_T('helpInfo')),
+        className: 'dlg-help notransition',
+        closeOnClick: true
+      })
+      e.preventDefault();
       break;
     }
     // Fullscreen

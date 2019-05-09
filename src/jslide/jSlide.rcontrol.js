@@ -2,7 +2,7 @@
  */
 import '../style/rcontrol.css'
 import jSlide from './jSlide'
-
+import md2html from '../md/md2html'
 
 // Create control panel
 const panel = document.createElement('DIV');
@@ -36,7 +36,15 @@ const buttons = [{
   },{
     title: ''
   },{
-    title: ''
+    title: _T('help'),
+    icon: 'fa fa-question',
+    click: function() {
+      jSlide.dialog.show({
+        content: md2html(_T('helpInfo')),
+        className: 'dlg-help notransition',
+        closeOnClick: true
+      })
+    }
   }
 ];
 

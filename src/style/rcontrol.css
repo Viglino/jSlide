@@ -56,7 +56,6 @@
   font-size: 1.5em;
   pointer-events: none;
   text-shadow: 2px 2px 1px #fff;
-  font-weight: bold;
 }
 #rcontrol i:before {
   margin: 0;
@@ -80,6 +79,14 @@
 #rcontrol .icon-3 {
   top: 85%;
   left: 50%;
+}
+#rcontrol .icon-4 {
+  top: 67%;
+  left: 19%;
+}
+#rcontrol .icon-5 {
+  top: 32%;
+  left: 19%;
 }
 
 #rcontrol .button {

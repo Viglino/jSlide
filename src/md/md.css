@@ -267,3 +267,19 @@ iframe.github-btn {
   vertical-align: middle;
   display: inline;
 }
+
+.md kbd {
+  background-color: #eee;
+  padding: 0 .3em;
+  display: inline-block;
+  box-shadow: inset 1px 1px 3px 2px #fff, 5px 5px 5px #999, 0px 0px 0 2px #999;
+  border-radius: 5px /100%;
+  margin: 0 .3em 0 .2em;
+  text-shadow: 2px 2px #fff;
+  font-size: .8em;
+  vertical-align: middle;
+  margin-top: -4px;
+  box-sizing: border-box;
+  min-width: 1.3em;
+  text-align: center;
+}

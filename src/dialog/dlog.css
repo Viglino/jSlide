@@ -1,4 +1,4 @@
-.dlog-back {
+.dlog {
   position: fixed;
   top: -100%;
   left: 0;
@@ -10,7 +10,7 @@
   pointer-events: none;
   z-index: 1000;
 }
-.dlog-back.visible {
+.dlog.visible {
   display: block;
   opacity: 1;
   top: 0;
@@ -18,7 +18,7 @@
   pointer-events: unset;
 }
 
-.dlog {
+.dlog > div {
   position: absolute;
   left: 33.33%;
   top: -50%;
@@ -33,15 +33,32 @@
   opacity: 0;
   transition: all .3s, top .1s ease-in-out .3s;
 }
-.visible .dlog {
+.dlog.visible > div {
   top: 40%;
   opacity: 1;
   transform: translate(-50%,-40%) scale(1);
   transition: all .3s, top 0s;
 }
+.dlog.dropdown.visible > div,
+.dlog.dropdown > div {
+  transition: all .3s, top .1s ease-in-out .3s;
+  transform: translate(-50%,-40%) scale(1);
+}
+.dlog.notransition.visible > div,
+.dlog.notransition > div {
+  transition: all 0s, opacity .3s;
+  transform: translate(-50%,-40%) scale(1);
+}
+
 .dlog h1 {
   font-size: 1.4em; 
   margin: 0;
+}
+.dlog h2 {
+  font-size: 1.2em; 
+}
+.dlog h3 {
+  font-size: 1.2em; 
 }
 .dlog .buttons {
   text-align: right;

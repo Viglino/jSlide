@@ -7,9 +7,14 @@ import '../i19n/i19n'
 const Dlog = function(options) {
   options = options || {};
   this.element = this.createElement('DIV', document.body);
-  this.element.className = 'dlog-back';
+  this.element.className = 'dlog';
+  this.element.addEventListener('click', function() {
+    console.log('click')
+    if (/closeOnClick/.test(this.element.className)) {
+      this.hide();
+    }
+  }.bind(this));
   this.dlog = this.createElement('DIV', this.element);
-  this.dlog.className = ('dlog '+(options.className||'')).trim();
 };
 
 /** Create an element
@@ -25,10 +30,13 @@ Dlog.prototype.createElement = function(el, parent, html){
  * @param {*} options
  *  @param {string|Element} options.title
  *  @param {string|Element} options.content
+ *  @param {string|Element} options.className
  *  @param {*} options.buttons a list of buttons
+ *  @param {boolean} options.closeBox add a close box, default false
+ *  @param {boolean} options.closeOnClick close when click on the dialog
  */
 Dlog.prototype.show = function(options) {
-  this.element.className = 'dlog-back visible';
+  this.element.className = ('dlog visible ' + (options.closeOnClick ? 'closeOnClick ':'') + (options.className || '')).trim();
   if (options) {
     this.dlog.innerHTML = '';
     if (options.title) {
@@ -57,10 +65,17 @@ Dlog.prototype.show = function(options) {
   }
 };
 
-/** Hide the dialog
+/** Hide/close the dialog
  */
+Dlog.prototype.close =
 Dlog.prototype.hide = function() {
-  this.element.className = 'dlog-back';
+    this.element.className = 'dlog';
+};
+
+/** Is dialog open
+ */
+Dlog.prototype.isOpen = function() {
+  return (/visible/.test(this.element.className));
 };
 
 export default Dlog;

@@ -12,12 +12,39 @@ footer:  | **%TITLE%** | %PAGE%/%LENGTH%
 |	!(./prez/logo.png 100x)
 
 [====]
+
+# Table
+
+|	**col1** |	col2 |	col3 |
+|----------|--------------|----------------|
+| ligne1   | test !(./logo.png)        | test           |
+| ligne 2  | testtesttest | test test test |
+
+[====]
+
+# Blocks
+
+[-[float:right; padding-left:1em; ] 
+!(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/AraschniaLevana_f_prorsa.jpg/1280px-AraschniaLevana_f_prorsa.jpg 400)
+|	float right
+-]
+
+Place blocks on the page where you want using CSS attributes. :fa-arrow-right:
+
+[-[ position:absolute; bottom:0; right:0; font-size:-1] 
+!(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/AraschniaLevana_f_prorsa.jpg/1280px-AraschniaLevana_f_prorsa.jpg 200)
+|	bottom-right
+-]
+
+[====]
 # Image
 
 Display images in your slides
 `!(image_url)`
 
 |	!(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/AraschniaLevana_f_prorsa.jpg/1280px-AraschniaLevana_f_prorsa.jpg 500)
+
+Internal links: [goto slide 5](#5)
 
 =====
 test
@@ -78,6 +105,13 @@ test
 :fa-eye: test
 :fa-pencil: pencil
 :fa-desktop: desktop
+
+## Keyboard
+Use `&lt;kbd>&lt;/kbd>` to display keyboard: <kbd>Ctrl</kbd>+<kbd>F5</kbd>
+
+## Color
+
+Display _[color:red] information_ with _[color:blue] color_
 
 [==== fontFamily: Dokdo
 ]
@@ -175,21 +209,21 @@ Display your twitter time line in your slides.
 
 # Animation 
 [--
-## Amazing [--(zoom,delay: 5) animations --] [--(delay:10) appears --]
+## Amazing [--[zoom,delay: 5] animations --] [--[delay:10] appears --]
 --]
-[--(zoom)
+[--[zoom]
 ## slide-up
 test 
 --]
-[--(slide-down,delay:5)
+[--[slide-down,delay:5]
 ## slide-down
 test 
 --]
-[--(slide-left,step:1)
+[--[slide-left,step:1]
 ## slide-left
 test 
 --]
-[--(slide-right)
+[--[slide-right]
 ## slide-right
 test 
 --]
