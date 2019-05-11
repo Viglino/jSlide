@@ -8,6 +8,8 @@ i19n.fr = {
   slideshow: 'diaporama',
   random: 'mode alléatoire',
   help: 'aide',
+  settings: 'paramètre de la présentation',
+  sslide: 'paramètre de la diapo',
   helpInfo: `
 # Aide
 ## :fa-keyboard-o: Racourcis clavier

@@ -8,6 +8,8 @@ i19n.en = {
   slideshow: 'slideshow',
   random: 'random',
   help: 'help',
+  settings: 'presentation settings',
+  sslide: 'slide settings',
   helpInfo: `
 # Help
 ## :fa-keyboard-o: Keyboard shortcuts

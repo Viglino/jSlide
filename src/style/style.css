@@ -66,25 +66,6 @@ tt, code, kbd, samp {
   margin: 0;
 }
 
-#editor {
-  position: fixed;
-  left: 10em;
-  height: 12em;
-  right: 0;
-  bottom: 0em;
-  background-color: #fff;
-}
-#editor textarea {
-  position: absolute;
-  font-size: .8em;
-  resize: none;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  tab-size : 4;
-  padding: 0 .5em;
-  border: 0;
-}
 #progress {
   position: absolute;
   left: 10em;

@@ -1,0 +1,49 @@
+#editor {
+  position: fixed;
+  left: 10em;
+  height: 12em;
+  right: 0;
+  bottom: 0em;
+  background-color: #fff;
+}
+
+#editor textarea {
+  position: absolute;
+  font-size: .8em;
+  resize: none;
+  top: 2.5em;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  tab-size : 4;
+  padding: 0 .5em;
+  border: 0;
+}
+
+#editor > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2em;
+  background-color: #ebe7e0;
+}
+
+#editor > div button {
+  position: relative;
+  width: 2em;
+  height: 2em;
+  font-size: 1em;
+  color: #7c6c50;
+  font-family: FontAwesome;
+  vertical-align: top;
+}
+
+#editor > div button.settings:before {
+  content: "\e807";
+  font-family: "jslide";
+  font-size: 1.3em
+}
+#editor > div button.sslide:before {
+  content: "\f1de";
+}

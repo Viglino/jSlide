@@ -1,3 +1,4 @@
+import '../style/editor.css'
 import jSlide from './jSlide'
 
 // Create editor
@@ -9,6 +10,29 @@ const editorDiv = document.createElement('DIV');
 editorDiv.id = 'editor';
 document.body.appendChild(editorDiv);
 
+// Editor bar
+editor.bar = document.createElement('DIV');
+editorDiv.appendChild(editor.bar);
+
+window.addEventListener('load', () => {
+  const buttons = [{
+    title: 'settings',
+    click: function(){}
+  },{
+    title: 'sslide',
+    click: function(){}
+  }];
+  
+  buttons.forEach((b) => {
+    const button = document.createElement('BUTTON');
+    button.className = b.title;
+    button.title = _T(b.title);
+    button.addEventListener('click', b.click);
+    editor.bar.appendChild(button);
+  });
+}, false);
+
+// Text area
 editor.element = document.createElement('TEXTAREA');
 editorDiv.appendChild(editor.element);
 

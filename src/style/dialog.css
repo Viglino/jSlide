@@ -1,0 +1,27 @@
+.dlog.dlg-help {
+  background-color: rgba(0,0,0,.8);
+}
+.dlog.dlg-help > div {
+  color: #fff;
+  background-color: transparent;
+  box-shadow: unset;
+  min-width: 40%;
+  font-size: 1.1em;
+}
+.dlog.dlg-help table {
+  width: 100%;
+}
+.dlog.dlg-help kbd {
+  color: #333;
+  background-color: #eee;
+  padding: 0 .3em;
+  border-radius: 4px / 100%;
+  margin: 0 .3em 0 0;
+  text-shadow: 2px 2px #fff;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -4px;
+  box-sizing: border-box;
+  min-width: 1.3em;
+  text-align: center;
+}
