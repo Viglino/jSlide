@@ -1,5 +1,4 @@
 import './dlog.css'
-import '../i19n/i19n'
 
 /** Application dialog
  * @class

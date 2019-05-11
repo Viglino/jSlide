@@ -5,7 +5,7 @@
   left: 0;
   width: 150px;
   height: 150px;
-  z-index: 1000;
+  z-index: 999;
   color: #7c6c50;
   background-color: #fafafa;
   border-radius: 50%;

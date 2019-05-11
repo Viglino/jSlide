@@ -7,7 +7,7 @@
  * @author Jean-Marc VIGLINO (https://github.com/Viglino)
  */
 // Global i19n
-const ie19n = window.i19n = {
+const i19n = window.i19n = {
   lang: (navigator.language || navigator.userLanguage).split('-').shift(),
   en: {}
 };

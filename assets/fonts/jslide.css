@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'jslide';
-    src: url('../font/jslide.svg?85258381#jslide') format('svg');
+    src: url('../font/jslide.svg?38737736#jslide') format('svg');
   }
 }
 */
@@ -52,3 +52,4 @@
 .jslide-edit:before { content: '\e805'; } /* '' */
 .jslide-duplicate:before { content: '\e806'; } /* '' */
 .jslide-logo:before { content: '\e807'; } /* '' */
+.jslide-play-random:before { content: '\e808'; } /* '' */

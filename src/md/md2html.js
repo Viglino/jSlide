@@ -50,18 +50,19 @@ md2html.mdPart = function (md, data) {
   // Table management
   md = md2html.doTable(md);
 
-  // Handle icons
-  md = md2html.doIcons(md);
-
-  // Handle blocks
-  md = md2html.doBlocks(md);
-
   // Data management
   md = md2html.doData(md, data);
   // RegEpx rules
   for (i=0; i<md2html.rules.length; i++) {
     md = md.replace(md2html.rules[i][0], md2html.rules[i][1]);
   }
+
+  // Handle blocks
+  md = md2html.doBlocks(md);
+
+  // Handle icons
+  md = md2html.doIcons(md);
+
   // Clean up
   md = md2html.cleanUp(md, data.PATH);
 //  console.log(md)
@@ -105,7 +106,7 @@ md2html.doBlocks = function (md) {
   md = md.replace(/\-\]\n?/g, '</div>');
 
   // Styled span
-  md = md.replace(/(_)\[([^_]*)\](.*?)\1/g, '<div class="styled" style="$2">$3</div>');
+  md = md.replace(/(_)\[([^_]*)\](.*?)\1(\n)?/g, '<div class="styled" style="$2">$3</div>$4$4');
 
   return md;
 };
@@ -207,6 +208,7 @@ md2html.cleanUp = function(md, path) {
 //  md = md.replace(/<\/ul>\n{1,2}/g, '</ul>');
 //  md = md.replace(/\<\/ol\>\n{1,2}/g, '</ol>');
 
+  md = md.replace(/<blockquote>\n/,'<blockquote>');
   md = md.replace(/<\/p>\n/g, '</p>');
 
   md = md.replace(/(\<\/h[0-9]>)\n/g, '$1');
@@ -242,8 +244,11 @@ md2html.rules = [
   [/<h([1-6])>\t/g, "<h$1 class='center'>"],      // Center header with tab
 
   // Blocks
-  [/\n\&gt\;(.*)/g, '<blockquote>$1</blockquote>'],  // blockquotes
+  [/\n>(.*)/g, '<blockquote>\n$1\n</blockquote>'],  // blockquotes
   [/\<\/blockquote\>\<blockquote\>/g, '\n'],      // fix
+
+  // Keyboard
+  [/<kbd ([^>]*)>/g, '<kbd>$1</kbd>'],             // keyboard
 
   // Lists
   [/\n(-+) (.*)/g, '\n<ul><li class="sub$1 minus">$2</li></ul>'],   // 
@@ -257,8 +262,7 @@ md2html.rules = [
   [/\n(-*)\[([ |x])\] (.*)/g, '\n<ul><li class="sub-$1 check-$2">$3</li></ul>'],   // check lists
   [/\n(-*)\(([ |x])\) (.*)/g, '\n<ul><li class="sub-$1 radio-$2">$3</li></ul>'],   // check lists
 
-  [/\n\<ul\>/g, '<ul>'],                                // fix
-  [/<\/ul><ul>/g, ''],                                  // concat
+  [/<\/ul>\n<ul>/g, ''],                                  // concat
   [/<\/li><li/g, '<\/li>\n<li'],                        // fix
 
   [/\n-{5,}/g, "\n<hr />"],              // hr
@@ -385,6 +389,8 @@ md2html.rules = [
   [/<em><\/em>/g, '**'],                        // fix em
   [/(__)(.*?)\1/g, '<u>$2</u>'],                // underline
   [/(~~)(.*?)\1/g, '<del>$2</del>'],            // del
+  [/\\~/g, '&tilde;'],                             // escape ~
+  [/~/g, '&nbsp;'],                             // nbsp
 
   // alignement https://github.com/jgm/pandoc/issues/719
   [/\n\|<>([^\n]*)/g, "\n<pc>$1</pc>"],       // center |<>

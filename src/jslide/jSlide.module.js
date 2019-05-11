@@ -1,3 +1,5 @@
+import '../i19n/i19n'
+
 import jSlide from './jSlide'
 import './jSlide.rcontrol'
 import './jSlide.editor'

@@ -101,17 +101,18 @@ Just link to your repo to add a gihub link to the top right corner:
 # Symbol icons
 
 :fa-check-square-o: FontAwesome icons.
-test
 :fa-eye: test
 :fa-pencil: pencil
 :fa-desktop: desktop
 
 ## Keyboard
-Use `&lt;kbd>&lt;/kbd>` to display keyboard: <kbd>Ctrl</kbd>+<kbd>F5</kbd>
 
-## Color
+Use `&lt;kbd char>` to display keyboard: <kbd Ctrl>+<kbd F5>
 
-Display _[color:red] information_ with _[color:blue] color_
+## Style blocks (colors)
+
+Display _[color:red; background:yellow] ~information~_ with _[color:blue] color_.
+Use <kbd \~> for non breaking spaces and <kbd \><kbd \~> for tilde (\~).
 
 [==== fontFamily: Dokdo
 ]

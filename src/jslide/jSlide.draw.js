@@ -84,6 +84,20 @@ jSlide.drawSlide = function (content, page, slideshow) {
   element.appendChild(div);
 
   this.updateSize();
+  // color
+  if (param.color) {
+    div.className += ' resetColor';
+    div.style.color = param.color;
+  }
+  // bgColor
+  if (param.bgColor) {
+    var d = (/\bfullscreen\b/.test(div.className)) ? element : div;
+    var bg = document.createElement('DIV');
+    bg.className = 'bgImage';
+    bg.style.backgroundColor = param.bgColor;
+    d.insertBefore(bg, d.lastChild);
+  }
+  // bgImage
   if (param.bgImage) {
     var img, d = (/\bfullscreen\b/.test(div.className)) ? element : div;
     if (/^linear-gradient|^radial-gradient/.test(param.bgImage)) {
@@ -104,10 +118,7 @@ jSlide.drawSlide = function (content, page, slideshow) {
     }
     d.insertBefore(img, d.lastChild);
   }
-  if (param.color) {
-    div.className += ' resetColor';
-    div.style.color = param.color;
-  }
+  // fontSize
   if (param.fontSize) {
     div.querySelector('.md').style.fontSize = param.fontSize+'px';
   }

@@ -3,8 +3,8 @@ i19n.fr = {
   cancel: 'Annuler',
   new_presentation: '# Nouvelle présentation\n## Sous-titre',
   edit: 'éditer',
-  play: 'presentation',
-  duplicate: 'dupliquer',
+  play: 'présentation',
+  duplicate: 'mode miroir',
   slideshow: 'diaporama',
   help: 'aide',
   helpInfo: `
