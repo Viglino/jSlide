@@ -21,7 +21,7 @@ tt, code, kbd, samp {
   left: 0;
   right: 0;
   height: 2em;
-  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,.2);
 }
 #panel {
   position: fixed;
@@ -133,7 +133,7 @@ tt, code, kbd, samp {
 #header button.save:before {
   content: "\f019";
 }
-#header button.present:before {
+#header button.rcontrol:before {
   content: "\f01d";
 }
 

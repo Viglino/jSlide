@@ -7,25 +7,33 @@ const header = document.createElement('DIV');
 header.id = 'header';
 document.body.appendChild(header);
 
-// Add button to the bar
-function addButton(className, click) {
-  var b = document.createElement('BUTTON');
-  // Save
-  b.className = className;
-  b.addEventListener('click', click);
-  header.appendChild(b);
-  return b;  
-}
+window.addEventListener('load', () => {
 
-//
-addButton('addSlide', () => {
-  jSlide.slide.splice(jSlide.current+1,0,']');
-  jSlide.showPanel();
-  jSlide.next();
+  const buttons = [{
+    title: 'addSlide',
+    click: function() {
+      jSlide.slide.splice(jSlide.current+1,0,']');
+      jSlide.showPanel();
+      jSlide.next();
+    }
+  }, {
+    title: 'open',
+    click: function() {}
+  }, {
+    title: 'save',
+    click: function() { jSlide.save(); }
+  }, {
+    title: 'rcontrol',
+    click: function() { jSlide.rcontrol.show([200,150]); }
+  }];
+
+  buttons.forEach((b) => {
+    var button = document.createElement('BUTTON');
+    button.className = b.title;
+    button.title = _T(b.title);
+    button.addEventListener('click', b.click);
+    header.appendChild(button);
+  });
 });
-addButton('open');
-addButton('save', () => { jSlide.save(); });
-addButton('present', () => { jSlide.rcontrol.show([200,150]); });
-//addButton('slideshow', () => { jSlide.startPresentation(); });
 
 export default bar
