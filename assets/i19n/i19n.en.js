@@ -6,6 +6,8 @@ i19n.en = {
   play: 'play',
   duplicate: 'duplicate view',
   slideshow: 'slideshow',
+  random: 'random',
+  help: 'help',
   helpInfo: `
 # Help
 ## :fa-keyboard-o: Keyboard shortcuts
@@ -15,8 +17,9 @@ i19n.en = {
 | <kbd>&#8594;</kbd>, <kbd>&#8595;</kbd>, <kbd>&#8671;</kbd>, <kbd> space </kbd>  | Go to next slide |
 | <kbd>Home</kbd>         | Go to first slide |
 | <kbd>End</kbd>          | Go to last slide |
-| <kbd>F5</kbd>           | Open mirror window / full screen |
 | <kbd>F1</kbd>           | Show help screen |
+| <kbd>F5</kbd>           | Open mirror window |
+| <kbd>F11</kbd>          | Full screen |
 | Long click              | Show remote control |
   `,
   jslide: 'jSlide'

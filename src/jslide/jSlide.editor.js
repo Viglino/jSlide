@@ -60,7 +60,7 @@ editor.element.addEventListener('change', (e) => { onchange(true); });
  * @param {Event} e
  */
 editor.element.addEventListener('keydown', (e) => {
-  if (e.keyCode === 116) return;
+  if (e.keyCode === 116 || e.keyCode === 112) return;
   if (!e.ctrlKey || e.keyCode < 60) {
     e.stopPropagation();
     switch (e.keyCode) {

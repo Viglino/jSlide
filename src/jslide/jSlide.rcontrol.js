@@ -34,10 +34,14 @@ function createButtons() {
       title: _T('slideshow'),
       icon: 'jslide-play-time',
       click: function() {
-        jSlide.setMode('play', true);
+        jSlide.setMode('play', { timer:true });
       }
     },{
-      title: ''
+      title: _T('random'),
+      icon: 'jslide-play-random',
+      click: function() {
+        jSlide.setMode('play', { timer:true, random:true });
+      }
     },{
       title: _T('help'),
       icon: 'fa fa-question',

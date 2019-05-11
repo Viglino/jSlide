@@ -6,6 +6,7 @@ i19n.fr = {
   play: 'présentation',
   duplicate: 'mode miroir',
   slideshow: 'diaporama',
+  random: 'mode alléatoire',
   help: 'aide',
   helpInfo: `
 # Aide
@@ -16,8 +17,9 @@ i19n.fr = {
 | <kbd>&#8594;</kbd>, <kbd>&#8595;</kbd>, <kbd>&#8671;</kbd>, <kbd> Espace </kbd> | Diapo précédente |
 | <kbd>Home</kbd>         | Aller à la première diapo |
 | <kbd>End</kbd>          | Aller à la dernière diapo |
-| <kbd>F5</kbd>           | Mode miroir / plein écran |
 | <kbd>F1</kbd>           | Afficher l'aide |
+| <kbd>F5</kbd>           | Mode miroir |
+| <kbd>F11</kbd>          | Plein écran |
 | Clic long               | Afficher la télécommande |
   `,
   jslide: 'jSlide'

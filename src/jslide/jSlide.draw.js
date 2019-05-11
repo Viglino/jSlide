@@ -179,12 +179,16 @@ jSlide.show = function (n, showpanel) {
   this.editor.setText('[===='+this.slide[this.current]);
 
   // Set progress bar
-  this.progressBar.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
+  if (jSlide.random) {
+    this.progressBar.style.width = 0;
+  } else {
+    this.progressBar.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
+  }
 
   if (this.presentation) {
     this.drawSlide(this.presentation, this.current, this.slideshow);
-    var p = this.presentation.ownerDocument.getElementById('progress').querySelector('div');
-    p.style.width = (100 * this.current / (this.slide.length-1)||0)+'%';
+    const p = this.presentation.ownerDocument.getElementById('progress').querySelector('div');
+    p.style.width = this.progressBar.style.width;
   }
 
   // Delay next slide
@@ -262,7 +266,9 @@ jSlide.next = function () {
       return;
     }
   }
-  if (this.current < this.slide.length-1) {
+  if (jSlide.random) {
+    this.show(Math.trunc(Math.random() * jSlide.slide.length));
+  } else if (this.current < this.slide.length-1) {
     this.show(++this.current);
   } else {
     if (jSlide.timer && jSlide.get('loop')) {

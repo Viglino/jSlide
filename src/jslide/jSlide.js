@@ -63,13 +63,15 @@ Object.keys(jSlide._default).forEach((p) => {
 
 /** Set presentation mode
  * @param {string} mode play | edit
- * @param {bolean} timer
+ * @param {string} options
  */
-jSlide.setMode = function (mode, timer) {
+jSlide.setMode = function (mode, options) {
+  options = options || {};
   if (jSlide.timer) {
     clearTimeout(jSlide.timer);
   }
-  jSlide.timer = timer;
+  jSlide.timer = !!options.timer;
+  jSlide.random = !!options.random;
   document.body.setAttribute('data-mode', mode);
   jSlide.slideshow = /play/.test(mode);
   jSlide.step = 0;
@@ -80,7 +82,7 @@ jSlide.setMode = function (mode, timer) {
  * @return {string} current mode: play | edit
  */
 jSlide.getMode = function () {
-  return document.body.getAttribute('data-mode');
+  return document.body.getAttribute('data-mode') || 'edit';
 };
 
 // Create dialog

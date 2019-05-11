@@ -87,16 +87,16 @@ jSlide.onkeydown = function(e) {
       e.preventDefault();
       break;
     }
-    // Fullscreen
+    // Openpresentation
     case 116: {
-      this.openPresentation();
+      jSlide.openPresentation();
       e.preventDefault();
       break;
     }
     // Ctrl + S
     case 83: {
       if (e.ctrlKey) {
-        this.save();
+        jSlide.save();
         e.preventDefault();
       }
       break;

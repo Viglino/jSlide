@@ -42,17 +42,15 @@ jSlide.openPresentation = function() {
     w.document.addEventListener('keydown', (e) => {
       // F5 = fullscreen
       if (e.keyCode===116 && w.document.documentElement.requestFullscreen) {
-        console.log('fullscreen')
+        /*
         if (w.fullScreen) {
           w.document.exitFullscreen();
-          w.fullScreen = false;
-          jSlide.updateSize();
-        }
-        else {
+        } else {
           w.document.documentElement.requestFullscreen();
-          w.fullScreen = true;
-          jSlide.updateSize();
         }
+        w.fullScreen = !w.fullScreen;
+        jSlide.updateSize();
+        */
         e.preventDefault();
         e.stopPropagation();
       } else {
