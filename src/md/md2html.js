@@ -212,7 +212,7 @@ md2html.cleanUp = function(md, path) {
   md = md.replace(/<\/p>\n/g, '</p>');
 
   md = md.replace(/(\<\/h[0-9]>)\n/g, '$1');
-  md = md.replace(/(\<hr \/>)\n/g, '$1');
+  md = md.replace(/(\<hr ([^\/]*)?\/>)\n/g, '$1');    // fix hr
   md = md.replace(/^\n/, '');
   md = md.replace(/^\n/, '');
   md = md.replace(/\n$/, '');
@@ -243,6 +243,13 @@ md2html.rules = [
 
   [/<h([1-6])>\t/g, "<h$1 class='center'>"],      // Center header with tab
 
+  // hr
+  [/\n-{3,}\n/g, '\n<hr class="hr0" />\n'],            // hr0
+  [/\n>-{3,}<\n/g, '\n<hr class="hr1" />\n'],          // hr1
+  [/\n-{3,}o-{3,}\n/g, '\n<hr class="hr2" />\n'],      // hr2
+  [/\n-{3,}<>-{3,}\n/g, '\n<hr class="hr3" />\n'],     // hr3
+  [/\n-{3,}:-{3,}\n/g, '\n<hr class="hr4" />\n'],      // hr4
+
   // Blocks
   [/\n>(.*)/g, '<blockquote>\n$1\n</blockquote>'],  // blockquotes
   [/\<\/blockquote\>\<blockquote\>/g, '\n'],      // fix
@@ -262,14 +269,12 @@ md2html.rules = [
   [/\n(-*)\[([ |x])\] (.*)/g, '\n<ul><li class="sub-$1 check-$2">$3</li></ul>'],   // check lists
   [/\n(-*)\(([ |x])\) (.*)/g, '\n<ul><li class="sub-$1 radio-$2">$3</li></ul>'],   // check lists
 
-  [/<\/ul>\n<ul>/g, ''],                                  // concat
+  [/<\/ul>\n<ul>/g, ''],                                // concat
   [/<\/li><li/g, '<\/li>\n<li'],                        // fix
 
-  [/\n-{5,}/g, "\n<hr />"],              // hr
-
   // Ordered list
-  [/\n[0-9]+\.(.*)/g, '<ol><li>$1</li></ol>'],    // ol lists
-  [/\<\/ol\>\<ol\>/g, ''],              // fix
+  [/\n[0-9]+\.(.*)/g, '<ol><li>$1</li></ol>'],          // ol lists
+  [/\<\/ol\>\<ol\>/g, ''],                              // fix
 
   // Automatic links
   [/([^\(])\b(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\b/g, 

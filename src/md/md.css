@@ -18,10 +18,6 @@
 .md h4 { font-size: 1.2em; }
 .md h5 { font-size: 1.1em; }
 
-.md hr {
-  clear: both;
-}
-
 .md { 
   position: relative;
   text-align: justify;
@@ -286,4 +282,42 @@ iframe.github-btn {
 
 .md div.styled {
   display: inline-block;
+}
+
+/* HR */
+.md hr {
+  clear: both;
+}
+.md hr.hr0,
+.md hr.hr2,
+.md hr.hr3 {
+  height: 6px;
+  background-image: radial-gradient(ellipse 50% 4px at center, currentColor, transparent 100%);
+  position: relative;
+  border: 0;
+  overflow: visible;
+  opacity: .6;
+}
+.md hr:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  background: currentColor;
+
+}
+.md hr.hr2:before {
+  content: '';
+  height: .5em;
+  width: .5em;
+  transform: translate(-50%,-50%);
+  border-radius: 100%;
+}
+
+.md hr.hr3:before {
+  content: '';
+  height: .5em;
+  width: .5em;
+  transform: translate(-50%,-50%) rotate(45deg);
+  border-radius: .1em;
 }

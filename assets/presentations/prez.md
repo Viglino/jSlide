@@ -22,6 +22,21 @@ footer:  | **%TITLE%** | %PAGE%/%LENGTH%
 
 [====]
 
+# Horiontal rules
+
+Standard: 3 or more `-` on a line
+---
+`>---<`
+>---<
+`---o---`
+---o---
+`---<>---`
+---<>---
+`---:---`
+---:---
+
+[====]
+
 # Blocks
 
 [-[float:right; padding-left:1em; ] 
