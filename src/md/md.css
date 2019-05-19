@@ -286,32 +286,32 @@ iframe.github-btn {
 
 /* HR */
 .md hr {
+  position: relative;
+  overflow: visible;
   clear: both;
+  opacity: .9;
+  margin: .25em 0;
+  border: 0;
 }
 .md hr.hr0,
-.md hr.hr2,
+.md hr.hr-o,
 .md hr.hr3 {
-  height: 6px;
+  height: .25em;
   background-image: radial-gradient(ellipse 50% 4px at center, currentColor, transparent 100%);
-  position: relative;
-  border: 0;
-  overflow: visible;
-  opacity: .6;
+  margin: .125em 0;
+}
+.md hr.hr1 {
+  height: .5em;
+  background-image: linear-gradient(currentColor, transparent 100%);
+  opacity: .2;
+  margin: .25em 0 -.25em;
 }
 .md hr:before {
   position: absolute;
   top: 50%;
   left: 50%;
   display: block;
-  background: currentColor;
-
-}
-.md hr.hr2:before {
-  content: '';
-  height: .5em;
-  width: .5em;
   transform: translate(-50%,-50%);
-  border-radius: 100%;
 }
 
 .md hr.hr3:before {
@@ -320,4 +320,130 @@ iframe.github-btn {
   width: .5em;
   transform: translate(-50%,-50%) rotate(45deg);
   border-radius: .1em;
+  background: currentColor;
+}
+
+.md hr.hr-x {
+  overflow: hidden;
+  height: .5em;
+  border: 1px dashed currentColor;
+  border-width: .07em 0 0;
+  font-size: 1.3em;
+}
+
+.md hr.hr4 {
+  background-color: currentColor;
+  box-shadow: 0 0 .5em currentColor;
+  height: .1em;
+  margin: .2em 20%;
+  background: transparent;
+}
+
+.md hr.hr5 {
+  height: .3em;
+  background-image: linear-gradient(135deg, 
+    currentColor 25%, transparent 25%, 
+    transparent 50%, currentColor 50%, 
+    currentColor 75%, transparent 75%, 
+    transparent 100%);
+  background-size: .3em .3em;
+  margin: .1em 30%;
+}
+
+.md hr.hr6:before,
+.md hr.hr6:after {
+  content: "";
+  position: absolute;
+  width: .6em;
+  height: .6em;
+  top: -.3em;
+  left: calc(50% - .9em);
+  border-width: 0 .6em .6em 0;
+  border-color: gray;
+  border-style: double;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+}
+.md hr.hr6:after {
+  left: calc(50% + .2em);
+  transform: rotate(135deg);
+}
+.md hr.hr7:before {
+  content: "\273D \273D \273D";
+}
+
+.md hr.hr-o:before {
+  content: '';
+  height: .5em;
+  width: .5em;
+  border-radius: 100%;
+  background: currentColor;
+}
+
+.md hr.hr-x,
+.md hr.hr-X {
+  margin: .25em 0 0;
+}
+.md hr.hr-x:before,
+.md hr.hr-X:before {
+      content: '\f0c4';
+  font-family: 'FontAwesome';
+  top: 0;
+  left: 1em;
+  transform: translateY(-50%);
+}
+
+.md hr.hr-w {
+  height: .5em;
+  overflow: hidden;
+  margin: 0;
+}
+.md hr.hr-w:before,
+.md hr.hr-w:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 40%;
+  background-size: .5em .6em;
+  height: .5em;
+  background-image: linear-gradient(315deg, rgba(0, 0, 0, 0.75) 25%, transparent 25%), 
+    linear-gradient(45deg, rgba(0, 0, 0, 0.75) 25%, transparent 25%);
+  background-position: 0;
+  top: 0;
+}
+.md hr.hr-w:after {
+  top: .5em;
+  background-image: linear-gradient(135deg, currentColor 25%, transparent 25%), 
+    linear-gradient(225deg, currentColor 25%, transparent 25%);
+  background-position: .25em;
+}
+
+.md hr.hr-§ {
+  overflow: hidden;
+  height: 1em;
+  margin: 0;
+}
+.md hr.hr-§:before {
+  content: "\e809";
+  font-family: "jslide";
+  font-size: 4em;
+  user-select: none;
+}
+
+.md .clear {
+  clear: both;
+}
+.md .mdcol {
+  width: 50%;
+  float: left;
+  padding: 0 .5em;
+  box-sizing: border-box;
+}
+.md .mdcol-3 {
+  width: 33.33%;
+}
+.md .mdcol-4 {
+  width: 25%;
 }

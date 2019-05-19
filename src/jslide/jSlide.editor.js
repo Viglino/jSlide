@@ -1,5 +1,7 @@
 import '../style/editor.css'
 import jSlide from './jSlide'
+import settings from '../jslide/jSlide.settings'
+import settingDlg from '../dialog/settings'
 
 // Create editor
 const editor = jSlide.editor = {
@@ -17,10 +19,23 @@ editorDiv.appendChild(editor.bar);
 window.addEventListener('load', () => {
   const buttons = [{
     title: 'settings',
-    click: function(){}
+    click: () => { 
+      settingDlg.show('<i class="jslide-logo"></i> '+_T('settings_dlg'), 
+      settings,
+      (values) => {
+        Object.keys(values).forEach((p) => {
+          jSlide.set(p, values[p]);
+        });
+        jSlide.show();
+      }); }
   },{
     title: 'sslide',
-    click: function(){}
+    click: () => { 
+      settingDlg.show('<i class="jslide-logo"></i> '+_T('slide_dlg'), 
+      settings,
+      () => {
+        
+      }); }
   }];
   
   buttons.forEach((b) => {

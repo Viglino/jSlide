@@ -2,12 +2,14 @@
 import './style.css'
 import './githubcorner.css'
 
-import './dialog.css'
+import './dialog.help.css'
+import './dialog.settings.css'
 
 import './style.title.css'
 import './style.chapter.css'
 import './style.list.css'
 import './style.transition.css'
+import './style.columns.css'
 
 // Load assets
 function addCSS(filename){

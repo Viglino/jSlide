@@ -1,0 +1,107 @@
+/* Settings dialog */
+.dlog.settings i {
+  font-size: 1.3em;
+}
+.dlog.settings > div {
+  max-width: 800px;
+  width: 60%;
+  color: #7c6c50;
+  padding: 1em 2em;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.dlog.settings input {
+  font-size: .9em;
+  border: 0;
+  vertical-align: middle;
+  color: currentColor;
+  width: 60%;
+  border-left: 2px solid #ccc;
+  box-sizing: border-box;
+  padding: .25em 0 .25em .5em;
+  background-color: #f7f5f3;
+}
+.dlog.settings input[type="text"] {
+  width: 100%;
+  border: 0;
+  padding: .25em 0;
+}
+.dlog.settings input[type="checkbox"] {
+  position: absolute;
+  opacity:0;
+  height: 0;
+  width: 0;
+}
+.dlog.settings ul {
+  margin: .5em 0;
+  padding: 0;
+  list-style: none;
+}
+.dlog.settings li {
+  position: relative;
+  border-bottom: 2px solid #ccc;
+  margin: 0 0 .5em;
+}
+.dlog.settings label {
+  display: inline-block;
+  width: 40%;
+  vertical-align: middle;
+}
+.dlog.settings li.li-text label,
+.dlog.settings li.li-checkbox label {
+  width:100%;
+}
+.dlog.settings ul span {
+  display: inline-block;
+}
+.dlog.settings ul span:after {
+  content: ':';
+}
+.dlog.settings ul input[type="checkbox"] ~ span {
+  padding-left: 1.8em;
+  width: 100%;
+  cursor: pointer;
+}
+.dlog.settings ul input[type="checkbox"] ~ span:after {
+  content: '';
+  position: absolute;
+  left: .4em;
+  width: 1em;
+  height: 1em;
+  background-color: #ebe7e0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: .1em;
+}
+.dlog.settings ul input[type="checkbox"]:hover ~ span:after {
+  background-color: #d1c5b1;
+}
+.dlog.settings ul input[type="checkbox"]:checked ~ span:after {
+  background-color: #7c6c50;
+}
+.dlog.settings ul input[type="checkbox"]:checked ~ span:before {
+  content: '';
+  position: absolute;
+  left: .65em;
+  top: 43%;
+  width: .5em;
+  height: .75em;
+  border: solid #fff;
+  border-width: 0 .2em .2em 0;
+  transform: translateY(-50%) rotate(45deg);
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.dlog.settings ul select {
+  font-size: .9em;
+  color: #fff;
+  background-color: #7c6c50;
+  border-color: #7c6c50;
+  min-width: 6em;
+  margin: .25em 0;
+}
+.dlog.settings ul select option {
+  color: #7c6c50;
+  background-color: #fff;
+}

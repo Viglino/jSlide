@@ -31,13 +31,13 @@
   box-shadow: 2px 2px 4px 1px rgba(0,0,0,.3);
   padding: 1em;
   opacity: 0;
-  transition: all .3s, top .1s ease-in-out .3s;
+  transition: all .3s, top .1s ease-in-out .3s, width 0s, height 0s, max-width 0s;
 }
 .dlog.visible > div {
   top: 40%;
   opacity: 1;
   transform: translate(-50%,-40%) scale(1);
-  transition: all .3s, top 0s;
+  transition: all .3s, top 0s, width 0s, height 0s, max-width 0s;
 }
 .dlog.dropdown.visible > div,
 .dlog.dropdown > div {

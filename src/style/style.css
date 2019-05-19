@@ -240,3 +240,8 @@ img.bgImage {
   left: 0!important;
   bottom: 0!important;
 }
+
+::selection { 
+  background: rgb(179, 154, 112);
+  color: #fff;
+}

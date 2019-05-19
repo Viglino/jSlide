@@ -8,11 +8,20 @@ const Dlog = function(options) {
   this.element = this.createElement('DIV', document.body);
   this.element.className = 'dlog';
   this.element.addEventListener('click', function() {
-    console.log('click')
     if (/closeOnClick/.test(this.element.className)) {
       this.hide();
     }
   }.bind(this));
+  document.addEventListener('keydown', (e) => {
+    if (this.isOpen()) {
+      // ESC: close dialog
+      if (e.keyCode === 27) {
+        this.close();
+        e.preventDefault();
+      }
+      e.stopImmediatePropagation();
+    }
+  });
   this.dlog = this.createElement('DIV', this.element);
 };
 

@@ -2,13 +2,16 @@ i19n.en = {
   /* Dialog */
   ok: 'OK',
   cancel: 'Cancel',
+
   /* New presentation content */
   new_presentation: '# New presentation\n## Subtitle',
+
   /* Menu bar */
   addSlide: 'add slide',
   open: 'open',
   save: 'save',
   rcontrol: 'remote control',
+
   /* Remote control */
   edit: 'edit',
   play: 'play',
@@ -16,9 +19,21 @@ i19n.en = {
   slideshow: 'slideshow',
   random: 'random',
   help: 'help',
+
   /* Edit bar */
   settings: 'presentation settings',
   sslide: 'slide settings',
+
+  /* Settings dialog */
+  settings_dlg: 'Settings',
+  settings_title: 'Title',
+  settings_description: 'Description',
+  settings_fontSize: 'Font size',
+  settings_footer: 'Footer',
+  settings_format: 'Format',
+  settings_delay: 'Delay beetween slides (ms)',
+  settings_loop: 'Loop slideshow',
+  
   /* Help dialog */
   helpInfo: `
 # Help

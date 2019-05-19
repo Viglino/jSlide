@@ -1,3 +1,9 @@
+.dlog textarea:focus, 
+.dlog select:focus, 
+.dlog input:focus {
+  outline: none;
+}
+
 .dlog.dlg-help {
   background-color: rgba(0,0,0,.8);
 }

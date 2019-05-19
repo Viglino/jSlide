@@ -31,6 +31,8 @@ jSlide.updateSize = function() {
 /** Handle keydown avent
  */
 jSlide.onkeydown = function(e) {
+  console.log('JSLIDE')
+
   // console.log(e.keyCode)
   switch (e.keyCode) {
     // Space arrow left/down
@@ -65,14 +67,6 @@ jSlide.onkeydown = function(e) {
     // Ctrl + O
     case 79: {
       if (e.ctrlKey) {
-        e.preventDefault();
-      }
-      break;
-    }
-    // ESC: close dialog
-    case 27: {
-      if (jSlide.dialog.isOpen()) {
-        jSlide.dialog.close();
         e.preventDefault();
       }
       break;

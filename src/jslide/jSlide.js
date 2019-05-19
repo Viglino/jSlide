@@ -1,19 +1,11 @@
+import settings from './jSlide.settings'
+
 /**
  * jSlide
  */
 const jSlide = {
   _param: {},
   fonts: {}
-};
-
-/** Default values  */
-jSlide._default = {
-  title: 'jSlide',
-  size: [1200,900],
-  fontSize: 35,
-  footer: '| %TITLE% | %PAGE%/%LENGTH%',
-  delay: 3000,
-  loop: false
 };
 
 /** Set property
@@ -23,13 +15,22 @@ jSlide._default = {
 jSlide.set = function(k,v) {
   if (typeof k === 'string') {
     if (k) {
-      jSlide._param[k] = v || jSlide._default[k] || '';
+      jSlide._param[k] = v || settings[k].default || '';
       if (k==='format') {
         switch (v) {
-          case '16:9': jSlide._param.size = [1600,900]; break;
-          case '4:3': jSlide._param.size = [1200,900]; break;
-          default: jSlide._param.size = jSlide.size;
+          case '16:9': {
+            jSlide._param.size = [1600,900]; 
+            break;
+          }
+          case '4:3': 
+          default: {
+            jSlide._param.size = [1200,900]; 
+            break;
+          }
         }
+      }
+      if (k==='title') {
+        document.title = v;
       }
     }
   } else {
@@ -57,8 +58,8 @@ jSlide.getProperties = function() {
 };
 
 /** Set default properties */
-Object.keys(jSlide._default).forEach((p) => {
-  jSlide.set(p);  
+Object.keys(settings).forEach((p) => {
+  jSlide.set(p, settings[p].default);  
 });
 
 /** Set presentation mode

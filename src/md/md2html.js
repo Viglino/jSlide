@@ -105,6 +105,11 @@ md2html.doBlocks = function (md) {
   md = md.replace(/\n\[-(\[([^\]]*)\])?( *)?\n?/g, '<div class="mdblock" style="$2">');
   md = md.replace(/\-\]\n?/g, '</div>');
 
+  // Column blocks
+  md = md.replace(/\n<-{3,}>\n/g, '<div class="clear">\n');
+  md = md.replace(/\n<-{3,}(\d+)?\n/g, '<div class="mdcol mdcol-$1">');
+  md = md.replace(/\-{3,}>\n/g, '</div>');
+
   // Styled span
   md = md.replace(/(_)\[([^_]*)\](.*?)\1(\n)?/g, '<div class="styled" style="$2">$3</div>$4$4');
 
@@ -244,11 +249,14 @@ md2html.rules = [
   [/<h([1-6])>\t/g, "<h$1 class='center'>"],      // Center header with tab
 
   // hr
-  [/\n-{3,}\n/g, '\n<hr class="hr0" />\n'],            // hr0
-  [/\n>-{3,}<\n/g, '\n<hr class="hr1" />\n'],          // hr1
-  [/\n-{3,}o-{3,}\n/g, '\n<hr class="hr2" />\n'],      // hr2
-  [/\n-{3,}<>-{3,}\n/g, '\n<hr class="hr3" />\n'],     // hr3
-  [/\n-{3,}:-{3,}\n/g, '\n<hr class="hr4" />\n'],      // hr4
+  [/\n-{3,}\n/g, '\n<hr class="hr0" />\n'],            // hr
+  [/\n-{3,}=-{3,}\n/g, '\n<hr class="hr1" />\n'],      // 1
+  [/\n-{3,}<>-{3,}\n/g, '\n<hr class="hr3" />\n'],     // 3
+  [/\n-{3,}:-{3,}\n/g, '\n<hr class="hr4" />\n'],      // 4
+  [/\n-{3,}\/\/-{3,}\n/g, '\n<hr class="hr5" />\n'],   // 5
+  [/\n-{3,}><-{3,}\n/g, '\n<hr class="hr6" />\n'],     // 6
+  [/\n-{3,}\*-{3,}\n/g, '\n<hr class="hr7" />\n'],     // 7
+  [/\n-{3,}(.)-{3,}\n/g, '\n<hr class="hr-$1" />\n'],  // x
 
   // Blocks
   [/\n>(.*)/g, '<blockquote>\n$1\n</blockquote>'],  // blockquotes
