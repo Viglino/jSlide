@@ -20,6 +20,35 @@ footer:  | **%TITLE%** | %PAGE%/%LENGTH%
 | ligne1   | test !(./logo.png)        | test           |
 | ligne 2  | testtesttest | test test test |
 
+[====
+  fontSize:30
+]
+
+# Horiontal rules
+
+Standard: 3 or more `-` on a line: `---`
+---
+ 1. `---=---`
+---=---
+ 2. `---o---`
+---o---
+ 3. `---<>---`
+---<>---
+ 4. `---><---`
+---><---
+ 5. `---:---`
+---:---
+ 6. `---*---`
+---*---
+ 7. `---//---`
+---//---
+ 8. `---x---`
+---x---
+ 9. `---w---`
+---w---
+ 9. `---§---`
+---§---
+
 [====]
 
 # Blocks
@@ -44,14 +73,12 @@ Display images in your slides
 
 |	!(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/AraschniaLevana_f_prorsa.jpg/1280px-AraschniaLevana_f_prorsa.jpg 500)
 
-Internal links: [goto slide 5](#5)
-
-=====
-test
+Internal links: [goto slide 6](#6)
 
 [====]
 # List
-
+<---
+## List
 * default
 - minus
 + plus
@@ -60,10 +87,15 @@ test
 <> diamond
 -> arrow
 => arrow-o
+--->
+
+<---
+## Checklist
 [ ] check box
 [x] checked
 ( ) radio off
 (x) radio on
+--->
 
 [====
   fontSize: 32
