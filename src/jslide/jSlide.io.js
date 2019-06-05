@@ -1,5 +1,6 @@
 import jSlide from './jSlide'
 import { saveAs } from 'file-saver';
+import settings from './jSlide.settings';
 
 /**
  * Read from a file
@@ -27,14 +28,36 @@ jSlide.open = function (slide) {
   this.slide = slide;
   this.slide = this.slide.replace(/(\r\n)/g, '\n');
   this.slide = this.slide.split(/\n\[====/g);
+  
   // Header
   var head = this.slide.shift().split('\n');
   var properties = {};
   head.forEach(function(p) {
-    p = p.split(':');
-    properties[p.shift().trim()] = p.join(':').trim();
+    if (p) {
+      p = p.split(':');
+      properties[p.shift().trim()] = p.join(':').trim();
+    }
   });
   this.set(properties);
+
+  // Get slide headers
+  this.slide.forEach((slide, i) => {
+    var pos = slide.search(']\n');
+    var head = slide.substr(0,pos).trim().split('\n');
+    var md = slide.substr(pos+2);
+    // Get slide parameters
+    if (!/:/.test(head[0])) head[0] = 'className:'+head[0];
+    var param = { className:'' };
+    head.forEach(function(h) {
+      var p = h.split(':');
+      param[p.shift().trim()] = p.join(':').trim();
+    });
+    this.slide[i] = {
+      head: param,
+      md: md
+    }
+  });
+
   // 
   this.showPanel();
   // title
@@ -45,11 +68,20 @@ jSlide.open = function (slide) {
 /** Save md file
  */
 jSlide.save = function () {
-  var slide = '';
-  for (var i in this.getProperties()) {
-    slide += i + ': ' + this.get(i) + '\n';
+  let i, slide = '';
+  for (i in this.getProperties()) {
+    if (i!=='size' && this.get(i) !== settings[i].default) slide += i + ': ' + this.get(i) + '\n';
   }
-  slide +=  '[==== ' + this.slide.join('[==== ');
+  this.slide.forEach((s) => {
+    slide += '[==== '+s.head.className+'\n';
+    for (i in s.head) {
+      if (i !== 'className') {
+        slide += '  ' + i + ': ' + s.head[i] + '\n';
+      }
+    }
+    slide += ']\n';
+    slide += s.md + '\n';
+  });
   var blob = new Blob([slide], {type: 'text/plain;charset=utf-8'});
   saveAs(blob, this.filename || 'slide.md');
 };
@@ -64,7 +96,7 @@ jSlide.ondrop = function (ev) {
   this.read(ev.dataTransfer.files[0]);
 };
 
-/* Load file using lcation hash info
+/* Load file using location hash info
  */
 jSlide.onload = function (ev) {
   // Look for a file to load
@@ -96,7 +128,10 @@ jSlide.onload = function (ev) {
     }
   } else {
     // Create new one
-    this.slide = [' title ]\n\n'+_T('new_presentation')];
+    this.slide = [{
+      head: { className: 'title' },
+      md: _T('new_presentation')
+    }];
     this.current = 0;
     this.showPanel();
     this.show(this.current+1);

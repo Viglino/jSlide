@@ -285,14 +285,14 @@ md2html.rules = [
   [/\<\/ol\>\<ol\>/g, ''],                              // fix
 
   // Automatic links
-  [/([^\(])\b(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\b/g, 
+  [/([\n[\t| ])(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\b/g, 
     '$1<a href=\'$2\' target="_blank">$2</a>'],
   // Mailto
   [/([^\(])\bmailto\b\:(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b)/gi, '$1<a href=\'mailto:$2\'>$2</a>'],
 
   /* Github */
-    // Github corner
-    [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&//=]*)\)\n/, 
+  // Github corner
+  [/\!\(https:\/\/github.com\/([-a-zA-Z0-9@:%_+.~#?&//=]*)\)\n/, 
     '<a href="https://github.com/$1" class="icss-github-corner" target="_blanck"><i></i></a>'],
 
   // Github

@@ -7,29 +7,19 @@ import 'highlight.js/styles/github.css';
  * 
  */
 jSlide.drawSlide = function (content, page, slideshow) {
-  var slide = this.slide[page];
-  var pos = slide.search(']');
-  var head = slide.substr(0,pos).trim().split('\n');
-  var md = slide.substr(pos+1);
+  const param = this.slide[page].head;
+  const md = this.slide[page].md;
 
   // Current path for local media
   let path = window.location.href.split(/[?|#]/).shift();
   path = path.substr(0, path.lastIndexOf('/'))+'/presentations/'+(jSlide.pathName||'');
-
+  
   var data = {
     TITLE: this.get('title'),
     PAGE: page+1,
     LENGTH: this.slide.length,
     PATH: path
   };
-
-  // Get slide parameters
-  if (!/:/.test(head[0])) head[0] = 'className:'+head[0];
-  var param = { className:'' };
-  head.forEach(function(h) {
-    var p = h.split(':');
-    param[p.shift().trim()] = p.join(':').trim();
-  });
 
   content.className = (slideshow ? 'slideshow tr-' + (param.transition||'') : '').trim();
   const element = document.createElement('DIV');
@@ -176,7 +166,7 @@ jSlide.show = function (n, showpanel) {
   }
 
   // Insert edition
-  this.editor.setText('[===='+this.slide[this.current]);
+  this.editor.setText(this.slide[this.current].md);
 
   // Set progress bar
   if (jSlide.random) {

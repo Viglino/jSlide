@@ -1,4 +1,3 @@
-import jSlide from '../jslide/jSlide'
 import Dlog from './dlog'
 
 const dlog = new Dlog();
@@ -6,7 +5,7 @@ const dlog = new Dlog();
 const content = document.createElement('UL');
 let values = {};
 
-function getContent(settings) {
+function getContent(settings, vals) {
   content.innerHTML = '';
   values = {};
   Object.keys(settings).forEach((p) => {
@@ -18,7 +17,7 @@ function getContent(settings) {
     const span = document.createElement('SPAN');
     span.innerText = _T('settings_'+p);
     label.appendChild(span);
-    values[p] = jSlide.get(p);
+    const val = vals[p] || settings[p].default
     switch (settings[p].type) {
       case 'select': {
         const select = document.createElement('SELECT');
@@ -27,7 +26,7 @@ function getContent(settings) {
           const option = document.createElement('OPTION');
           option.innerText = v;
           option.value = v;
-          if (jSlide.get(p) === v) option.selected = true;
+          if (val === v) option.selected = true;
           select.appendChild(option);
         });
         select.addEventListener('change', (e) => {
@@ -38,17 +37,39 @@ function getContent(settings) {
       case 'checkbox': {
         const input = document.createElement('INPUT');
         input.setAttribute ('type', settings[p].type);
-        input.checked = jSlide.get(p);
+        input.checked = val;
+        console.log(val)
         label.insertBefore(input, span);
         input.addEventListener('change', (e) => {
-          values[p] = input.value;
+          values[p] = input.checked;
         });
         break;
       }
-      default: {
+      /*
+      case 'color': {
         const input = document.createElement('INPUT');
         input.setAttribute ('type', settings[p].type);
-        input.value = jSlide.get(p);
+        input.value = val;
+        li.appendChild(input);
+        input.addEventListener('change', (e) => {
+          values[p] = input.value;
+        });
+        const bt = document.createElement('BUTTON');
+        bt.innerText = _T('reset');
+        li.appendChild(bt);
+        bt.addEventListener('click', (e) => {
+          values[p] = '';
+          input.value = '#f7f5f3';
+        });
+        break;
+      }
+      */
+      default: {
+        const input = document.createElement('INPUT');
+        if (settings[p].type==='color') input.setAttribute ('type', 'text');
+        else input.setAttribute ('type', settings[p].type);
+        input.className = settings[p].type;
+        input.value = val;
         li.appendChild(input);
         input.addEventListener('change', (e) => {
           values[p] = input.value;
@@ -63,11 +84,11 @@ function getContent(settings) {
 /** Settings dialog
  */
 export default {
-  show: (title, settings, onchange) => {
+  show: (title, settings, vals, onchange) => {
     dlog.show({ 
       className: 'settings',
       title: title,
-      content: getContent(settings),
+      content: getContent(settings, vals),
       buttons: {
         // Save params
         ok: () => { onchange(values); },

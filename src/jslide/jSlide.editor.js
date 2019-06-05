@@ -1,6 +1,7 @@
 import '../style/editor.css'
 import jSlide from './jSlide'
 import settings from '../jslide/jSlide.settings'
+import slideSettings from '../jslide/jSlide.slideSettings'
 import settingDlg from '../dialog/settings'
 
 // Create editor
@@ -21,21 +22,31 @@ window.addEventListener('load', () => {
     title: 'settings',
     click: () => { 
       settingDlg.show('<i class="jslide-logo"></i> '+_T('settings_dlg'), 
-      settings,
-      (values) => {
-        Object.keys(values).forEach((p) => {
-          jSlide.set(p, values[p]);
-        });
-        jSlide.show();
-      }); }
+        settings,
+        jSlide.getProperties(),
+        (values) => {
+          Object.keys(values).forEach((p) => {
+            jSlide.set(p, values[p]);
+          });
+          jSlide.show();
+        }
+      );
+    }
   },{
-    title: 'sslide',
-    click: () => { 
-      settingDlg.show('<i class="jslide-logo"></i> '+_T('slide_dlg'), 
-      settings,
-      () => {
-        
-      }); }
+      title: 'sslide',
+      click: () => { 
+        const slide = jSlide.slide[jSlide.current]
+        settingDlg.show('<i class="jslide-logo"></i> '+_T('slide_dlg'), 
+          slideSettings,
+          slide.head,
+          (values) => {
+            Object.keys(values).forEach((p) => {
+              slide.head[p] = values[p];
+            });
+            jSlide.show();
+          }
+        );
+      }
   }];
   
   buttons.forEach((b) => {
@@ -85,10 +96,10 @@ editor.insertChar = function(c) {
 /** Something as changed
  */
 function onchange(panel) {
-  let t = editor.getText().replace(/^\[====/, '');
+  let t = editor.getText();
   t = t.replace(/\n\[====/g,'\n&#91;====');
   if (t.slice(-1) !== '\n') t += '\n';
-  jSlide.slide[jSlide.current] = t;
+  jSlide.slide[jSlide.current].md = t;
   jSlide.show(false);
   if (panel) jSlide.showPanel(jSlide.current);
 };

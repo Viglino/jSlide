@@ -15,7 +15,7 @@ const jSlide = {
 jSlide.set = function(k,v) {
   if (typeof k === 'string') {
     if (k) {
-      jSlide._param[k] = v || settings[k].default || '';
+      jSlide._param[k] = v || (settings[k].hasOwnProperty('default') ? settings[k].default : '');
       if (k==='format') {
         switch (v) {
           case '16:9': {

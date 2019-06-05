@@ -171,6 +171,9 @@ div.bgImage {
   height: calc(100% + 4em);
   margin: -1em;
 }
+.slide .bgImage {
+  z-index: -1;
+}
 img.bgImage {
   position: absolute;
   left: 50%;

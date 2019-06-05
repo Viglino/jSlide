@@ -21,7 +21,13 @@
   padding: .25em 0 .25em .5em;
   background-color: #f7f5f3;
 }
-.dlog.settings input[type="text"] {
+.dlog.settings input[type="color"] {
+  padding: 0 .5em;
+  width: 3em;
+  height: 1.5em;
+}
+
+.dlog.settings input[type="text"]:not(.color) {
   width: 100%;
   border: 0;
   padding: .25em 0;

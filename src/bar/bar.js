@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
   const buttons = [{
     title: 'addSlide',
     click: function() {
-      jSlide.slide.splice(jSlide.current+1,0,']');
+      jSlide.slide.splice(jSlide.current+1,0,{ head:{}, md:'' });
       jSlide.showPanel();
       jSlide.next();
     }
